@@ -59,8 +59,40 @@ export const api = {
   fetchInjuries: (teamId: string) =>
     fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/injuries`),
 
-  fetchLeagueLeaders: (stat: string) =>
-    fetchWithCache<any>(`${ESPN_BASE}/leaders?stat=${stat}&limit=20`),
+  fetchStatistics: () =>
+    fetchWithCache<any>(`${ESPN_BASE}/statistics`),
+
+  fetchLeagueLeaders: async (stat = 'passing') => {
+    try {
+      const data = await fetchWithCache<any>(`${ESPN_BASE}/statistics`);
+      const cats = data?.stats?.categories || [];
+      const statMap: Record<string, string> = {
+        passing: 'passingYards',
+        rushing: 'rushingYards',
+        receiving: 'receivingYards',
+        sacks: 'sacks',
+        tackles: 'totalTackles',
+        interceptions: 'interceptions',
+      };
+      const targetName = statMap[stat.toLowerCase()] || stat;
+      const category = cats.find(
+        (c: any) =>
+          c.name?.toLowerCase() === targetName.toLowerCase() ||
+          c.displayName?.toLowerCase().includes(stat.toLowerCase())
+      );
+      if (!category) return [];
+      return (category.leaders || []).map((l: any) => ({
+        name: l.athlete?.displayName || l.athlete?.fullName || 'Athlete',
+        headshot: l.athlete?.headshot?.href || l.athlete?.headshot,
+        team: l.team?.abbreviation || l.team?.displayName || '',
+        statLine: `${l.displayValue || l.value} ${category.displayName || ''}`.trim(),
+        value: l.value || 0,
+        athleteId: l.athlete?.id,
+      }));
+    } catch {
+      return [];
+    }
+  },
 
   fetchGamePlayByPlay: (gameId: string) =>
     fetchWithCache<any>(`${ESPN_BASE}/playbyplay?event=${gameId}`),

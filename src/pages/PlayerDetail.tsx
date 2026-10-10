@@ -11,6 +11,7 @@ export default function PlayerDetail() {
 
   const [bio, setBio] = useState<any>(null);
   const [stats, setStats] = useState<any>(null);
+  const [selectedCategoryIdx, setSelectedCategoryIdx] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -62,30 +63,103 @@ export default function PlayerDetail() {
   else if (salaryPercentile - perfPercentile > 15) valueLabel = 'Overpaid';
 
   const renderStatsTable = () => {
-    if (!stats?.splits?.categories?.length) return <p className="text-gray-400">No stats available for this player.</p>;
-    
-    // Simplistic handling of dynamic stat columns
-    const category = stats.splits.categories[0];
-    const statTypes = category.stats;
+    const categories = stats?.categories || stats?.splits?.categories || [];
+    if (!categories.length) {
+      return (
+        <div className="text-gray-400 py-6 text-center border border-gray-800 rounded-xl bg-gray-950/40">
+          <p>No historical season statistics returned for this athlete.</p>
+        </div>
+      );
+    }
+
+    const activeCat = categories[selectedCategoryIdx] || categories[0];
+    const labels: string[] = activeCat?.labels || [];
+    const seasons: any[] = activeCat?.statistics || [];
+    const totals: string[] = activeCat?.totals || [];
 
     return (
-      <div className="overflow-x-auto bg-gray-900 rounded-lg shadow border border-gray-800">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-gray-800 text-gray-400 text-sm tracking-wider">
-              {statTypes.map((st: any, i: number) => (
-                <th key={i} className="p-4">{st.displayName}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800">
-            <tr className="hover:bg-gray-800/50">
-              {statTypes.map((st: any, i: number) => (
-                <td key={i} className="p-4 text-gray-200">{st.displayValue}</td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+      <div className="space-y-4">
+        {/* Category Tabs */}
+        {categories.length > 1 && (
+          <div className="flex overflow-x-auto touch-scroll gap-2 pb-1 scrollbar-none">
+            {categories.map((c: any, idx: number) => (
+              <button
+                key={c.name || idx}
+                onClick={() => setSelectedCategoryIdx(idx)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition touch-target min-h-[36px] ${
+                  selectedCategoryIdx === idx
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'bg-gray-800 text-gray-400 hover:text-white'
+                }`}
+              >
+                {c.displayName || c.name}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Stats Table */}
+        <div className="overflow-x-auto touch-scroll bg-gray-900 rounded-xl shadow border border-gray-800">
+          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[550px]">
+            <thead>
+              <tr className="bg-gray-950/80 text-gray-400 border-b border-gray-800 uppercase tracking-wider text-[11px]">
+                <th className="p-3 text-left">Season</th>
+                <th className="p-3 text-left">Team</th>
+                {labels.map((lbl: string, i: number) => (
+                  <th key={i} className="p-3 text-right font-mono">{lbl}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-800/60 font-mono">
+              {seasons.map((row: any, i: number) => {
+                const year = row.season?.displayName || row.season?.year || row.year || 'Season';
+                const is2026 = String(year).includes('2026');
+                const rowStats: string[] = row.stats || [];
+
+                return (
+                  <tr
+                    key={i}
+                    className={`transition ${
+                      is2026 
+                        ? 'bg-blue-950/40 text-blue-200 font-bold border-l-4 border-blue-500' 
+                        : 'hover:bg-gray-800/40 text-gray-300'
+                    }`}
+                  >
+                    <td className="p-3 font-sans font-semibold flex items-center gap-1.5">
+                      {year}
+                      {is2026 && (
+                        <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/40">
+                          Active
+                        </span>
+                      )}
+                    </td>
+                    <td className="p-3 font-sans text-gray-400">
+                      {row.teamSlug?.toUpperCase() || row.position || '-'}
+                    </td>
+                    {labels.map((_, colIdx) => (
+                      <td key={colIdx} className="p-3 text-right">
+                        {rowStats[colIdx] ?? '-'}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+            {totals.length > 0 && (
+              <tfoot className="border-t-2 border-gray-700 bg-gray-950/90 font-bold font-mono text-emerald-400">
+                <tr>
+                  <td className="p-3 font-sans">Career Totals</td>
+                  <td className="p-3 font-sans text-gray-500">-</td>
+                  {labels.map((_, colIdx) => (
+                    <td key={colIdx} className="p-3 text-right">
+                      {totals[colIdx] ?? '-'}
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            )}
+          </table>
+        </div>
       </div>
     );
   };

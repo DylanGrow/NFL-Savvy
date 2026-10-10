@@ -22,25 +22,74 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const [scoresRes, offRes, defRes, injRes, standRes] = await Promise.allSettled([
-        (api as any).fetchScoreboard ? (api as any).fetchScoreboard() : fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard').then(r => r.json()),
-        (api as any).fetchLeagueLeaders ? (api as any).fetchLeagueLeaders('passing') : Promise.resolve([]),
-        (api as any).fetchLeagueLeaders ? (api as any).fetchLeagueLeaders('sacks') : Promise.resolve([]),
-        Promise.resolve([]), // no global injuries
-        (api as any).fetchStandings ? (api as any).fetchStandings() : fetch('https://site.api.espn.com/apis/v2/sports/football/nfl/standings').then(r => r.json())
+      const [scoresRes, offRes, defRes, standRes] = await Promise.allSettled([
+        api.fetchScoreboard(),
+        api.fetchLeagueLeaders('passing'),
+        api.fetchLeagueLeaders('sacks'),
+        api.fetchStandings().catch(() => fetch('https://site.api.espn.com/apis/v2/sports/football/nfl/standings?season=2026').then(r => r.json()))
       ]);
 
       if (scoresRes.status === 'fulfilled') {
-        const events = scoresRes.value?.events || scoresRes.value || [];
+        const events = scoresRes.value?.events || [];
         setScoreboard(Array.isArray(events) ? events : []);
         if (scoresRes.value?.week?.number) {
           setCurrentWeek(scoresRes.value.week.number);
         }
       }
-      if (offRes.status === 'fulfilled' && Array.isArray(offRes.value)) setOffenseLeaders(offRes.value);
-      if (defRes.status === 'fulfilled' && Array.isArray(defRes.value)) setDefenseLeaders(defRes.value);
-      if (injRes.status === 'fulfilled' && Array.isArray(injRes.value)) setInjuries(injRes.value);
-      if (standRes.status === 'fulfilled') setStandings(standRes.value);
+
+      if (offRes.status === 'fulfilled' && Array.isArray(offRes.value) && offRes.value.length > 0) {
+        setOffenseLeaders(offRes.value);
+      } else if (scoresRes.status === 'fulfilled') {
+        const gameOffLeaders: any[] = [];
+        (scoresRes.value?.events || []).forEach((e: any) => {
+          (e.competitions?.[0]?.leaders || []).forEach((cat: any) => {
+            const top = cat.leaders?.[0];
+            if (top?.athlete && (cat.name === 'passingYards' || cat.name === 'rushingYards')) {
+              gameOffLeaders.push({
+                name: top.athlete.displayName,
+                headshot: top.athlete.headshot,
+                team: top.team?.abbreviation || '',
+                statLine: top.displayValue,
+                athleteId: top.athlete.id
+              });
+            }
+          });
+        });
+        setOffenseLeaders(gameOffLeaders.slice(0, 3));
+      }
+
+      if (defRes.status === 'fulfilled' && Array.isArray(defRes.value)) {
+        setDefenseLeaders(defRes.value);
+      }
+
+      if (standRes.status === 'fulfilled') {
+        setStandings(standRes.value);
+      }
+
+      // Load notable injuries from active teams
+      try {
+        const sampleTeams = ['6', '25', '12', '21'];
+        const rosters = await Promise.all(sampleTeams.map(tid => api.fetchRoster(tid).catch(() => null)));
+        const injList: any[] = [];
+        rosters.forEach(r => {
+          if (!r?.athletes) return;
+          const tm = r.team?.abbreviation || '';
+          r.athletes.forEach((g: any) => {
+            (g.items || []).forEach((p: any) => {
+              const inj = p.injuries?.[0];
+              if (inj && (inj.status === 'Out' || inj.status === 'Injured Reserve' || inj.status === 'Doubtful')) {
+                injList.push({
+                  name: p.displayName,
+                  team: tm,
+                  status: inj.status,
+                  id: p.id
+                });
+              }
+            });
+          });
+        });
+        setInjuries(injList.slice(0, 6));
+      } catch {}
 
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -166,14 +215,18 @@ export default function Home() {
         <section>
           <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">Offensive Highlights</h2>
           <div className="space-y-4">
-            {offenseLeaders.length ? offenseLeaders.slice(0,3).map((l, i) => (
-              <div key={i} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-700 rounded-full overflow-hidden">
+            {offenseLeaders.length ? offenseLeaders.slice(0, 3).map((l, i) => (
+              <div 
+                key={i} 
+                onClick={() => l.athleteId && navigate(`/players/${l.athleteId}`)}
+                className={`bg-gray-800 p-4 rounded-xl flex items-center gap-4 transition ${l.athleteId ? 'cursor-pointer hover:bg-gray-750' : ''}`}
+              >
+                <div className="w-12 h-12 bg-gray-700 rounded-full overflow-hidden flex-shrink-0">
                   {l.headshot && <img src={l.headshot} alt={l.name} className="w-full h-full object-cover"/>}
                 </div>
-                <div>
-                  <h3 className="font-bold">{l.name} <span className="text-gray-400 font-normal text-sm">{l.team}</span></h3>
-                  <p className="text-sm text-blue-400">{l.statLine}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-bold text-white truncate">{l.name} <span className="text-gray-400 font-normal text-xs ml-1">{l.team}</span></h3>
+                  <p className="text-sm font-semibold text-blue-400 truncate">{l.statLine}</p>
                 </div>
               </div>
             )) : <p className="text-gray-500 italic">No offensive data.</p>}
@@ -184,14 +237,18 @@ export default function Home() {
         <section>
           <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">Defensive Highlights</h2>
           <div className="space-y-4">
-             {defenseLeaders.length ? defenseLeaders.slice(0,3).map((l, i) => (
-              <div key={i} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-700 rounded-full overflow-hidden">
+             {defenseLeaders.length ? defenseLeaders.slice(0, 3).map((l, i) => (
+              <div 
+                key={i} 
+                onClick={() => l.athleteId && navigate(`/players/${l.athleteId}`)}
+                className={`bg-gray-800 p-4 rounded-xl flex items-center gap-4 transition ${l.athleteId ? 'cursor-pointer hover:bg-gray-750' : ''}`}
+              >
+                <div className="w-12 h-12 bg-gray-700 rounded-full overflow-hidden flex-shrink-0">
                   {l.headshot && <img src={l.headshot} alt={l.name} className="w-full h-full object-cover"/>}
                 </div>
-                <div>
-                  <h3 className="font-bold">{l.name} <span className="text-gray-400 font-normal text-sm">{l.team}</span></h3>
-                  <p className="text-sm text-red-400">{l.statLine}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-bold text-white truncate">{l.name} <span className="text-gray-400 font-normal text-xs ml-1">{l.team}</span></h3>
+                  <p className="text-sm font-semibold text-red-400 truncate">{l.statLine}</p>
                 </div>
               </div>
             )) : <p className="text-gray-500 italic">No defensive data.</p>}
@@ -202,12 +259,20 @@ export default function Home() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Injuries */}
         <section>
-           <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">Notable Injuries (OUT)</h2>
-           <ul className="bg-gray-800 rounded-lg p-4 divide-y divide-gray-700">
+           <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">Notable Injuries (OUT / IR)</h2>
+           <ul className="bg-gray-800 rounded-xl p-4 divide-y divide-gray-700">
              {injuries.length ? injuries.map((inj, i) => (
-               <li key={i} className="py-2 flex justify-between">
-                 <span className="font-medium">{inj.name} <span className="text-xs text-gray-400">{inj.team}</span></span>
-                 <span className="text-sm text-red-400">{inj.status}</span>
+               <li 
+                 key={i} 
+                 onClick={() => inj.id && navigate(`/players/${inj.id}`)}
+                 className={`py-2.5 flex justify-between items-center transition ${inj.id ? 'cursor-pointer hover:text-blue-300' : ''}`}
+               >
+                 <span className="font-medium text-sm">
+                   {inj.name} <span className="text-xs text-gray-400 font-normal ml-1">({inj.team})</span>
+                 </span>
+                 <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-950/80 text-red-400 border border-red-800/60">
+                   {inj.status}
+                 </span>
                </li>
              )) : <p className="text-gray-500 italic py-2">No notable injuries.</p>}
            </ul>
@@ -215,10 +280,69 @@ export default function Home() {
 
         {/* Standings Snapshot */}
         <section>
-           <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">Standings Snapshot</h2>
-           <div className="bg-gray-800 rounded-lg p-4">
-             <Link to="/standings" className="text-blue-400 hover:underline text-sm mb-4 inline-block">View Full Standings &rarr;</Link>
-             <p className="text-gray-500 italic">Snapshot available in full standings.</p>
+           <div className="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
+             <h2 className="text-2xl font-semibold">Standings Snapshot</h2>
+             <Link to="/standings" className="text-blue-400 hover:underline text-sm inline-block">
+               View Full Standings &rarr;
+             </Link>
+           </div>
+           
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+             {/* AFC Leaders */}
+             <div className="bg-gray-800 border border-gray-700/60 rounded-xl p-3.5 space-y-2">
+               <div className="flex items-center gap-2 border-b border-gray-700 pb-1.5 text-xs font-bold text-red-400 uppercase">
+                 <span className="w-2 h-2 rounded-full bg-red-500" /> AFC Leaders
+               </div>
+               <div className="space-y-1.5">
+                 {(standings?.children?.[0]?.standings?.entries?.slice(0, 4) || []).map((e: any, idx: number) => {
+                   const t = e.team;
+                   const rec = e.stats?.find((s: any) => s.name === 'overall')?.displayValue || 
+                              `${e.stats?.find((s: any) => s.name === 'wins')?.displayValue || 0}-${e.stats?.find((s: any) => s.name === 'losses')?.displayValue || 0}`;
+                   return (
+                     <div
+                       key={idx}
+                       onClick={() => navigate(`/teams/${t?.id}`)}
+                       className="flex items-center justify-between p-1.5 rounded hover:bg-gray-700/50 cursor-pointer transition text-xs"
+                     >
+                       <div className="flex items-center gap-2 truncate">
+                         <span className="text-gray-500 font-mono w-3">#{idx + 1}</span>
+                         {t?.logos?.[0]?.href && <img src={t.logos[0].href} alt="" className="w-4 h-4 object-contain" />}
+                         <span className="font-semibold text-gray-200 truncate">{t?.displayName || t?.abbreviation}</span>
+                       </div>
+                       <span className="font-mono font-bold text-gray-300 ml-2">{rec}</span>
+                     </div>
+                   );
+                 })}
+               </div>
+             </div>
+
+             {/* NFC Leaders */}
+             <div className="bg-gray-800 border border-gray-700/60 rounded-xl p-3.5 space-y-2">
+               <div className="flex items-center gap-2 border-b border-gray-700 pb-1.5 text-xs font-bold text-blue-400 uppercase">
+                 <span className="w-2 h-2 rounded-full bg-blue-500" /> NFC Leaders
+               </div>
+               <div className="space-y-1.5">
+                 {(standings?.children?.[1]?.standings?.entries?.slice(0, 4) || []).map((e: any, idx: number) => {
+                   const t = e.team;
+                   const rec = e.stats?.find((s: any) => s.name === 'overall')?.displayValue || 
+                              `${e.stats?.find((s: any) => s.name === 'wins')?.displayValue || 0}-${e.stats?.find((s: any) => s.name === 'losses')?.displayValue || 0}`;
+                   return (
+                     <div
+                       key={idx}
+                       onClick={() => navigate(`/teams/${t?.id}`)}
+                       className="flex items-center justify-between p-1.5 rounded hover:bg-gray-700/50 cursor-pointer transition text-xs"
+                     >
+                       <div className="flex items-center gap-2 truncate">
+                         <span className="text-gray-500 font-mono w-3">#{idx + 1}</span>
+                         {t?.logos?.[0]?.href && <img src={t.logos[0].href} alt="" className="w-4 h-4 object-contain" />}
+                         <span className="font-semibold text-gray-200 truncate">{t?.displayName || t?.abbreviation}</span>
+                       </div>
+                       <span className="font-mono font-bold text-gray-300 ml-2">{rec}</span>
+                     </div>
+                   );
+                 })}
+               </div>
+             </div>
            </div>
         </section>
       </div>
