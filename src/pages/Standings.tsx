@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
-import { fetchTeamsData } from '../lib/data';
-import type { Team } from '../types';
+import { fetchStandingsData } from '../lib/data';
 
 interface ParsedEntry {
   team: any;
@@ -11,6 +10,57 @@ interface ParsedEntry {
   conference: string;
   seed: number;
 }
+
+/** Complete 32-team NFL division and conference mapping */
+const NFL_TEAM_DIVISIONS: Record<string, { conference: 'AFC' | 'NFC'; division: 'East' | 'North' | 'South' | 'West'; abbr: string }> = {
+  // AFC East
+  '2':  { conference: 'AFC', division: 'East',  abbr: 'BUF' },
+  '15': { conference: 'AFC', division: 'East',  abbr: 'MIA' },
+  '17': { conference: 'AFC', division: 'East',  abbr: 'NE' },
+  '20': { conference: 'AFC', division: 'East',  abbr: 'NYJ' },
+  // AFC North
+  '33': { conference: 'AFC', division: 'North', abbr: 'BAL' },
+  '4':  { conference: 'AFC', division: 'North', abbr: 'CIN' },
+  '5':  { conference: 'AFC', division: 'North', abbr: 'CLE' },
+  '23': { conference: 'AFC', division: 'North', abbr: 'PIT' },
+  // AFC South
+  '34': { conference: 'AFC', division: 'South', abbr: 'HOU' },
+  '11': { conference: 'AFC', division: 'South', abbr: 'IND' },
+  '30': { conference: 'AFC', division: 'South', abbr: 'JAX' },
+  '10': { conference: 'AFC', division: 'South', abbr: 'TEN' },
+  // AFC West
+  '7':  { conference: 'AFC', division: 'West',  abbr: 'DEN' },
+  '12': { conference: 'AFC', division: 'West',  abbr: 'KC' },
+  '13': { conference: 'AFC', division: 'West',  abbr: 'LV' },
+  '24': { conference: 'AFC', division: 'West',  abbr: 'LAC' },
+  // NFC East
+  '6':  { conference: 'NFC', division: 'East',  abbr: 'DAL' },
+  '19': { conference: 'NFC', division: 'East',  abbr: 'NYG' },
+  '21': { conference: 'NFC', division: 'East',  abbr: 'PHI' },
+  '28': { conference: 'NFC', division: 'East',  abbr: 'WSH' },
+  // NFC North
+  '3':  { conference: 'NFC', division: 'North', abbr: 'CHI' },
+  '8':  { conference: 'NFC', division: 'North', abbr: 'DET' },
+  '9':  { conference: 'NFC', division: 'North', abbr: 'GB' },
+  '16': { conference: 'NFC', division: 'North', abbr: 'MIN' },
+  // NFC South
+  '1':  { conference: 'NFC', division: 'South', abbr: 'ATL' },
+  '29': { conference: 'NFC', division: 'South', abbr: 'CAR' },
+  '18': { conference: 'NFC', division: 'South', abbr: 'NO' },
+  '27': { conference: 'NFC', division: 'South', abbr: 'TB' },
+  // NFC West
+  '22': { conference: 'NFC', division: 'West',  abbr: 'ARI' },
+  '14': { conference: 'NFC', division: 'West',  abbr: 'LAR' },
+  '25': { conference: 'NFC', division: 'West',  abbr: 'SF' },
+  '26': { conference: 'NFC', division: 'West',  abbr: 'SEA' },
+};
+
+// Also index by abbreviation
+const ABBR_TO_DIVISION: Record<string, { conference: 'AFC' | 'NFC'; division: 'East' | 'North' | 'South' | 'West' }> = {};
+Object.entries(NFL_TEAM_DIVISIONS).forEach(([id, meta]) => {
+  ABBR_TO_DIVISION[meta.abbr.toUpperCase()] = { conference: meta.conference, division: meta.division };
+  ABBR_TO_DIVISION[id] = { conference: meta.conference, division: meta.division };
+});
 
 const SkeletonRow = () => (
   <div className="animate-pulse flex items-center bg-gray-800 h-10 w-full mb-1.5 rounded-lg"></div>
@@ -22,27 +72,37 @@ export default function Standings() {
   const [error, setError] = useState<string | null>(null);
   const [conferences, setConferences] = useState<any[]>([]);
   const [viewMode, setViewMode] = useState<'division' | 'conference'>('division');
-  const [teamMetaMap, setTeamMetaMap] = useState<Map<string, Team>>(new Map());
 
   const loadData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const [standingsRes, teamsRes] = await Promise.all([
-        api.fetchStandings().catch(() => fetch('https://site.api.espn.com/apis/v2/sports/football/nfl/standings?season=2026').then(r => r.json())),
-        fetchTeamsData().catch(() => [] as Team[])
-      ]);
+      let standingsRes: any = null;
 
-      const map = new Map<string, Team>();
-      teamsRes.forEach(t => {
-        map.set(String(t.id), t);
-        if (t.espnId) map.set(String(t.espnId), t);
-      });
-      setTeamMetaMap(map);
+      try {
+        standingsRes = await api.fetchStandings();
+      } catch {
+        // Fallback to local 2026 standings JSON
+        standingsRes = await fetchStandingsData();
+      }
+
+      if (!standingsRes?.children || standingsRes.children.length === 0) {
+        standingsRes = await fetchStandingsData();
+      }
 
       const children = standingsRes?.children || [];
+      if (children.length === 0) {
+        throw new Error('Unable to load standings records');
+      }
       setConferences(children);
     } catch (err: any) {
+      try {
+        const fallback = await fetchStandingsData();
+        if (fallback?.children && fallback.children.length > 0) {
+          setConferences(fallback.children);
+          return;
+        }
+      } catch {}
       setError(err?.message || 'Failed to load standings data');
     } finally {
       setLoading(false);
@@ -57,7 +117,10 @@ export default function Standings() {
   const parseEntries = (entries: any[] = []): ParsedEntry[] => {
     return entries.map(entry => {
       const t = entry.team;
-      const meta = teamMetaMap.get(String(t?.id));
+      const tid = String(t?.id || '');
+      const tabbr = String(t?.abbreviation || '').toUpperCase();
+
+      const meta = NFL_TEAM_DIVISIONS[tid] || ABBR_TO_DIVISION[tabbr] || ABBR_TO_DIVISION[tid];
       const stats: Record<string, any> = {};
 
       (entry.stats || []).forEach((s: any) => {
@@ -70,7 +133,7 @@ export default function Standings() {
       return {
         team: t,
         stats,
-        division: meta?.division || 'Other',
+        division: meta?.division || 'East',
         conference: meta?.conference || (t?.displayName?.includes('AFC') ? 'AFC' : 'NFC'),
         seed,
       };
@@ -89,7 +152,7 @@ export default function Standings() {
     );
   }
 
-  if (error) {
+  if (error && conferences.length === 0) {
     return (
       <div className="app-container py-12 text-center text-red-400">
         <p className="text-base font-semibold">{error}</p>
@@ -171,6 +234,19 @@ export default function Standings() {
                     const divTeams = entries.filter(e => e.division.toLowerCase() === divName.toLowerCase());
                     if (divTeams.length === 0) return null;
 
+                    // Sort division teams by win percentage, then wins, then differential
+                    const sortedDivTeams = [...divTeams].sort((a, b) => {
+                      const pctA = parseFloat(a.stats.winPercent ?? a.stats.PCT ?? '0');
+                      const pctB = parseFloat(b.stats.winPercent ?? b.stats.PCT ?? '0');
+                      if (pctB !== pctA) return pctB - pctA;
+                      const winsA = parseInt(a.stats.wins ?? a.stats.W ?? '0', 10);
+                      const winsB = parseInt(b.stats.wins ?? b.stats.W ?? '0', 10);
+                      if (winsB !== winsA) return winsB - winsA;
+                      const diffA = parseFloat(a.stats.pointDifferential ?? a.stats.DIFF ?? '0');
+                      const diffB = parseFloat(b.stats.pointDifferential ?? b.stats.DIFF ?? '0');
+                      return diffB - diffA;
+                    });
+
                     return (
                       <div key={divName} className="space-y-2">
                         <div className="flex items-center justify-between px-1">
@@ -194,10 +270,12 @@ export default function Standings() {
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-800/50">
-                              {divTeams.map((entry, idx) => {
+                              {sortedDivTeams.map((entry, idx) => {
                                 const t = entry.team;
                                 const s = entry.stats;
                                 const isLeader = idx === 0;
+                                const strk = String(s.streak ?? s.STRK ?? '-');
+                                const isWinStreak = strk.startsWith('W');
 
                                 return (
                                   <tr
@@ -232,7 +310,7 @@ export default function Standings() {
                                     <td className="px-2 py-2.5 text-right font-mono text-xs sm:text-sm text-gray-400">{s.ties ?? s.T ?? 0}</td>
                                     <td className="px-2 py-2.5 text-right font-mono text-xs sm:text-sm font-semibold text-blue-400">{s.winPercent ?? s.PCT ?? '.000'}</td>
                                     <td className="px-2 py-2.5 text-right font-mono text-xs hidden sm:table-cell text-gray-300">{s.pointDifferential ?? s.DIFF ?? s.differential ?? '0'}</td>
-                                    <td className="px-2 py-2.5 text-right font-mono text-xs hidden sm:table-cell text-emerald-400 font-semibold">{s.streak ?? s.STRK ?? '-'}</td>
+                                    <td className={`px-2 py-2.5 text-right font-mono text-xs hidden sm:table-cell font-semibold ${isWinStreak ? 'text-emerald-400' : 'text-gray-400'}`}>{strk}</td>
                                     <td className="px-2 py-2.5 text-right font-mono text-xs text-gray-400">{s.divisionRecord ?? s.DIV ?? '-'}</td>
                                   </tr>
                                 );
@@ -268,6 +346,8 @@ export default function Standings() {
                         const isDivLeader = seed <= 4;
                         const isWildcard = seed > 4 && seed <= 7;
                         const isCutoffLine = seed === 7;
+                        const strk = String(s.streak ?? s.STRK ?? '-');
+                        const isWinStreak = strk.startsWith('W');
 
                         return (
                           <tr
@@ -321,8 +401,8 @@ export default function Standings() {
                             <td className="px-2 py-2.5 text-right font-mono text-xs hidden sm:table-cell text-gray-300">
                               {s.pointDifferential ?? s.DIFF ?? s.differential ?? '0'}
                             </td>
-                            <td className="px-2 py-2.5 text-right font-mono text-xs text-emerald-400 font-semibold">
-                              {s.streak ?? s.STRK ?? '-'}
+                            <td className={`px-2 py-2.5 text-right font-mono text-xs font-semibold ${isWinStreak ? 'text-emerald-400' : 'text-gray-400'}`}>
+                              {strk}
                             </td>
                           </tr>
                         );
