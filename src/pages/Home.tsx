@@ -75,7 +75,7 @@ export default function Home() {
       {/* Hero Bar */}
       <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">2025 NFL Season Overview</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">2026 NFL Season Overview</h1>
           <p className="text-gray-400 text-xs sm:text-sm mt-1">Live scores, advanced player analytics, salaries, and referee assignments</p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">

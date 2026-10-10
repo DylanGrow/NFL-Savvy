@@ -1,4 +1,4 @@
-# 🏈 NFL Savvy (2025 Season)
+# 🏈 NFL Savvy (2026 Season)
 
 > **NFL Savant-level deep analytics meets OverTheCap/Spotrac salary cap intelligence, stadium weather forecasts, officiating crew tendencies, and 5-tier multi-API resilience.**
 
@@ -11,8 +11,8 @@
 
 ## 🌟 Core Features
 
-- **💰 2025 Player Salaries & Contract Intelligence:**
-  - Full breakdown against the **$279,000,000** 2025 NFL Salary Cap ceiling.
+- **💰 2026 Player Salaries & Contract Intelligence:**
+  - Full breakdown against the **$305,000,000** 2026 NFL Salary Cap ceiling.
   - Cap hit, average annual value (AAV), total contract value, and guaranteed money.
   - **Contract Value vs. Performance Index:** Algorithmic rating identifying *Undervalued / High Surplus*, *Fair Value*, and *Overpaid* assets.
   - Positional spending SVG donut charts (QB, WR, OL, DL, DB, LB, RB, ST).

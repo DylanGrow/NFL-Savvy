@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
-import { getTeamSalaries, formatSalary, NFL_CAP_2025, getTeamCapAllocated } from '../lib/salary';
+import { getTeamSalaries, formatSalary, NFL_CAP_2026, getTeamCapAllocated } from '../lib/salary';
 import { Skeleton, SkeletonCard } from '../components/ui/Skeleton';
 import { Badge } from '../components/ui/Badge';
 import { DonutChart } from '../components/ui/DonutChart';
@@ -140,7 +140,7 @@ export default function TeamDetail() {
   };
 
   const capAllocated = teamId ? getTeamCapAllocated(teamId) : 0;
-  const capPercent = (capAllocated / NFL_CAP_2025) * 100;
+  const capPercent = (capAllocated / NFL_CAP_2026) * 100;
   const salaries = teamId ? getTeamSalaries(teamId) : [];
 
   const capData = useMemo(() => {
@@ -290,7 +290,7 @@ export default function TeamDetail() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-gray-400 mb-1">Cap Limit</p>
-                  <p className="text-xl font-medium text-gray-300">{formatSalary(NFL_CAP_2025)}</p>
+                  <p className="text-xl font-medium text-gray-300">{formatSalary(NFL_CAP_2026)}</p>
                 </div>
               </div>
               <div className="h-4 bg-gray-800 rounded-full overflow-hidden mb-6">

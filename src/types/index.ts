@@ -1,5 +1,5 @@
 // ============================================================
-// Core domain types for NFL Hub 2025
+// Core domain types for NFL Savvy 2026
 // ============================================================
 
 export interface Team {

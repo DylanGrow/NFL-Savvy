@@ -45,7 +45,7 @@ export const api = {
     fetchWithCache<any>(`${ESPN_BASE}/scoreboard`),
 
   fetchStandings: () =>
-    fetchWithCache<any>(`${ESPN_V2}/standings?season=2025`),
+    fetchWithCache<any>(`${ESPN_V2}/standings?season=2026`),
 
   fetchPlayerStats: (playerId: string) =>
     fetchWithCache<any>(`${ESPN_COMMON}/athletes/${playerId}/stats`),

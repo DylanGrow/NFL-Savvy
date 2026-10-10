@@ -64,7 +64,7 @@ export function Header() {
                   NFL Savvy
                 </span>
                 <span className="hidden xs:inline-block text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                  2025
+                  2026
                 </span>
               </Link>
             </div>

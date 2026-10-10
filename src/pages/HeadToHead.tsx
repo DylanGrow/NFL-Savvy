@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../lib/api';
-import { SALARIES, formatSalary, getTeamCapAllocated, NFL_CAP_2025 } from '../lib/salary';
+import { SALARIES, formatSalary, getTeamCapAllocated, NFL_CAP_2026 } from '../lib/salary';
 
 interface Team {
   id: string;
@@ -286,7 +286,7 @@ export default function HeadToHead() {
                       <div 
                         className="h-full rounded-full absolute left-0 top-0 transition-all duration-500"
                         style={{ 
-                          width: `\${Math.min(100, (getTeamCapAllocated(teamAId) / NFL_CAP_2025) * 100)}%`,
+                          width: `\${Math.min(100, (getTeamCapAllocated(teamAId) / NFL_CAP_2026) * 100)}%`,
                           backgroundColor: `#\${teamA.color}`
                         }}
                       />
@@ -336,7 +336,7 @@ export default function HeadToHead() {
                       <div 
                         className="h-full rounded-full absolute left-0 top-0 transition-all duration-500"
                         style={{ 
-                          width: `\${Math.min(100, (getTeamCapAllocated(teamBId) / NFL_CAP_2025) * 100)}%`,
+                          width: `\${Math.min(100, (getTeamCapAllocated(teamBId) / NFL_CAP_2026) * 100)}%`,
                           backgroundColor: `#\${teamB.color}`
                         }}
                       />

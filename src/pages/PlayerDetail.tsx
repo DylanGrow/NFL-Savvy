@@ -170,7 +170,7 @@ export default function PlayerDetail() {
               
               <div className="space-y-4 flex-1">
                 <div className="flex justify-between items-end border-b border-gray-800 pb-2">
-                  <span className="text-gray-400">2025 Cap Hit</span>
+                  <span className="text-gray-400">2026 Cap Hit</span>
                   <span className="text-2xl font-mono font-semibold text-white">
                     {salary ? formatSalary(salary.capHit) : 'N/A'}
                   </span>
@@ -241,7 +241,7 @@ export default function PlayerDetail() {
 
           {/* Season Stats */}
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-            <h2 className="text-xl font-bold mb-6">2025 Season Stats</h2>
+            <h2 className="text-xl font-bold mb-6">2026 Season Stats</h2>
             {renderStatsTable()}
           </div>
         </div>

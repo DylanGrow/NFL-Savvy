@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SALARIES, NFL_CAP_2025, formatSalary } from '../lib/salary';
+import { SALARIES, NFL_CAP_2026, formatSalary } from '../lib/salary';
 import { api } from '../lib/api';
 
 const TEAM_MAP: Record<string, string> = {
@@ -71,14 +71,14 @@ export default function Salaries() {
   }, [SALARIES, positionFilter, sortBy, playerDetails]);
 
   const totalKnownCap = SALARIES.reduce((sum, s) => sum + s.capHit, 0);
-  const totalLeagueCap = NFL_CAP_2025 * 32;
+  const totalLeagueCap = NFL_CAP_2026 * 32;
   const pct = (totalKnownCap / totalLeagueCap) * 100;
 
   return (
     <div className="app-container py-4 sm:py-8 min-h-screen text-gray-100 font-sans space-y-6">
       <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1">2025 NFL Salaries & Cap Allocation</h1>
-        <p className="text-xs sm:text-sm text-gray-400">Official NFL Salary Cap: {formatSalary(NFL_CAP_2025)} per franchise</p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1">2026 NFL Salaries & Cap Allocation</h1>
+        <p className="text-xs sm:text-sm text-gray-400">Official NFL Salary Cap: {formatSalary(NFL_CAP_2026)} per franchise</p>
       </div>
 
       <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-md">
