@@ -40,6 +40,11 @@ export const SALARIES: Salary[] = [
   { playerId: '4575517', teamId: '33', capHit: 21000000, totalValue: 86000000,  guaranteedMoney: 55000000,  yearsRemaining: 3, aav: 21500000, signingBonus: 12000000 }, // Kyle Hamilton
   // Kickers
   { playerId: '3055899', teamId: '12', capHit: 7500000,  totalValue: 25600000,  guaranteedMoney: 17750000,  yearsRemaining: 3, aav: 6400000,   signingBonus: 5000000  }, // Harrison Butker
+  // Pittsburgh Steelers
+  { playerId: '3045282', teamId: '23', capHit: 30418000, totalValue: 112000000, guaranteedMoney: 80000000,  yearsRemaining: 3, aav: 28000000, signingBonus: 24000000 }, // T.J. Watt
+  { playerId: '13977',   teamId: '23', capHit: 16000000, totalValue: 45000000,  guaranteedMoney: 29000000,  yearsRemaining: 2, aav: 15000000, signingBonus: 10000000 }, // Cameron Heyward
+  { playerId: '4037333', teamId: '23', capHit: 14000000, totalValue: 68000000,  guaranteedMoney: 27000000,  yearsRemaining: 3, aav: 17000000, signingBonus: 16000000 }, // Alex Highsmith
+  { playerId: '4361411', teamId: '23', capHit: 12000000, totalValue: 48400000,  guaranteedMoney: 23380000,  yearsRemaining: 4, aav: 12100000, signingBonus: 10500000 }, // Pat Freiermuth
 ];
 
 /** Build a Map for O(1) lookup by playerId */
@@ -116,6 +121,10 @@ export const PLAYER_METADATA: Record<string, PlayerSalaryMeta> = {
   '4372012': { name: 'Patrick Surtain II', position: 'CB', teamAbbr: 'DEN' },
   '4575517': { name: 'Kyle Hamilton', position: 'S', teamAbbr: 'BAL' },
   '3055899': { name: 'Harrison Butker', position: 'K', teamAbbr: 'KC' },
+  '3045282': { name: 'T.J. Watt', position: 'LB', teamAbbr: 'PIT' },
+  '13977':   { name: 'Cameron Heyward', position: 'DT', teamAbbr: 'PIT' },
+  '4037333': { name: 'Alex Highsmith', position: 'LB', teamAbbr: 'PIT' },
+  '4361411': { name: 'Pat Freiermuth', position: 'TE', teamAbbr: 'PIT' },
 };
 
 export function getPlayerMeta(playerId: string): PlayerSalaryMeta {

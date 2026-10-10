@@ -2,7 +2,7 @@ import type { BadgeVariant } from '../../types';
 
 interface BadgeProps {
   variant: BadgeVariant;
-  label: string;
+  label: any;
   icon?: string;
   className?: string;
 }
@@ -25,12 +25,16 @@ const variantStyles: Record<BadgeVariant, string> = {
 };
 
 export function Badge({ variant, label, icon, className = '' }: BadgeProps) {
+  const text = typeof label === 'string'
+    ? label
+    : label?.abbreviation || label?.displayName || label?.name || (label != null ? String(label) : '');
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${variantStyles[variant]} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${variantStyles[variant] || variantStyles.default} ${className}`}
     >
       {icon && <span aria-hidden="true">{icon}</span>}
-      <span>{label}</span>
+      <span>{text}</span>
     </span>
   );
 }
