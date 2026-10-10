@@ -93,8 +93,28 @@ export default function GameDetail() {
   const homeStats = teamStats.find((t: any) => t.team?.id === home?.team?.id)?.statistics || [];
   const awayStats = teamStats.find((t: any) => t.team?.id === away?.team?.id)?.statistics || [];
 
-  const statLabels = ['Total Yards', 'Net Passing Yards', 'Rushing Yards', 'First Downs', 'Third Down Eff', 'Turnovers', 'Total Penalties-Yards', 'Possession Time'];
-  const displayLabels = ['Total Yards', 'Pass Yards', 'Rush Yards', '1st Downs', '3rd Down%', 'Turnovers', 'Penalties', 'TOP'];
+  const GAME_STAT_CONFIGS = [
+    { key: 'totalYards', label: 'Total Yards', matchNames: ['totalyards', 'total yards'] },
+    { key: 'netPassingYards', label: 'Pass Yards', matchNames: ['netpassingyards', 'passing', 'net passing yards', 'pass yards'] },
+    { key: 'rushingYards', label: 'Rush Yards', matchNames: ['rushingyards', 'rushing', 'rushing yards', 'rush yards'] },
+    { key: 'firstDowns', label: '1st Downs', matchNames: ['firstdowns', '1st downs', 'first downs'] },
+    { key: 'thirdDownEff', label: '3rd Down%', matchNames: ['thirddowneff', '3rd down efficiency', 'third down eff', '3rd down%'] },
+    { key: 'turnovers', label: 'Turnovers', matchNames: ['turnovers'], isLowerBetter: true },
+    { key: 'totalPenaltiesYards', label: 'Penalties', matchNames: ['totalpenaltiesyards', 'penalties', 'total penalties-yards', 'total penalties'] },
+    { key: 'possessionTime', label: 'TOP', matchNames: ['possessiontime', 'possession', 'possession time', 'top'] },
+    { key: 'completionAttempts', label: 'Comp/Att', matchNames: ['completionattempts', 'comp/att', 'completion attempts'] },
+    { key: 'sacksYardsLost', label: 'Sacks-Yards', matchNames: ['sacksyardslost', 'sacks-yards lost', 'sacks'] },
+  ];
+
+  const getStatDisplay = (stats: any[], matchNames: string[]): string => {
+    if (!stats || !Array.isArray(stats)) return '-';
+    const item = stats.find((s: any) => {
+      const n = (s.name || '').toLowerCase();
+      const l = (s.label || '').toLowerCase();
+      return matchNames.includes(n) || matchNames.includes(l);
+    });
+    return item?.displayValue || '-';
+  };
 
   // Extract live officials from API
   const liveOfficials: Official[] = (data.gameInfo?.officials || header.officials || []).map((o: any) => ({
@@ -142,18 +162,22 @@ export default function GameDetail() {
                 <span className="flex-1 text-center">STAT</span>
                 <span className="w-16 text-right">{home?.team?.abbreviation}</span>
               </div>
-              {statLabels.map((label, idx) => {
-                const as = awayStats.find((s: any) => s.label === label)?.displayValue || '-';
-                const hs = homeStats.find((s: any) => s.label === label)?.displayValue || '-';
+              {GAME_STAT_CONFIGS.map((cfg) => {
+                const as = getStatDisplay(awayStats, cfg.matchNames);
+                const hs = getStatDisplay(homeStats, cfg.matchNames);
                 const aVal = parseFloat(as);
                 const hVal = parseFloat(hs);
-                const aBetter = !isNaN(aVal) && !isNaN(hVal) && aVal > hVal && label !== 'Turnovers';
-                const hBetter = !isNaN(aVal) && !isNaN(hVal) && hVal > aVal && label !== 'Turnovers';
+                const aBetter = cfg.isLowerBetter
+                  ? !isNaN(aVal) && !isNaN(hVal) && aVal < hVal
+                  : !isNaN(aVal) && !isNaN(hVal) && aVal > hVal;
+                const hBetter = cfg.isLowerBetter
+                  ? !isNaN(aVal) && !isNaN(hVal) && hVal < aVal
+                  : !isNaN(aVal) && !isNaN(hVal) && hVal > aVal;
 
                 return (
-                  <div key={label} className="flex justify-between items-center py-2 border-b border-gray-700 px-2 text-sm">
+                  <div key={cfg.key} className="flex justify-between items-center py-2 border-b border-gray-700 px-2 text-sm">
                     <span className={`w-16 text-left ${aBetter ? 'font-bold text-white' : 'text-gray-400'}`}>{as}</span>
-                    <span className="flex-1 text-center text-gray-400">{displayLabels[idx]}</span>
+                    <span className="flex-1 text-center text-gray-400">{cfg.label}</span>
                     <span className={`w-16 text-right ${hBetter ? 'font-bold text-white' : 'text-gray-400'}`}>{hs}</span>
                   </div>
                 );
