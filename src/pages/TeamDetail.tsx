@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/Badge';
 import { DonutChart } from '../components/ui/DonutChart';
 import { CoachCard } from '../components/team/CoachCard';
 import { PlayerCard } from '../components/player/PlayerCard';
-import { fetchTeamsData, fetchStadiumsData } from '../lib/data';
+import { fetchTeamsData, fetchStadiumsData, fetchCoachesData } from '../lib/data';
 import type { Team, Coach } from '../types';
 
 export default function TeamDetail() {
@@ -20,6 +20,7 @@ export default function TeamDetail() {
   const [injuries, setInjuries] = useState<any[]>([]);
   const [staticTeams, setStaticTeams] = useState<any[]>([]);
   const [stadiums, setStadiums] = useState<any[]>([]);
+  const [coachesData, setCoachesData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,10 +39,11 @@ export default function TeamDetail() {
         api.fetchRoster(teamId),
         api.fetchInjuries(teamId),
         fetchTeamsData(),
-        fetchStadiumsData()
+        fetchStadiumsData(),
+        fetchCoachesData()
       ]);
 
-      const [teamRes, rosterRes, injuriesRes, teamsRes, stadiumsRes] = results;
+      const [teamRes, rosterRes, injuriesRes, teamsRes, stadiumsRes, coachesRes] = results;
 
       if (teamRes.status === 'fulfilled') {
         setTeam(teamRes.value.team);
@@ -51,6 +53,7 @@ export default function TeamDetail() {
       if (injuriesRes.status === 'fulfilled') setInjuries(injuriesRes.value.injuries || []);
       if (teamsRes.status === 'fulfilled') setStaticTeams(teamsRes.value);
       if (stadiumsRes.status === 'fulfilled') setStadiums(stadiumsRes.value);
+      if (coachesRes.status === 'fulfilled') setCoachesData(coachesRes.value);
 
       if (teamRes.status === 'rejected') {
         throw new Error('Failed to load primary team data');
@@ -208,7 +211,34 @@ export default function TeamDetail() {
     );
   }
 
-  const primaryColor = team.primaryColor ? `#${team.primaryColor}` : '#1f2937';
+  const staticMeta = useMemo(() => {
+    return staticTeams.find((st: any) => st.id === teamId || st.abbreviation === team?.abbreviation);
+  }, [staticTeams, teamId, team]);
+
+  const primaryColor = staticMeta?.primaryColor || (team?.primaryColor ? `#${team.primaryColor}` : (rawTeam?.team?.color ? `#${rawTeam.team.color}` : '#1f2937'));
+  const cityName = staticMeta?.city || team?.city || rawTeam?.team?.location || '';
+
+  const teamCoaches = useMemo<Coach[]>(() => {
+    if (rawTeam?.team?.coaches && rawTeam.team.coaches.length > 0) {
+      return rawTeam.team.coaches.map((c: any, idx: number) => ({
+        id: c.id || `coach-${idx}`,
+        fullName: c.fullName || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Coach',
+        role: c.role || c.titles?.[0]?.position || 'Coach',
+        teamId: teamId || '',
+        yearsExperience: c.yearsExperience !== undefined ? c.yearsExperience : c.experience,
+        record: c.record,
+      }));
+    }
+    const filtered = coachesData.filter((c: any) => c.teamId === teamId || c.teamAbbr === team?.abbreviation);
+    return filtered.map((c: any) => ({
+      id: c.id,
+      fullName: c.fullName || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Coach',
+      role: c.role || 'Coach',
+      teamId: c.teamId || teamId || '',
+      yearsExperience: c.yearsExperience !== undefined ? c.yearsExperience : c.experience,
+      record: c.record,
+    }));
+  }, [rawTeam, coachesData, teamId, team]);
 
   return (
     <div className="bg-gray-950 min-h-screen text-gray-100 pb-16 font-sans">
@@ -231,7 +261,7 @@ export default function TeamDetail() {
         <div className="flex-1">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-white mb-1 tracking-tight">{team.name}</h1>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-white/90 text-xs sm:text-sm font-medium">
-            <span>{team.city}</span>
+            <span>{cityName}</span>
             <span>&bull;</span>
             <span className="bg-black/20 px-2 py-0.5 rounded text-white font-mono">{team.conference} {team.division}</span>
           </div>
@@ -264,10 +294,10 @@ export default function TeamDetail() {
         {/* 2. Coaching Staff */}
         <section>
           <h2 className="text-xl font-bold mb-4 text-white">Coaching Staff</h2>
-          {rawTeam?.team?.coaches && rawTeam.team.coaches.length > 0 ? (
+          {teamCoaches.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3.5 sm:gap-4">
-              {rawTeam.team.coaches.map((coach: Coach, i: number) => (
-                <CoachCard key={i} coach={coach} />
+              {teamCoaches.map((coach: Coach, i: number) => (
+                <CoachCard key={coach.id || i} coach={coach} />
               ))}
             </div>
           ) : (

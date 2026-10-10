@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../lib/api';
-import { SALARIES, formatSalary, getTeamCapAllocated, NFL_CAP_2026 } from '../lib/salary';
+import { SALARIES, formatSalary, getTeamCapAllocated, NFL_CAP_2026, getPlayerMeta } from '../lib/salary';
 
 interface Team {
   id: string;
@@ -8,35 +8,6 @@ interface Team {
   logo: string;
   color: string;
 }
-
-const PLAYER_NAMES: Record<string, { name: string; position: string }> = {
-  '3139477': { name: 'Patrick Mahomes', position: 'QB' },
-  '3918298': { name: 'Josh Allen', position: 'QB' },
-  '4241479': { name: 'Lamar Jackson', position: 'QB' },
-  '4360310': { name: 'Jalen Hurts', position: 'QB' },
-  '3054211': { name: 'Geno Smith', position: 'QB' },
-  '4697815': { name: 'C.J. Stroud', position: 'QB' },
-  '4040715': { name: 'Dak Prescott', position: 'QB' },
-  '3054220': { name: 'Jordan Love', position: 'QB' },
-  '4567048': { name: 'Matthew Stafford', position: 'QB' },
-  '4360438': { name: 'Sam Darnold', position: 'QB' },
-  '3054288': { name: 'Stefon Diggs', position: 'WR' },
-  '4047646': { name: 'Keenan Allen', position: 'WR' },
-  '4241478': { name: 'Tyreek Hill', position: 'WR' },
-  '3054273': { name: 'Davante Adams', position: 'WR' },
-  '4040570': { name: 'A.J. Brown', position: 'WR' },
-  '3054239': { name: 'Isiah Pacheco', position: 'RB' },
-  '4040749': { name: 'Christian McCaffrey', position: 'RB' },
-  '3054275': { name: 'Trey McBride', position: 'TE' },
-  '4040611': { name: 'Travis Kelce', position: 'TE' },
-  '3054294': { name: 'Laremy Tunsil', position: 'OL' },
-  '4039348': { name: 'Danielle Hunter', position: 'EDGE' },
-  '4040557': { name: 'Odafe Oweh', position: 'EDGE' },
-  '3054266': { name: 'Micah Parsons', position: 'LB' },
-  '4037571': { name: 'Darius Slay', position: 'CB' },
-  '4040618': { name: 'Kyle Hamilton', position: 'S' },
-  '3054258': { name: 'Harrison Butker', position: 'K' },
-};
 
 export default function HeadToHead() {
   const [mode, setMode] = useState<'PLAYERS' | 'TEAMS'>('PLAYERS');
@@ -76,8 +47,8 @@ export default function HeadToHead() {
   const playerA = SALARIES.find(s => s.playerId === playerAId);
   const playerB = SALARIES.find(s => s.playerId === playerBId);
 
-  const getPos = (pid?: string) => pid ? (PLAYER_NAMES[pid]?.position || 'UNK') : '-';
-  const getName = (pid?: string) => pid ? (PLAYER_NAMES[pid]?.name || `Player ${pid}`) : '-';
+  const getPos = (pid?: string) => pid ? (getPlayerMeta(pid).position || 'UNK') : '-';
+  const getName = (pid?: string) => pid ? (getPlayerMeta(pid).name || `Player ${pid}`) : '-';
 
   const compareMetric = (valA?: number, valB?: number, isLowerBetter = false) => {
     if (valA === undefined || valB === undefined) return { aClass: '', bClass: '' };

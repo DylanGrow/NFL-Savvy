@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../lib/api';
-import { fetchTeamsData } from '../lib/data';
+import { fetchCoachesData } from '../lib/data';
 
 interface Coach {
   id: string;
   firstName: string;
   lastName: string;
-  experience: number;
+  experience?: number;
   role: string;
   teamAbbr: string;
   teamName: string;
+  record?: string;
 }
 
 export default function Coaches() {
@@ -17,55 +18,19 @@ export default function Coaches() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('ALL');
 
-  const [teamsArr, setTeamsArr] = useState<any[]>([]);
-
   useEffect(() => {
-    fetchTeamsData().then(setTeamsArr).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    document.title = 'Coaches | NFL Hub';
-    const fetchCoaches = async () => {
-      try {
-        const teams = Array.isArray(teamsArr) ? teamsArr : (teamsArr as any).teams || [];
-        if (teams.length === 0) return;
-        const promises = teams.map((t: any) => api.fetchTeam(t.id || t.team?.id));
-        const results = await Promise.allSettled(promises);
-        
-        let allCoaches: Coach[] = [];
-        
-        results.forEach((res: any, i: number) => {
-          if (res.status === 'fulfilled' && res.value?.team) {
-            const team = res.value.team;
-            const tAbbr = team.abbreviation || teams[i].abbreviation || '';
-            const tName = team.displayName || teams[i].displayName || '';
-            
-            if (team.coaches) {
-              team.coaches.forEach((c: any) => {
-                allCoaches.push({
-                  id: c.id || `${tAbbr}-${c.lastName}`,
-                  firstName: c.firstName,
-                  lastName: c.lastName,
-                  experience: c.experience,
-                  role: c.titles?.[0]?.position || 'Coach',
-                  teamAbbr: tAbbr,
-                  teamName: tName
-                });
-              });
-            }
-          }
-        });
-        
-        setCoaches(allCoaches);
-      } catch (e) {
-        console.error(e);
-      } finally {
+    document.title = 'Coaches | NFL Savvy';
+    fetchCoachesData()
+      .then(data => {
+        setCoaches(data || []);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-    
-    fetchCoaches();
-  }, [teamsArr]);
+      });
+  }, []);
 
   const roles = ['ALL', 'Head Coach', 'Offensive Coordinator', 'Defensive Coordinator', 'Special Teams Coordinator'];
 

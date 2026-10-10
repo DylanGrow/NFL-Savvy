@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SALARIES, NFL_CAP_2026, formatSalary } from '../lib/salary';
+import { SALARIES, NFL_CAP_2026, formatSalary, PLAYER_METADATA } from '../lib/salary';
 import { api } from '../lib/api';
 
 const TEAM_MAP: Record<string, string> = {
@@ -16,11 +16,8 @@ export default function Salaries() {
   const [positionFilter, setPositionFilter] = useState('ALL');
   const [sortBy, setSortBy] = useState<SortCol>('Cap Hit');
   
-  // We need player names/positions. Since SALARIES only has playerId, we need to fetch them or we can just show IDs until loaded.
-  // Wait, the prompt says "Player name links to /players/:playerId", but SALARIES has no names!
-  // I must fetch the player bio to get the names, or fetch roster for all teams. 
-  // Let's create a local state for player details mapped by ID.
-  const [playerDetails, setPlayerDetails] = useState<Record<string, { name: string; position: string }>>({});
+  // Instant initial data with zero layout shift
+  const [playerDetails, setPlayerDetails] = useState<Record<string, { name: string; position: string }>>(PLAYER_METADATA);
 
   useEffect(() => {
     document.title = 'Salaries | NFL Hub';

@@ -79,3 +79,45 @@ export function formatSalary(amount: number): string {
   if (amount >= 1_000) return `\$${(amount / 1_000).toFixed(0)}K`;
   return `\$${amount}`;
 }
+
+export interface PlayerSalaryMeta {
+  name: string;
+  position: string;
+  teamAbbr?: string;
+}
+
+export const PLAYER_METADATA: Record<string, PlayerSalaryMeta> = {
+  '3139477': { name: 'Patrick Mahomes', position: 'QB', teamAbbr: 'KC' },
+  '2577417': { name: 'Dak Prescott', position: 'QB', teamAbbr: 'DAL' },
+  '3916387': { name: 'Lamar Jackson', position: 'QB', teamAbbr: 'BAL' },
+  '4040715': { name: 'Jalen Hurts', position: 'QB', teamAbbr: 'PHI' },
+  '4036378': { name: 'Jordan Love', position: 'QB', teamAbbr: 'GB' },
+  '4360310': { name: 'Trevor Lawrence', position: 'QB', teamAbbr: 'JAX' },
+  '3918298': { name: 'Josh Allen', position: 'QB', teamAbbr: 'BUF' },
+  '4432577': { name: 'C.J. Stroud', position: 'QB', teamAbbr: 'HOU' },
+  '4241479': { name: 'Tua Tagovailoa', position: 'QB', teamAbbr: 'MIA' },
+  '12483':   { name: 'Matthew Stafford', position: 'QB', teamAbbr: 'LAR' },
+  '4262921': { name: 'Justin Jefferson', position: 'WR', teamAbbr: 'MIN' },
+  '4241389': { name: 'CeeDee Lamb', position: 'WR', teamAbbr: 'DAL' },
+  '4360438': { name: 'Brandon Aiyuk', position: 'WR', teamAbbr: 'SF' },
+  '4047646': { name: 'A.J. Brown', position: 'WR', teamAbbr: 'PHI' },
+  '16800':   { name: 'Davante Adams', position: 'WR', teamAbbr: 'LAR' },
+  '3117251': { name: 'Christian McCaffrey', position: 'RB', teamAbbr: 'SF' },
+  '3929630': { name: 'Saquon Barkley', position: 'RB', teamAbbr: 'PHI' },
+  '4361529': { name: 'Isiah Pacheco', position: 'RB', teamAbbr: 'KC' },
+  '15847':   { name: 'Travis Kelce', position: 'TE', teamAbbr: 'KC' },
+  '4361307': { name: 'Trey McBride', position: 'TE', teamAbbr: 'ARI' },
+  '4240589': { name: 'Tristan Wirfs', position: 'OL', teamAbbr: 'TB' },
+  '4373825': { name: 'Penei Sewell', position: 'OL', teamAbbr: 'DET' },
+  '4040605': { name: 'Nick Bosa', position: 'EDGE', teamAbbr: 'SF' },
+  '2976560': { name: 'Danielle Hunter', position: 'EDGE', teamAbbr: 'HOU' },
+  '4361422': { name: 'Odafe Oweh', position: 'EDGE', teamAbbr: 'BAL' },
+  '4361423': { name: 'Micah Parsons', position: 'LB', teamAbbr: 'DAL' },
+  '4372012': { name: 'Patrick Surtain II', position: 'CB', teamAbbr: 'DEN' },
+  '4575517': { name: 'Kyle Hamilton', position: 'S', teamAbbr: 'BAL' },
+  '3055899': { name: 'Harrison Butker', position: 'K', teamAbbr: 'KC' },
+};
+
+export function getPlayerMeta(playerId: string): PlayerSalaryMeta {
+  return PLAYER_METADATA[playerId] || { name: `Player ${playerId}`, position: 'N/A' };
+}

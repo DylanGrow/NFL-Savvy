@@ -53,8 +53,31 @@ export const api = {
   fetchPlayerBio: (playerId: string) =>
     fetchWithCache<any>(`${ESPN_COMMON}/athletes/${playerId}`),
 
-  fetchDepthChart: (teamId: string) =>
-    fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/depthchart`),
+  fetchDepthChart: async (teamId: string) => {
+    try {
+      const res = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/depthchart`);
+      if (res && res.items && res.items.length > 0) return res;
+    } catch {}
+
+    try {
+      const roster = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/roster?limit=100`);
+      const posMap: Record<string, any[]> = {};
+      (roster.athletes || []).forEach((grp: any) => {
+        (grp.items || []).forEach((p: any) => {
+          const pos = p.position?.abbreviation || 'UNK';
+          if (!posMap[pos]) posMap[pos] = [];
+          posMap[pos].push(p);
+        });
+      });
+      const items = Object.keys(posMap).map(pos => ({
+        position: { abbreviation: pos, name: pos },
+        athletes: posMap[pos].map((athlete, idx) => ({ rank: idx + 1, athlete }))
+      }));
+      return { items };
+    } catch {
+      return { items: [] };
+    }
+  },
 
   fetchInjuries: (teamId: string) =>
     fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/injuries`),

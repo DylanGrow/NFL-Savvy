@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { RefereeCard } from '../components/game/RefereeCard';
+import { WeatherCard } from '../components/weather/WeatherCard';
+import { fetchGameWeather } from '../lib/weather';
 import { fetchStadiumsData, fetchRefereesData } from '../lib/data';
-import type { Official, RefereeCrew } from '../types';
+import type { Official, RefereeCrew, Weather } from '../types';
 
 export default function GameDetail() {
   const { gameId } = useParams();
@@ -12,6 +14,8 @@ export default function GameDetail() {
   const [error, setError] = useState<string | null>(null);
   const [stadiums, setStadiums] = useState<Record<string, any>>({});
   const [referees, setReferees] = useState<RefereeCrew[]>([]);
+  const [weather, setWeather] = useState<Weather | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(false);
 
   useEffect(() => {
     document.title = 'Game Detail | NFL Hub';
@@ -67,6 +71,23 @@ export default function GameDetail() {
 
   const stadium = venueName ? Object.values(stadiums).find((s: any) => s.name === venueName || s.fullName === venueName || venueName.includes(s.name)) : null;
   const isDome = stadium?.isDome || stadium?.type === 'dome' || stadium?.type === 'retractable';
+
+  useEffect(() => {
+    if (!stadium || isDome || !stadium.coordinates) {
+      setWeather(null);
+      setWeatherLoading(false);
+      return;
+    }
+
+    const compDate = header.date || data?.header?.competitions?.[0]?.date;
+    const gameDate = compDate ? compDate.split('T')[0] : new Date().toISOString().split('T')[0];
+
+    setWeatherLoading(true);
+    fetchGameWeather(stadium.coordinates.lat, stadium.coordinates.lon, gameDate)
+      .then(w => setWeather(w))
+      .catch(() => setWeather(null))
+      .finally(() => setWeatherLoading(false));
+  }, [stadium, isDome, header.date, data]);
 
   const teamStats = boxscore.teams || [];
   const homeStats = teamStats.find((t: any) => t.team?.id === home?.team?.id)?.statistics || [];
@@ -192,20 +213,23 @@ export default function GameDetail() {
             ))}
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-4">
-            <h3 className="font-bold text-lg mb-2">Stadium</h3>
-            <div className="text-sm space-y-2">
-              <div className="font-bold">{venueName || 'Unknown Venue'}</div>
-              {stadium && (
-                <>
-                  <div className="text-gray-400">Capacity: {stadium.capacity?.toLocaleString() || 'N/A'}</div>
-                  <div className="text-gray-400">Surface: {stadium.surface || 'N/A'}</div>
-                </>
-              )}
-              <div className="mt-4 inline-block px-2 py-1 rounded bg-gray-700 text-xs">
-                {isDome ? '🏟️ Indoor/Dome' : '🌤️ Outdoor'}
+          <div className="bg-gray-800 rounded-lg p-4 space-y-4">
+            <div>
+              <h3 className="font-bold text-lg mb-2 text-white">Stadium & Venue</h3>
+              <div className="text-sm space-y-1">
+                <div className="font-bold text-base text-gray-100">{venueName || 'Unknown Venue'}</div>
+                {stadium && (
+                  <>
+                    <div className="text-gray-400">Capacity: {stadium.capacity?.toLocaleString() || 'N/A'} • Surface: {stadium.surface || 'N/A'}</div>
+                    <div className="text-gray-400">{stadium.city}, {stadium.state}</div>
+                  </>
+                )}
               </div>
-              {!isDome && <p className="text-xs text-gray-500 mt-2">Weather details require live data</p>}
+            </div>
+
+            <div>
+              <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Game Conditions</div>
+              <WeatherCard weather={weather} isDome={!!isDome} isLoading={weatherLoading} />
             </div>
           </div>
 

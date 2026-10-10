@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SALARIES, formatSalary } from '../../lib/salary';
-import { fetchTeamsData, fetchRefereesData } from '../../lib/data';
+import { SALARIES, formatSalary, PLAYER_METADATA } from '../../lib/salary';
+import { fetchTeamsData, fetchRefereesData, fetchCoachesData } from '../../lib/data';
 import type { Team, SearchResult } from '../../types';
 
 interface SearchModalProps {
@@ -9,39 +9,11 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
-const PLAYER_NAME_LOOKUP: Record<string, { name: string; position: string; teamAbbr: string }> = {
-  '3139477': { name: 'Patrick Mahomes', position: 'QB', teamAbbr: 'KC' },
-  '3918298': { name: 'Josh Allen', position: 'QB', teamAbbr: 'BUF' },
-  '4241479': { name: 'Lamar Jackson', position: 'QB', teamAbbr: 'BAL' },
-  '4360310': { name: 'Jalen Hurts', position: 'QB', teamAbbr: 'PHI' },
-  '3054211': { name: 'Geno Smith', position: 'QB', teamAbbr: 'SEA' },
-  '4697815': { name: 'C.J. Stroud', position: 'QB', teamAbbr: 'HOU' },
-  '4040715': { name: 'Dak Prescott', position: 'QB', teamAbbr: 'DAL' },
-  '3054220': { name: 'Jordan Love', position: 'QB', teamAbbr: 'GB' },
-  '4567048': { name: 'Matthew Stafford', position: 'QB', teamAbbr: 'LAR' },
-  '4360438': { name: 'Sam Darnold', position: 'QB', teamAbbr: 'MIN' },
-  '3054288': { name: 'Stefon Diggs', position: 'WR', teamAbbr: 'HOU' },
-  '4047646': { name: 'Keenan Allen', position: 'WR', teamAbbr: 'CHI' },
-  '4241478': { name: 'Tyreek Hill', position: 'WR', teamAbbr: 'MIA' },
-  '3054273': { name: 'Davante Adams', position: 'WR', teamAbbr: 'NYJ' },
-  '4040570': { name: 'A.J. Brown', position: 'WR', teamAbbr: 'PHI' },
-  '3054239': { name: 'Isiah Pacheco', position: 'RB', teamAbbr: 'KC' },
-  '4040749': { name: 'Christian McCaffrey', position: 'RB', teamAbbr: 'SF' },
-  '3054275': { name: 'Trey McBride', position: 'TE', teamAbbr: 'ARI' },
-  '4040611': { name: 'Travis Kelce', position: 'TE', teamAbbr: 'KC' },
-  '3054294': { name: 'Laremy Tunsil', position: 'OT', teamAbbr: 'HOU' },
-  '4039348': { name: 'Danielle Hunter', position: 'DE', teamAbbr: 'HOU' },
-  '4040557': { name: 'Odafe Oweh', position: 'OLB', teamAbbr: 'BAL' },
-  '3054266': { name: 'Micah Parsons', position: 'LB', teamAbbr: 'DAL' },
-  '4037571': { name: 'Darius Slay', position: 'CB', teamAbbr: 'PHI' },
-  '4040618': { name: 'Kyle Hamilton', position: 'S', teamAbbr: 'BAL' },
-  '3054258': { name: 'Harrison Butker', position: 'K', teamAbbr: 'KC' }
-};
-
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('');
   const [teams, setTeams] = useState<Team[]>([]);
   const [referees, setReferees] = useState<any[]>([]);
+  const [coaches, setCoaches] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -52,6 +24,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     fetchRefereesData()
       .then(setReferees)
+      .catch(() => {});
+
+    fetchCoachesData()
+      .then(setCoaches)
       .catch(() => {});
   }, []);
 
@@ -97,7 +73,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     // 2. Players from database
     SALARIES.forEach(s => {
-      const pInfo = PLAYER_NAME_LOOKUP[s.playerId];
+      const pInfo = PLAYER_METADATA[s.playerId];
       const name = pInfo?.name || `Player #${s.playerId}`;
       const pos = pInfo?.position || 'NFL';
       const abbr = pInfo?.teamAbbr || '';
@@ -113,7 +89,21 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       }
     });
 
-    // 3. Referees
+    // 3. Coaches
+    coaches.forEach(c => {
+      const fullName = `${c.firstName} ${c.lastName}`;
+      if (fullName.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || (c.teamName && c.teamName.toLowerCase().includes(q)) || (c.teamAbbr && c.teamAbbr.toLowerCase() === q)) {
+        matched.push({
+          type: 'coach',
+          id: c.id,
+          name: fullName,
+          subtitle: `${c.role} • ${c.teamName || c.teamAbbr || 'NFL'}`,
+          url: `/coaches`
+        });
+      }
+    });
+
+    // 4. Referees
     referees.forEach(r => {
       if (r.referee.toLowerCase().includes(q) || (r.jerseyNumber && r.jerseyNumber.includes(q))) {
         matched.push({
@@ -127,7 +117,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     });
 
     return matched.slice(0, 10);
-  }, [query, teams, referees]);
+  }, [query, teams, referees, coaches]);
 
   if (!isOpen) return null;
 
@@ -183,7 +173,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-lg">
-                      {res.type === 'team' ? '🛡️' : res.type === 'player' ? '🏈' : '🦓'}
+                      {res.type === 'team' ? '🛡️' : res.type === 'player' ? '🏈' : res.name.startsWith('Ref') ? '🦓' : '📋'}
                     </span>
                     <div>
                       <div className="font-semibold text-gray-100 group-hover:text-blue-400 transition-colors text-sm">

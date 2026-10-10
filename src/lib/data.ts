@@ -57,3 +57,7 @@ export function fetchStadiumsData(): Promise<Stadium[]> {
 export function fetchRefereesData(): Promise<RefereeCrew[]> {
   return fetchLocalJson<RefereeCrew[]>('data/referees.json');
 }
+
+export function fetchCoachesData(): Promise<any[]> {
+  return fetchLocalJson<any[]>('data/coaches.json');
+}
