@@ -12,6 +12,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   
   const [scoreboard, setScoreboard] = useState<any[]>([]);
+  const [currentWeek, setCurrentWeek] = useState<number | null>(null);
   const [offenseLeaders, setOffenseLeaders] = useState<any[]>([]);
   const [defenseLeaders, setDefenseLeaders] = useState<any[]>([]);
   const [injuries, setInjuries] = useState<any[]>([]);
@@ -32,6 +33,9 @@ export default function Home() {
       if (scoresRes.status === 'fulfilled') {
         const events = scoresRes.value?.events || scoresRes.value || [];
         setScoreboard(Array.isArray(events) ? events : []);
+        if (scoresRes.value?.week?.number) {
+          setCurrentWeek(scoresRes.value.week.number);
+        }
       }
       if (offRes.status === 'fulfilled' && Array.isArray(offRes.value)) setOffenseLeaders(offRes.value);
       if (defRes.status === 'fulfilled' && Array.isArray(defRes.value)) setDefenseLeaders(defRes.value);
@@ -98,7 +102,7 @@ export default function Home() {
       <section>
         <div className="flex items-center justify-between mb-4 border-b border-gray-800 pb-2">
           <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-            <span>🏈</span> Week Matchups & Scores
+            <span>🏈</span> {currentWeek ? `Week ${currentWeek}` : 'Live'} Matchups & Scores (2026 Season)
           </h2>
           <span className="text-xs text-gray-500">Tap or click any game for full breakdown</span>
         </div>

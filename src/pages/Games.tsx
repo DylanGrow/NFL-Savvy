@@ -24,6 +24,18 @@ export default function Games() {
       .then(setReferees)
       .catch(() => {});
 
+    // Auto-detect current active NFL week (e.g. Week 5 in 2026)
+    api.fetchScoreboard()
+      .then(sb => {
+        const curWeek = sb?.week?.number;
+        if (typeof curWeek === 'number' && curWeek >= 1 && curWeek <= 18) {
+          setSelectedWeek(curWeek);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     loadWeek(selectedWeek);
   }, [selectedWeek]);
 
@@ -46,8 +58,8 @@ export default function Games() {
     <div className="app-container py-4 sm:py-8 text-white font-sans space-y-6">
       <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">NFL Schedule & Live Lines</h1>
-          <p className="text-xs sm:text-sm text-gray-400 mt-1">Select any week to inspect stadium venues, dome weather, and referee crews</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">2026 NFL Schedule & Live Lines</h1>
+          <p className="text-xs sm:text-sm text-gray-400 mt-1">Week {selectedWeek} • Select any week to inspect stadium venues, dome weather, and referee crews</p>
         </div>
       </div>
       
