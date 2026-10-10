@@ -9,7 +9,7 @@ const JSON_CACHE = new Map<string, any>();
  * - GitHub Pages (https://<user>.github.io/keen-maxwell/)
  */
 export async function fetchLocalJson<T>(relativePath: string): Promise<T> {
-  const clean = relativePath.replace(/^\//, '').replace(/^keen-maxwell\//, '');
+  const clean = relativePath.replace(/^\//, '').replace(/^(NFL-Savvy|keen-maxwell)\//, '');
   
   if (JSON_CACHE.has(clean)) {
     return JSON_CACHE.get(clean) as T;
@@ -22,6 +22,7 @@ export async function fetchLocalJson<T>(relativePath: string): Promise<T> {
     `${normalizedBase}${clean}`,
     `./${clean}`,
     `/${clean}`,
+    `/NFL-Savvy/${clean}`,
     `/keen-maxwell/${clean}`
   ];
 
