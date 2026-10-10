@@ -1,0 +1,342 @@
+[
+  {
+    "id": "carl-cheffers",
+    "referee": "Carl Cheffers",
+    "jerseyNumber": "51",
+    "experience": 25,
+    "superBowls": [51, 55],
+    "umpire": "Duane Heydt",
+    "downJudge": "Jerod Phillips",
+    "lineJudge": "Robin DeLorenzo",
+    "fieldJudge": "Eugene Hall",
+    "sideJudge": "Eugene Hall",
+    "backJudge": "Martin Hankins",
+    "replayOfficial": "Kevin Brown",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 14.8,
+      "avgPenaltyYards": 122.4,
+      "homeWinPct": 56.2,
+      "tendency": "High defensive holding & pass interference enforcement"
+    }
+  },
+  {
+    "id": "shawn-hochuli",
+    "referee": "Shawn Hochuli",
+    "jerseyNumber": "83",
+    "experience": 11,
+    "superBowls": [],
+    "umpire": "Terry Killens",
+    "downJudge": "Patrick Holt",
+    "lineJudge": "Greg Bradley",
+    "fieldJudge": "Anthony Flemming",
+    "sideJudge": "Chad Hill",
+    "backJudge": "Rich Martinez",
+    "replayOfficial": "Tyler Cerimeli",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 15.2,
+      "avgPenaltyYards": 128.6,
+      "homeWinPct": 52.8,
+      "tendency": "Top 3 highest foul-rate crews; strict pre-snap penalties"
+    }
+  },
+  {
+    "id": "clete-blakeman",
+    "referee": "Clete Blakeman",
+    "jerseyNumber": "34",
+    "experience": 17,
+    "superBowls": [50],
+    "umpire": "Scott Campbell",
+    "downJudge": "Dana McKenzie",
+    "lineJudge": "Julian Mapp",
+    "fieldJudge": "Terry Brown",
+    "sideJudge": "Lo van Pham",
+    "backJudge": "Jonah Monroe",
+    "replayOfficial": "Chad Adams",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.1,
+      "avgPenaltyYards": 108.5,
+      "homeWinPct": 53.5,
+      "tendency": "Balanced crew; moderate offensive holding enforcement"
+    }
+  },
+  {
+    "id": "bill-vinovich",
+    "referee": "Bill Vinovich",
+    "jerseyNumber": "52",
+    "experience": 21,
+    "superBowls": [49, 54, 58],
+    "umpire": "Mark Pellis",
+    "downJudge": "Dale Keller",
+    "lineJudge": "Mark Perlman",
+    "fieldJudge": "Joe Blubaugh",
+    "sideJudge": "Aaron Santi",
+    "backJudge": "Jimmy Russell",
+    "replayOfficial": "Mark Butterworth",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 10.9,
+      "avgPenaltyYards": 89.2,
+      "homeWinPct": 55.1,
+      "tendency": "Lowest penalty volume in NFL; allows physical secondary play"
+    }
+  },
+  {
+    "id": "brad-allen",
+    "referee": "Brad Allen",
+    "jerseyNumber": "122",
+    "experience": 11,
+    "superBowls": [],
+    "umpire": "Duane Heydt",
+    "downJudge": "Sarah Thomas",
+    "lineJudge": "Walter Flowers",
+    "fieldJudge": "Rick Patterson",
+    "sideJudge": "Boris Cheek",
+    "backJudge": "Greg Yette",
+    "replayOfficial": "Russell Yurk",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 14.4,
+      "avgPenaltyYards": 118.0,
+      "homeWinPct": 58.0,
+      "tendency": "Strict reporting procedures & eligible receiver monitoring"
+    }
+  },
+  {
+    "id": "ron-torbert",
+    "referee": "Ron Torbert",
+    "jerseyNumber": "62",
+    "experience": 15,
+    "superBowls": [56],
+    "umpire": "Barry Anderson",
+    "downJudge": "Max Causey",
+    "lineJudge": "Mark Steinkerchner",
+    "fieldJudge": "Ryan Dickson",
+    "sideJudge": "Keith Washington",
+    "backJudge": "Tony Josselyn",
+    "replayOfficial": "Denise Crudup",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 12.4,
+      "avgPenaltyYards": 99.5,
+      "homeWinPct": 54.0,
+      "tendency": "Strong clock management; very consistent foul thresholds"
+    }
+  },
+  {
+    "id": "john-hussey",
+    "referee": "John Hussey",
+    "jerseyNumber": "35",
+    "experience": 23,
+    "superBowls": [],
+    "umpire": "Carl Paganelli",
+    "downJudge": "Frank LeBlanc",
+    "lineJudge": "Carl Johnson",
+    "fieldJudge": "Jabir Walker",
+    "sideJudge": "Allen Baynes",
+    "backJudge": "Matt Edwards",
+    "replayOfficial": "James Carter",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.6,
+      "avgPenaltyYards": 111.2,
+      "homeWinPct": 57.1,
+      "tendency": "Quick whistles on forward progress; high roughing the passer rate"
+    }
+  },
+  {
+    "id": "alex-kemp",
+    "referee": "Alex Kemp",
+    "jerseyNumber": "55",
+    "experience": 11,
+    "superBowls": [],
+    "umpire": "Mike Morton",
+    "downJudge": "Robert Richeson",
+    "lineJudge": "Tom Eaton",
+    "fieldJudge": "Sean Petty",
+    "sideJudge": "Dale Shaw",
+    "backJudge": "Scott Helverson",
+    "replayOfficial": "Gerald Austin",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 15.0,
+      "avgPenaltyYards": 124.8,
+      "homeWinPct": 49.3,
+      "tendency": "High road team foul distribution; strict offensive pass interference"
+    }
+  },
+  {
+    "id": "tra-blake",
+    "referee": "Tra Blake",
+    "jerseyNumber": "33",
+    "experience": 5,
+    "superBowls": [],
+    "umpire": "Tony Michalek",
+    "downJudge": "Patrick Turner",
+    "lineJudge": "Daniel Gallagher",
+    "fieldJudge": "Don Willard",
+    "sideJudge": "Clay Reynard",
+    "backJudge": "Grantis Bell",
+    "replayOfficial": "Andrew Lambert",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.9,
+      "avgPenaltyYards": 114.7,
+      "homeWinPct": 51.5,
+      "tendency": "Average penalty calls across all down & distance situations"
+    }
+  },
+  {
+    "id": "clay-martin",
+    "referee": "Clay Martin",
+    "jerseyNumber": "19",
+    "experience": 10,
+    "superBowls": [],
+    "umpire": "James Carter",
+    "downJudge": "Jerod Phillips",
+    "lineJudge": "Greg Steed",
+    "fieldJudge": "Steve Zimmer",
+    "sideJudge": "Dave Hawkshaw",
+    "backJudge": "Greg Wilson",
+    "replayOfficial": "Brian Stevens",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 12.8,
+      "avgPenaltyYards": 102.3,
+      "homeWinPct": 54.8,
+      "tendency": "Fast-paced games; few unnecessary roughness flags"
+    }
+  },
+  {
+    "id": "scott-novak",
+    "referee": "Scott Novak",
+    "jerseyNumber": "1",
+    "experience": 11,
+    "superBowls": [],
+    "umpire": "Mark Pellis",
+    "downJudge": "Brian Sakowski",
+    "lineJudge": "Mark Stewart",
+    "fieldJudge": "Tra Blake",
+    "sideJudge": "David Meslow",
+    "backJudge": "Terrence Miles",
+    "replayOfficial": "Matt Sumstine",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 14.1,
+      "avgPenaltyYards": 117.6,
+      "homeWinPct": 53.2,
+      "tendency": "High false start rate; strictly watches offensive line alignment"
+    }
+  },
+  {
+    "id": "adrian-hill",
+    "referee": "Adrian Hill",
+    "jerseyNumber": "29",
+    "experience": 15,
+    "superBowls": [],
+    "umpire": "Roy Ellison",
+    "downJudge": "David Oliver",
+    "lineJudge": "Brett Bergman",
+    "fieldJudge": "Mearl Robinson",
+    "sideJudge": "Jim Quirk",
+    "backJudge": "Keith Ferguson",
+    "replayOfficial": "Paul Weidner",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.5,
+      "avgPenaltyYards": 109.1,
+      "homeWinPct": 52.0,
+      "tendency": "Well-balanced crew; prominent in clear on-field penalty explanations"
+    }
+  },
+  {
+    "id": "shawn-smith",
+    "referee": "Shawn Smith",
+    "jerseyNumber": "14",
+    "experience": 10,
+    "superBowls": [],
+    "umpire": "Bryan Neale",
+    "downJudge": "Jay Bilbo",
+    "lineJudge": "Jeff Seeman",
+    "fieldJudge": "Dyrol Prioleau",
+    "sideJudge": "Angelo Alleyne",
+    "backJudge": "Dino Paganelli",
+    "replayOfficial": "Mike Wimmer",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 14.6,
+      "avgPenaltyYards": 120.3,
+      "homeWinPct": 55.4,
+      "tendency": "High defensive pass interference enforcement on deep balls"
+    }
+  },
+  {
+    "id": "alan-eck",
+    "referee": "Alan Eck",
+    "jerseyNumber": "76",
+    "experience": 9,
+    "superBowls": [],
+    "umpire": "Tab Slaughter",
+    "downJudge": "Derick Bowers",
+    "lineJudge": "Fred Bryan",
+    "fieldJudge": "John Jenkins",
+    "sideJudge": "Dale Shaw",
+    "backJudge": "Greg Meyer",
+    "replayOfficial": "Joe Wollan",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.7,
+      "avgPenaltyYards": 113.8,
+      "homeWinPct": 53.9,
+      "tendency": "High illegal contact rate downfield in 3rd down situations"
+    }
+  },
+  {
+    "id": "land-clark",
+    "referee": "Land Clark",
+    "jerseyNumber": "130",
+    "experience": 7,
+    "superBowls": [],
+    "umpire": "Paul King",
+    "downJudge": "Tom Stephan",
+    "lineJudge": "Brian Bolinger",
+    "fieldJudge": "Jabir Walker",
+    "sideJudge": "Dominique Pender",
+    "backJudge": "Anthony Jeffries",
+    "replayOfficial": "Bob Hubbell",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 14.0,
+      "avgPenaltyYards": 115.5,
+      "homeWinPct": 50.8,
+      "tendency": "Frequent holding calls on outside zone rushing plays"
+    }
+  },
+  {
+    "id": "craig-wrolstad",
+    "referee": "Craig Wrolstad",
+    "jerseyNumber": "4",
+    "experience": 22,
+    "superBowls": [47],
+    "umpire": "Steve Woods",
+    "downJudge": "Jim Mello",
+    "lineJudge": "Tripp Sutter",
+    "fieldJudge": "Jeff Lamberth",
+    "sideJudge": "Jeff Shears",
+    "backJudge": "Grantis Bell",
+    "replayOfficial": "Kevin Stine",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 12.9,
+      "avgPenaltyYards": 104.2,
+      "homeWinPct": 56.7,
+      "tendency": "Favors letting offensive and defensive lines battle with fewer holding flags"
+    }
+  },
+  {
+    "id": "brad-rogers",
+    "referee": "Brad Rogers",
+    "jerseyNumber": "126",
+    "experience": 8,
+    "superBowls": [],
+    "umpire": "Mark Pellis",
+    "downJudge": "Kent Payne",
+    "lineJudge": "Thomas Eaton",
+    "fieldJudge": "Nathan Endrue",
+    "sideJudge": "Eugene Hall",
+    "backJudge": "Greg Steed",
+    "replayOfficial": "Terri Valenti",
+    "penaltyStats": {
+      "avgPenaltiesPerGame": 13.8,
+      "avgPenaltyYards": 112.0,
+      "homeWinPct": 54.3,
+      "tendency": "Strict illegal formation calls on offensive tackles"
+    }
+  }
+]
