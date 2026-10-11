@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <!-- Leather Gradient -->
+    <linearGradient id="leatherPointer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="40%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <filter id="glowPointer" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#38bdf8" flood-opacity="0.9"/>
+      <feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#glowPointer)">
+    <g transform="translate(16, 16) rotate(45)">
+      <!-- Outer outline with bright cyan/blue interactive ring -->
+      <path d="M-17,0 C-11,-9.5 11,-9.5 17,0 C11,9.5 -11,9.5 -17,0 Z" 
+            fill="url(#leatherPointer)" 
+            stroke="#38bdf8" 
+            stroke-width="1.8" 
+            stroke-linejoin="round"/>
+
+      <!-- Specular highlight -->
+      <path d="M-13,-2 C-7,-7 7,-7 13,-2" 
+            fill="none" 
+            stroke="#fef08a" 
+            stroke-width="1" 
+            stroke-opacity="0.6"/>
+
+      <!-- White Tip Stripes -->
+      <path d="M-12.5,-5 C-11,-1.5 -11,1.5 -12.5,5" 
+            stroke="#ffffff" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            fill="none"/>
+      <path d="M12.5,-5 C11,-1.5 11,1.5 12.5,5" 
+            stroke="#ffffff" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            fill="none"/>
+
+      <!-- Center Laces -->
+      <line x1="-6.5" y1="0" x2="6.5" y2="0" 
+            stroke="#ffffff" 
+            stroke-width="1.8" 
+            stroke-linecap="round"/>
+      <line x1="-4.5" y1="-3" x2="-4.5" y2="3" 
+            stroke="#ffffff" 
+            stroke-width="1.6" 
+            stroke-linecap="round"/>
+      <line x1="-1.5" y1="-3" x2="-1.5" y2="3" 
+            stroke="#ffffff" 
+            stroke-width="1.6" 
+            stroke-linecap="round"/>
+      <line x1="1.5" y1="-3" x2="1.5" y2="3" 
+            stroke="#ffffff" 
+            stroke-width="1.6" 
+            stroke-linecap="round"/>
+      <line x1="4.5" y1="-3" x2="4.5" y2="3" 
+            stroke="#ffffff" 
+            stroke-width="1.6" 
+            stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Interactive Hotspot pointer star / circle -->
+  <circle cx="3" cy="3" r="2.2" fill="#38bdf8" stroke="#0f172a" stroke-width="0.75"/>
+  <circle cx="3" cy="3" r="1.1" fill="#ffffff"/>
+</svg>
