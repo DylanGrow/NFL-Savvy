@@ -174,6 +174,7 @@ export type BadgeVariant =
   | 'fantasy'
   | 'afc'
   | 'nfc'
+  | 'international'
   | 'success'
   | 'warning'
   | 'danger'

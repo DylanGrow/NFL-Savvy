@@ -5,6 +5,8 @@ import { RefereeCard } from '../components/game/RefereeCard';
 import { WeatherCard } from '../components/weather/WeatherCard';
 import { fetchGameWeather } from '../lib/weather';
 import { fetchStadiumsData, fetchRefereesData } from '../lib/data';
+import { getInternationalGameInfo } from '../lib/international';
+import { InternationalBadge } from '../components/game/InternationalBadge';
 import type { Official, RefereeCrew, Weather } from '../types';
 
 export default function GameDetail() {
@@ -132,11 +134,27 @@ export default function GameDetail() {
     ? referees.find(r => r.referee.toLowerCase() === headRefOfficial.displayName.toLowerCase() || headRefOfficial.displayName.toLowerCase().includes(r.referee.toLowerCase()))
     : (referees.length > 0 ? referees[Math.abs((gameId ? gameId.split('').reduce((a, c) => a + c.charCodeAt(0), 0) : 0)) % referees.length] : null);
 
+  const intl = getInternationalGameInfo(data);
+
   return (
     <div className="app-container py-4 sm:py-8 text-white font-sans space-y-6">
-      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-8 text-center shadow-xl">
-        <div className="inline-block px-3 py-1 bg-gray-950 text-blue-400 text-xs font-semibold rounded-full border border-gray-800 mb-4">
-          {status}
+      {/* Featured International Series Marquee Banner */}
+      {intl && (
+        <InternationalBadge info={intl} variant="banner" />
+      )}
+
+      <div className={`rounded-2xl p-4 sm:p-8 text-center shadow-xl transition-all ${
+        intl
+          ? 'bg-gradient-to-b from-indigo-950/40 via-gray-900 to-gray-900 border-2 border-indigo-500/60 shadow-indigo-950/40'
+          : 'bg-gray-900 border border-gray-800'
+      }`}>
+        <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+          <div className="inline-block px-3 py-1 bg-gray-950 text-blue-400 text-xs font-semibold rounded-full border border-gray-800">
+            {status}
+          </div>
+          {intl && (
+            <InternationalBadge info={intl} variant="pill" />
+          )}
         </div>
         <div className="flex items-center justify-between gap-2 sm:gap-6 max-w-2xl mx-auto">
           <div className="flex-1 text-center sm:text-right min-w-0">
@@ -149,7 +167,14 @@ export default function GameDetail() {
             <div className="text-3xl sm:text-5xl font-black font-mono mt-1 text-white tracking-tight">{home?.score || '0'}</div>
           </div>
         </div>
-        {venueName && <div className="text-gray-400 mt-4 text-xs sm:text-sm font-medium">{venueName}</div>}
+        {intl ? (
+          <div className="text-indigo-300 mt-4 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5">
+            <span>✈️</span>
+            <span>{venueName} · {intl.city}, {intl.country} (Neutral Site)</span>
+          </div>
+        ) : venueName && (
+          <div className="text-gray-400 mt-4 text-xs sm:text-sm font-medium">{venueName}</div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -239,9 +264,19 @@ export default function GameDetail() {
 
           <div className="bg-gray-800 rounded-lg p-4 space-y-4">
             <div>
-              <h3 className="font-bold text-lg mb-2 text-white">Stadium & Venue</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-bold text-lg text-white">Stadium & Venue</h3>
+                {intl && <InternationalBadge info={intl} variant="tag" />}
+              </div>
               <div className="text-sm space-y-1">
                 <div className="font-bold text-base text-gray-100">{venueName || 'Unknown Venue'}</div>
+                {intl && (
+                  <div className="text-indigo-300 font-semibold flex items-center gap-1.5 py-1">
+                    <span>✈️ Host:</span>
+                    <span>{intl.flag} {intl.city}, {intl.country}</span>
+                    <span className="text-xs text-indigo-400 font-medium">· Neutral Site</span>
+                  </div>
+                )}
                 {stadium && (
                   <>
                     <div className="text-gray-400">Capacity: {stadium.capacity?.toLocaleString() || 'N/A'} • Surface: {stadium.surface || 'N/A'}</div>

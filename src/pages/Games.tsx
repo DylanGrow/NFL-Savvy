@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { fetchStadiumsData, fetchRefereesData } from '../lib/data';
+import { getInternationalGameInfo } from '../lib/international';
+import { InternationalBadge } from '../components/game/InternationalBadge';
 
 // ──────────────────────────────────────────────
 // Season-phase configuration
@@ -43,6 +45,19 @@ const PHASES: PhaseConfig[] = [
   },
 ];
 
+const INTL_WEEKS = [1, 3, 4, 5, 6, 7, 9, 10, 11];
+
+const INTL_DESTINATIONS = [
+  { id: 'ALL', label: 'All 9 International Games' },
+  { id: 'Australia', label: '🇦🇺 Melbourne (W1)' },
+  { id: 'Brazil', label: '🇧🇷 Rio (W3)' },
+  { id: 'United Kingdom', label: '🇬🇧 London (W4, 5, 6)' },
+  { id: 'France', label: '🇫🇷 Paris (W7)' },
+  { id: 'Spain', label: '🇪🇸 Madrid (W9)' },
+  { id: 'Germany', label: '🇩🇪 Munich (W10)' },
+  { id: 'Mexico', label: '🇲🇽 Mexico City (W11)' },
+];
+
 export default function Games() {
   const [phaseIdx, setPhaseIdx] = useState<number>(1); // default: Regular Season
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
@@ -53,11 +68,17 @@ export default function Games() {
   const [referees, setReferees] = useState<any[]>([]);
   const chipRailRef = useRef<HTMLDivElement>(null);
 
+  // International Series specialized state
+  const [isIntlMode, setIsIntlMode] = useState<boolean>(false);
+  const [intlGames, setIntlGames] = useState<any[]>([]);
+  const [intlLoading, setIntlLoading] = useState<boolean>(false);
+  const [selectedDestination, setSelectedDestination] = useState<string>('ALL');
+
   const phase = PHASES[phaseIdx];
   const currentWeeks = phase.weeks;
   const weekIdx = currentWeeks.findIndex(w => w.num === selectedWeek);
-  const canPrev = weekIdx > 0 || phaseIdx > 0;
-  const canNext = weekIdx < currentWeeks.length - 1 || phaseIdx < PHASES.length - 1;
+  const canPrev = !isIntlMode && (weekIdx > 0 || phaseIdx > 0);
+  const canNext = !isIntlMode && (weekIdx < currentWeeks.length - 1 || phaseIdx < PHASES.length - 1);
 
   // ── Static data + current-week auto-detect ─────────────────
   useEffect(() => {
@@ -101,8 +122,43 @@ export default function Games() {
   }, []);
 
   useEffect(() => {
-    loadGames(phase.seasonType, selectedWeek);
-  }, [phase.seasonType, selectedWeek, loadGames]);
+    if (!isIntlMode) {
+      loadGames(phase.seasonType, selectedWeek);
+    }
+  }, [phase.seasonType, selectedWeek, loadGames, isIntlMode]);
+
+  // ── Load all 2026 International Games ─────────────────────
+  const loadInternationalGames = useCallback(async () => {
+    if (intlGames.length > 0) return;
+    setIntlLoading(true);
+    setError(null);
+    try {
+      const results = await Promise.allSettled(
+        INTL_WEEKS.map(w => api.fetchSchedule(2, w))
+      );
+      const allIntl: any[] = [];
+      results.forEach((res, idx) => {
+        if (res.status === 'fulfilled' && res.value?.events) {
+          const weekNum = INTL_WEEKS[idx];
+          res.value.events.forEach((event: any) => {
+            const intl = getInternationalGameInfo(event);
+            if (intl) {
+              allIntl.push({
+                ...event,
+                _weekNumber: weekNum,
+                _intlInfo: intl,
+              });
+            }
+          });
+        }
+      });
+      setIntlGames(allIntl);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load international series games');
+    } finally {
+      setIntlLoading(false);
+    }
+  }, [intlGames.length]);
 
   // Scroll the active chip into view
   useEffect(() => {
@@ -110,12 +166,18 @@ export default function Games() {
     if (!rail) return;
     const active = rail.querySelector<HTMLButtonElement>('[data-active="true"]');
     active?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-  }, [selectedWeek, phaseIdx]);
+  }, [selectedWeek, phaseIdx, selectedDestination, isIntlMode]);
 
   // ── Phase change ─────────────────────────────────────────
   const handlePhaseChange = (idx: number) => {
+    setIsIntlMode(false);
     setPhaseIdx(idx);
     setSelectedWeek(PHASES[idx].weeks[0].num);
+  };
+
+  const handleActivateIntlMode = () => {
+    setIsIntlMode(true);
+    loadInternationalGames();
   };
 
   // ── Prev / Next ───────────────────────────────────────────
@@ -141,25 +203,52 @@ export default function Games() {
 
   const activeWeekLabel = currentWeeks.find(w => w.num === selectedWeek)?.label ?? `Week ${selectedWeek}`;
 
+  // Check if current active regular season week has an international matchup
+  const activeWeekIntlGame = !isIntlMode ? games.find(g => getInternationalGameInfo(g)) : null;
+  const activeWeekIntlInfo = activeWeekIntlGame ? getInternationalGameInfo(activeWeekIntlGame) : null;
+
+  // Filtered games to render
+  const displayedGames = isIntlMode
+    ? intlGames.filter(g => {
+        if (selectedDestination === 'ALL') return true;
+        const info = g._intlInfo || getInternationalGameInfo(g);
+        return info?.country === selectedDestination || info?.city === selectedDestination;
+      })
+    : games;
+
+  const isCurrentLoading = isIntlMode ? intlLoading : loading;
+
   return (
     <div className="app-container py-4 sm:py-8 text-white font-sans space-y-5">
 
       {/* ── Header ─────────────────────────────────────── */}
-      <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">2026 NFL Schedule</h1>
-        <p className="text-xs sm:text-sm text-gray-400 mt-1">
-          {phase.label} · {activeWeekLabel} · Stadium venues, dome weather, and referee crews
-        </p>
+      <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">2026 NFL Schedule</h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-1">
+              {isIntlMode
+                ? 'NFL International Series · 9 Overseas Neutral-Site Games Across 7 Countries'
+                : `${phase.label} · ${activeWeekLabel} · Stadium venues, dome weather, and referee crews`}
+            </p>
+          </div>
+          {isIntlMode && (
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-500/50 text-indigo-300 text-xs font-bold">
+              <span>✈️</span>
+              <span>Global Series View</span>
+            </span>
+          )}
+        </div>
       </div>
 
       {/* ── Season-phase toggle ───────────────────────── */}
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         {PHASES.map((p, i) => (
           <button
             key={p.label}
             onClick={() => handlePhaseChange(i)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors min-h-[40px] ${
-              phaseIdx === i
+              !isIntlMode && phaseIdx === i
                 ? 'bg-indigo-600 text-white shadow'
                 : 'bg-gray-900 text-gray-400 hover:bg-gray-800 border border-gray-800'
             }`}
@@ -167,55 +256,133 @@ export default function Games() {
             {p.label}
           </button>
         ))}
+
+        {/* Dedicated International Series filter button */}
+        <button
+          onClick={handleActivateIntlMode}
+          className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all min-h-[40px] flex items-center gap-2 ${
+            isIntlMode
+              ? 'bg-indigo-600 text-white shadow-lg ring-2 ring-indigo-400/50'
+              : 'bg-indigo-950/70 text-indigo-300 hover:bg-indigo-900/80 border border-indigo-700/60'
+          }`}
+        >
+          <span className="text-base leading-none">🌍</span>
+          <span>International Series (9)</span>
+        </button>
       </div>
 
-      {/* ── Week selector + arrows ────────────────────── */}
+      {/* ── Week or Destination Selector Rail ────────────────────── */}
       <div className="flex items-center gap-2">
-        {/* Prev arrow */}
-        <button
-          onClick={goPrev}
-          disabled={!canPrev}
-          aria-label="Previous week"
-          className="shrink-0 p-2 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-        >
-          ‹
-        </button>
-
-        {/* Chip rail */}
-        <div
-          ref={chipRailRef}
-          className="flex overflow-x-auto touch-scroll pb-1 gap-2 scrollbar-none flex-1"
-          style={{ scrollbarWidth: 'none' }}
-        >
-          {currentWeeks.map(w => (
+        {!isIntlMode ? (
+          <>
+            {/* Prev arrow */}
             <button
-              key={w.num}
-              data-active={selectedWeek === w.num ? 'true' : 'false'}
-              onClick={() => setSelectedWeek(w.num)}
-              className={`px-3.5 py-2.5 rounded-xl whitespace-nowrap text-xs sm:text-sm font-semibold transition-colors min-h-[44px] ${
-                selectedWeek === w.num
-                  ? 'bg-blue-600 text-white shadow'
-                  : 'bg-gray-900 text-gray-300 hover:bg-gray-800 border border-gray-800/80'
-              }`}
+              onClick={goPrev}
+              disabled={!canPrev}
+              aria-label="Previous week"
+              className="shrink-0 p-2 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              {w.label}
+              ‹
             </button>
-          ))}
-        </div>
 
-        {/* Next arrow */}
-        <button
-          onClick={goNext}
-          disabled={!canNext}
-          aria-label="Next week"
-          className="shrink-0 p-2 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-        >
-          ›
-        </button>
+            {/* Chip rail for Weeks */}
+            <div
+              ref={chipRailRef}
+              className="flex overflow-x-auto touch-scroll pb-1 gap-2 scrollbar-none flex-1"
+              style={{ scrollbarWidth: 'none' }}
+            >
+              {currentWeeks.map(w => {
+                const hasIntlInWeek = phase.seasonType === 2 && INTL_WEEKS.includes(w.num);
+                return (
+                  <button
+                    key={w.num}
+                    data-active={selectedWeek === w.num ? 'true' : 'false'}
+                    onClick={() => setSelectedWeek(w.num)}
+                    className={`px-3.5 py-2.5 rounded-xl whitespace-nowrap text-xs sm:text-sm font-semibold transition-colors min-h-[44px] flex items-center gap-1.5 ${
+                      selectedWeek === w.num
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'bg-gray-900 text-gray-300 hover:bg-gray-800 border border-gray-800/80'
+                    }`}
+                  >
+                    <span>{w.label}</span>
+                    {hasIntlInWeek && (
+                      <span className="text-xs" title="Features International Game" aria-label="International Game">
+                        ✈️
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Next arrow */}
+            <button
+              onClick={goNext}
+              disabled={!canNext}
+              aria-label="Next week"
+              className="shrink-0 p-2 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            >
+              ›
+            </button>
+          </>
+        ) : (
+          /* Chip rail for International Destinations */
+          <div
+            ref={chipRailRef}
+            className="flex overflow-x-auto touch-scroll pb-1 gap-2 scrollbar-none flex-1"
+            style={{ scrollbarWidth: 'none' }}
+          >
+            {INTL_DESTINATIONS.map(d => (
+              <button
+                key={d.id}
+                data-active={selectedDestination === d.id ? 'true' : 'false'}
+                onClick={() => setSelectedDestination(d.id)}
+                className={`px-3.5 py-2.5 rounded-xl whitespace-nowrap text-xs sm:text-sm font-semibold transition-colors min-h-[44px] ${
+                  selectedDestination === d.id
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'bg-gray-900 text-gray-300 hover:bg-gray-800 border border-gray-800/80'
+                }`}
+              >
+                {d.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* ── Featured International Alert Banner (when viewing regular season week with an intl game) ── */}
+      {!isIntlMode && activeWeekIntlGame && activeWeekIntlInfo && (
+        <div className="bg-gradient-to-r from-indigo-950 via-purple-950/80 to-indigo-950 border border-indigo-500/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xl">
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl sm:text-4xl filter drop-shadow-md select-none" role="img" aria-label={activeWeekIntlInfo.country}>
+              {activeWeekIntlInfo.flag}
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-indigo-300 bg-indigo-500/25 px-2 py-0.5 rounded border border-indigo-400/40">
+                  NFL International Series
+                </span>
+                <span className="text-xs text-indigo-200/80 font-semibold hidden sm:inline">Featured Overseas Matchup</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-white mt-1">
+                {activeWeekIntlInfo.headline} · {activeWeekIntlInfo.city}, {activeWeekIntlInfo.country}
+              </h3>
+              <p className="text-xs text-gray-300 mt-0.5">
+                📍 {activeWeekIntlInfo.venue || 'Stadium'} · Neutral Site
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleActivateIntlMode}
+            className="shrink-0 text-xs font-bold px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 transition-colors"
+          >
+            Explore All 9 Intl Games &rarr;
+          </button>
+        </div>
+      )}
 
       {/* ── Loading skeletons ─────────────────────────── */}
-      {loading && (
+      {isCurrentLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="bg-gray-900 border border-gray-800 rounded-xl p-4 h-36 animate-pulse" />
@@ -228,7 +395,7 @@ export default function Games() {
         <div className="text-red-300 bg-red-950/60 border border-red-800 p-6 rounded-2xl text-center space-y-3">
           <p>{error}</p>
           <button
-            onClick={() => loadGames(phase.seasonType, selectedWeek)}
+            onClick={() => isIntlMode ? loadInternationalGames() : loadGames(phase.seasonType, selectedWeek)}
             className="px-4 py-2 bg-red-800 hover:bg-red-700 rounded-lg text-sm font-semibold"
           >
             Retry
@@ -237,9 +404,9 @@ export default function Games() {
       )}
 
       {/* ── Game cards ───────────────────────────────── */}
-      {!loading && !error && (
+      {!isCurrentLoading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-3.5 sm:gap-4">
-          {games.map(game => {
+          {displayedGames.map(game => {
             const comp = game.competitions?.[0];
             const home = comp?.competitors?.find((c: any) => c.homeAway === 'home');
             const away = comp?.competitors?.find((c: any) => c.homeAway === 'away');
@@ -252,6 +419,9 @@ export default function Games() {
                 ) as any)
               : null;
             const isDome = stadium?.isDome || stadium?.type === 'dome' || stadium?.type === 'retractable';
+
+            // International game detection
+            const intl = game._intlInfo || getInternationalGameInfo(game);
 
             const refName =
               comp?.officials?.find((o: any) =>
@@ -275,25 +445,41 @@ export default function Games() {
               <Link
                 to={`/games/${game.id}`}
                 key={game.id}
-                className="block bg-gray-900 hover:bg-gray-800 border border-gray-800 hover:border-gray-700 p-4 rounded-xl transition-colors"
+                className={`block p-4 rounded-xl transition-all ${
+                  intl
+                    ? 'bg-gradient-to-b from-indigo-950/40 via-gray-900 to-gray-900 border-2 border-indigo-500/70 hover:border-indigo-400 shadow-lg shadow-indigo-950/40 hover:shadow-indigo-900/60'
+                    : 'bg-gray-900 hover:bg-gray-800 border border-gray-800 hover:border-gray-700'
+                }`}
               >
                 {/* Status row */}
                 <div className="flex justify-between items-center mb-3">
-                  <span
-                    className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      isFinal
-                        ? 'bg-gray-700 text-gray-300'
-                        : isLive
-                        ? 'bg-green-900/70 text-green-300 animate-pulse'
-                        : 'bg-gray-800 text-gray-400'
-                    }`}
-                  >
-                    {status}
-                  </span>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {game._weekNumber && (
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-950 text-blue-300 border border-blue-800">
+                        Week {game._weekNumber}
+                      </span>
+                    )}
+                    <span
+                      className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                        isFinal
+                          ? 'bg-gray-700 text-gray-300'
+                          : isLive
+                          ? 'bg-green-900/70 text-green-300 animate-pulse'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
+                    >
+                      {status}
+                    </span>
+                    {/* Special International Signifier */}
+                    {intl && (
+                      <InternationalBadge info={intl} variant="pill" />
+                    )}
+                  </div>
+
                   <div className="flex items-center gap-1.5">
                     {refName && (
                       <span
-                        className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded border border-gray-700/60 flex items-center gap-1 max-w-[130px]"
+                        className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded border border-gray-700/60 flex items-center gap-1 max-w-[120px]"
                         title="Head Referee"
                       >
                         <span>🦓</span>
@@ -323,23 +509,35 @@ export default function Games() {
                   </div>
                 </div>
 
-                {/* Venue */}
-                {venueName && (
-                  <div className="mt-2.5 text-xs text-gray-500 truncate">
+                {/* Venue & Overseas Host Signifier */}
+                {intl ? (
+                  <div className="mt-2.5 text-xs text-indigo-300 flex items-center justify-between font-medium pt-2 border-t border-indigo-900/40">
+                    <span className="truncate flex items-center gap-1">
+                      <span>✈️</span>
+                      <span>{venueName ? `${venueName} · ` : ''}{intl.city}, {intl.country}</span>
+                    </span>
+                    <span className="text-[11px] text-indigo-400/90 font-semibold shrink-0 ml-1">
+                      Neutral Site
+                    </span>
+                  </div>
+                ) : venueName ? (
+                  <div className="mt-2.5 text-xs text-gray-500 truncate pt-2 border-t border-gray-800/40">
                     📍 {venueName}
                     {isDome ? ' · Dome' : ' · Outdoor'}
                   </div>
-                )}
+                ) : null}
               </Link>
             );
           })}
 
-          {games.length === 0 && (
+          {displayedGames.length === 0 && (
             <div className="col-span-full text-center py-16 text-gray-500">
               <p className="text-4xl mb-3">🏈</p>
               <p className="text-lg font-semibold">No games scheduled</p>
               <p className="text-sm mt-1">
-                {phase.label === 'Playoffs'
+                {isIntlMode
+                  ? 'No international games match the selected destination filter.'
+                  : phase.label === 'Playoffs'
                   ? 'Playoff schedule will be available after the regular season.'
                   : phase.label === 'Preseason'
                   ? 'Preseason schedule will be available before the season.'

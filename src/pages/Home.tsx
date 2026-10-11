@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { fetchStandingsData } from '../lib/data';
+import { getInternationalGameInfo } from '../lib/international';
+import { InternationalBadge } from '../components/game/InternationalBadge';
 
 const SkeletonCard = () => (
   <div className="animate-pulse bg-gray-900 border border-gray-800 rounded-xl h-36 w-full p-4" />
@@ -199,9 +201,17 @@ export default function Home() {
       {/* ── Live Scoreboard ───────────────────────────────── */}
       <section>
         <div className="flex items-center justify-between mb-4 border-b border-gray-800 pb-2">
-          <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-            <span>🏈</span> {currentWeek ? `Week ${currentWeek}` : 'Live'} Matchups & Scores (2026 Season)
-          </h2>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <span>🏈</span> {currentWeek ? `Week ${currentWeek}` : 'Live'} Matchups & Scores (2026 Season)
+            </h2>
+            {scoreboard.some(g => getInternationalGameInfo(g)) && (
+              <span className="text-xs font-bold text-indigo-300 bg-indigo-950/90 px-2.5 py-0.5 rounded-full border border-indigo-500/50 flex items-center gap-1 shadow-sm">
+                <span>🌍</span>
+                <span>International Series Game</span>
+              </span>
+            )}
+          </div>
           <Link to="/games" className="text-xs text-blue-400 hover:text-blue-300 font-medium">
             View Full Schedule &rarr;
           </Link>
@@ -220,6 +230,7 @@ export default function Home() {
             const isLive = game.status?.type?.state === 'in';
             const isFinal = game.status?.type?.completed;
             const dome = game.weather?.indoor ? '🏟️ Dome' : '';
+            const intl = getInternationalGameInfo(game);
 
             const awayColor = away?.team?.color ? `#${away.team.color.replace(/^#/, '')}` : '#00338D';
             const homeColor = home?.team?.color ? `#${home.team.color.replace(/^#/, '')}` : '#E31837';
@@ -237,16 +248,27 @@ export default function Home() {
                     navigate(`/games/${game.id}`);
                   }
                 }}
-                className="bg-gray-900 border border-gray-800 rounded-xl p-4 cursor-pointer hover:bg-gray-850 hover:border-gray-700 transition-all shadow-md focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98]"
+                className={`rounded-xl p-4 cursor-pointer transition-all shadow-md focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.98] ${
+                  intl
+                    ? 'bg-gradient-to-b from-indigo-950/40 via-gray-900 to-gray-900 border-2 border-indigo-500/70 hover:border-indigo-400 shadow-indigo-950/50 hover:shadow-indigo-900/60'
+                    : 'bg-gray-900 border border-gray-800 hover:bg-gray-850 hover:border-gray-700'
+                }`}
               >
                 <div className="flex justify-between items-center text-xs mb-3 border-b border-gray-800/60 pb-2">
-                  <span className={`font-semibold px-2 py-0.5 rounded-full ${
-                    isLive ? 'bg-green-950 text-green-400 border border-green-800/60 animate-pulse' :
-                    isFinal ? 'bg-gray-800 text-gray-400' : 'text-blue-400 font-medium'
-                  }`}>
-                    {status}
-                  </span>
-                  {dome && <span className="text-[11px] bg-gray-800 px-2 py-0.5 rounded text-gray-300">{dome}</span>}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className={`font-semibold px-2 py-0.5 rounded-full ${
+                      isLive ? 'bg-green-950 text-green-400 border border-green-800/60 animate-pulse' :
+                      isFinal ? 'bg-gray-800 text-gray-400' : 'text-blue-400 font-medium'
+                    }`}>
+                      {status}
+                    </span>
+                    {intl && (
+                      <InternationalBadge info={intl} variant="tag" />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {dome && <span className="text-[11px] bg-gray-800 px-2 py-0.5 rounded text-gray-300">{dome}</span>}
+                  </div>
                 </div>
                 <div className="space-y-2.5">
                   <div className="flex justify-between items-center">
@@ -266,6 +288,17 @@ export default function Home() {
                     <span className="text-xl font-bold font-mono text-white">{home?.score !== undefined ? home.score : '--'}</span>
                   </div>
                 </div>
+
+                {/* International signifier footer on card */}
+                {intl && (
+                  <div className="mt-2.5 pt-2 border-t border-indigo-900/40 flex items-center justify-between text-[11px] text-indigo-300">
+                    <span className="truncate flex items-center gap-1">
+                      <span>✈️</span>
+                      <span>{intl.city}, {intl.country}</span>
+                    </span>
+                    <span className="font-semibold text-indigo-400/90 shrink-0 ml-1">Neutral Site</span>
+                  </div>
+                )}
               </div>
             );
           })}

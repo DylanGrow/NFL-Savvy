@@ -20,8 +20,9 @@ const variantStyles: Record<BadgeVariant, string> = {
   success:   'bg-green-500/10 text-green-400 border border-green-500/20',
   warning:   'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
   danger:    'bg-red-600/10 text-red-500 border border-red-600/20',
-  info:      'bg-blue-500/10 text-blue-400 border border-blue-500/20',
-  default:   'bg-gray-700/50 text-gray-300 border border-gray-600/30',
+  info:          'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+  international: 'bg-indigo-950/90 text-indigo-200 border border-indigo-500/50 shadow-sm font-semibold',
+  default:       'bg-gray-700/50 text-gray-300 border border-gray-600/30',
 };
 
 export function Badge({ variant, label, icon, className = '' }: BadgeProps) {
