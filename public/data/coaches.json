@@ -1,24 +1,24 @@
 [
   {
     "id": "ari-hc",
-    "firstName": "Jonathan",
-    "lastName": "Gannon",
+    "firstName": "Mike",
+    "lastName": "LaFleur",
     "role": "Head Coach",
     "teamId": "22",
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
-    "experience": 2,
-    "record": "4-13"
+    "experience": 1,
+    "record": "0-0"
   },
   {
     "id": "ari-oc",
-    "firstName": "Drew",
-    "lastName": "Petzing",
+    "firstName": "Nathaniel",
+    "lastName": "Hackett",
     "role": "Offensive Coordinator",
     "teamId": "22",
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
-    "experience": 2
+    "experience": 10
   },
   {
     "id": "ari-dc",
@@ -28,100 +28,100 @@
     "teamId": "22",
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
-    "experience": 2
+    "experience": 4
   },
   {
     "id": "atl-hc",
-    "firstName": "Raheem",
-    "lastName": "Morris",
+    "firstName": "Kevin",
+    "lastName": "Stefanski",
     "role": "Head Coach",
     "teamId": "1",
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
-    "experience": 4,
-    "record": "24-38"
+    "experience": 6,
+    "record": "45-38"
   },
   {
     "id": "atl-oc",
-    "firstName": "Zac",
-    "lastName": "Robinson",
+    "firstName": "Tommy",
+    "lastName": "Rees",
     "role": "Offensive Coordinator",
     "teamId": "1",
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "atl-dc",
-    "firstName": "Jimmy",
-    "lastName": "Lake",
+    "firstName": "Jeff",
+    "lastName": "Ulbrich",
     "role": "Defensive Coordinator",
     "teamId": "1",
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
-    "experience": 1
-  },
-  {
-    "id": "bal-hc",
-    "firstName": "John",
-    "lastName": "Harbaugh",
-    "role": "Head Coach",
-    "teamId": "33",
-    "teamAbbr": "BAL",
-    "teamName": "Baltimore Ravens",
-    "experience": 17,
-    "record": "160-99"
-  },
-  {
-    "id": "bal-oc",
-    "firstName": "Todd",
-    "lastName": "Monken",
-    "role": "Offensive Coordinator",
-    "teamId": "33",
-    "teamAbbr": "BAL",
-    "teamName": "Baltimore Ravens",
     "experience": 6
   },
   {
+    "id": "bal-hc",
+    "firstName": "Jesse",
+    "lastName": "Minter",
+    "role": "Head Coach",
+    "teamId": "33",
+    "teamAbbr": "BAL",
+    "teamName": "Baltimore Ravens",
+    "experience": 1,
+    "record": "0-0"
+  },
+  {
+    "id": "bal-oc",
+    "firstName": "Declan",
+    "lastName": "Doyle",
+    "role": "Offensive Coordinator",
+    "teamId": "33",
+    "teamAbbr": "BAL",
+    "teamName": "Baltimore Ravens",
+    "experience": 2
+  },
+  {
     "id": "bal-dc",
-    "firstName": "Zach",
-    "lastName": "Orr",
+    "firstName": "Anthony",
+    "lastName": "Weaver",
     "role": "Defensive Coordinator",
     "teamId": "33",
     "teamAbbr": "BAL",
     "teamName": "Baltimore Ravens",
-    "experience": 1
+    "experience": 5
   },
   {
     "id": "buf-hc",
-    "firstName": "Sean",
-    "lastName": "McDermott",
+    "firstName": "Joe",
+    "lastName": "Brady",
     "role": "Head Coach",
     "teamId": "2",
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
-    "experience": 8,
-    "record": "73-41"
+    "experience": 1,
+    "record": "0-0"
   },
   {
     "id": "buf-oc",
-    "firstName": "Joe",
-    "lastName": "Brady",
+    "firstName": "Pete",
+    "lastName": "Carmichael Jr.",
     "role": "Offensive Coordinator",
     "teamId": "2",
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
-    "experience": 3
+    "experience": 18
   },
   {
     "id": "buf-dc",
-    "firstName": "Bobby",
-    "lastName": "Babich",
+    "firstName": "Jim",
+    "lastName": "Leonhard",
     "role": "Defensive Coordinator",
     "teamId": "2",
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "car-hc",
@@ -131,8 +131,8 @@
     "teamId": "29",
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
-    "experience": 1,
-    "record": "1-4"
+    "experience": 3,
+    "record": "10-24"
   },
   {
     "id": "car-oc",
@@ -142,7 +142,7 @@
     "teamId": "29",
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
-    "experience": 1
+    "experience": 3
   },
   {
     "id": "car-dc",
@@ -152,38 +152,38 @@
     "teamId": "29",
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
-    "experience": 3
+    "experience": 5
   },
   {
     "id": "chi-hc",
-    "firstName": "Matt",
-    "lastName": "Eberflus",
+    "firstName": "Ben",
+    "lastName": "Johnson",
     "role": "Head Coach",
     "teamId": "3",
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
-    "experience": 3,
-    "record": "10-24"
+    "experience": 2,
+    "record": "11-6"
   },
   {
     "id": "chi-oc",
-    "firstName": "Shane",
-    "lastName": "Waldron",
+    "firstName": "Press",
+    "lastName": "Taylor",
     "role": "Offensive Coordinator",
     "teamId": "3",
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
-    "experience": 4
+    "experience": 5
   },
   {
     "id": "chi-dc",
-    "firstName": "Eric",
-    "lastName": "Washington",
+    "firstName": "Dennis",
+    "lastName": "Allen",
     "role": "Defensive Coordinator",
     "teamId": "3",
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
-    "experience": 3
+    "experience": 14
   },
   {
     "id": "cin-hc",
@@ -193,8 +193,8 @@
     "teamId": "4",
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
-    "experience": 6,
-    "record": "37-44"
+    "experience": 8,
+    "record": "46-52-1"
   },
   {
     "id": "cin-oc",
@@ -204,79 +204,79 @@
     "teamId": "4",
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
-    "experience": 1
+    "experience": 3
   },
   {
     "id": "cin-dc",
-    "firstName": "Lou",
-    "lastName": "Anarumo",
+    "firstName": "Al",
+    "lastName": "Golden",
     "role": "Defensive Coordinator",
     "teamId": "4",
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
-    "experience": 6
+    "experience": 2
   },
   {
     "id": "cle-hc",
-    "firstName": "Kevin",
-    "lastName": "Stefanski",
+    "firstName": "Todd",
+    "lastName": "Monken",
     "role": "Head Coach",
     "teamId": "5",
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
-    "experience": 5,
-    "record": "37-30"
+    "experience": 2,
+    "record": "0-0"
   },
   {
     "id": "cle-oc",
-    "firstName": "Ken",
-    "lastName": "Dorsey",
+    "firstName": "Travis",
+    "lastName": "Switzer",
     "role": "Offensive Coordinator",
     "teamId": "5",
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
-    "experience": 3
+    "experience": 1
   },
   {
     "id": "cle-dc",
-    "firstName": "Jim",
-    "lastName": "Schwartz",
+    "firstName": "Mike",
+    "lastName": "Rutenberg",
     "role": "Defensive Coordinator",
     "teamId": "5",
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
-    "experience": 15
+    "experience": 2
   },
   {
     "id": "dal-hc",
-    "firstName": "Mike",
-    "lastName": "McCarthy",
+    "firstName": "Brian",
+    "lastName": "Schottenheimer",
     "role": "Head Coach",
     "teamId": "6",
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
-    "experience": 18,
-    "record": "167-102"
+    "experience": 2,
+    "record": "12-5"
   },
   {
     "id": "dal-oc",
-    "firstName": "Brian",
-    "lastName": "Schottenheimer",
+    "firstName": "Klayton",
+    "lastName": "Adams",
     "role": "Offensive Coordinator",
     "teamId": "6",
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
-    "experience": 14
+    "experience": 2
   },
   {
     "id": "dal-dc",
-    "firstName": "Mike",
-    "lastName": "Zimmer",
+    "firstName": "Christian",
+    "lastName": "Parker",
     "role": "Defensive Coordinator",
     "teamId": "6",
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
-    "experience": 20
+    "experience": 2
   },
   {
     "id": "den-hc",
@@ -286,18 +286,18 @@
     "teamId": "7",
     "teamAbbr": "DEN",
     "teamName": "Denver Broncos",
-    "experience": 17,
-    "record": "160-98"
+    "experience": 18,
+    "record": "172-104"
   },
   {
     "id": "den-oc",
-    "firstName": "Joe",
-    "lastName": "Lombardi",
+    "firstName": "Davis",
+    "lastName": "Webb",
     "role": "Offensive Coordinator",
     "teamId": "7",
     "teamAbbr": "DEN",
     "teamName": "Denver Broncos",
-    "experience": 7
+    "experience": 2
   },
   {
     "id": "den-dc",
@@ -317,28 +317,28 @@
     "teamId": "8",
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
-    "experience": 4,
-    "record": "24-26"
+    "experience": 6,
+    "record": "44-38-1"
   },
   {
     "id": "det-oc",
-    "firstName": "Ben",
-    "lastName": "Johnson",
+    "firstName": "Drew",
+    "lastName": "Petzing",
     "role": "Offensive Coordinator",
     "teamId": "8",
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
-    "experience": 3
+    "experience": 4
   },
   {
     "id": "det-dc",
-    "firstName": "Aaron",
-    "lastName": "Glenn",
+    "firstName": "Kelvin",
+    "lastName": "Sheppard",
     "role": "Defensive Coordinator",
     "teamId": "8",
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
-    "experience": 4
+    "experience": 2
   },
   {
     "id": "gb-hc",
@@ -348,8 +348,8 @@
     "teamId": "9",
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
-    "experience": 6,
-    "record": "56-27"
+    "experience": 8,
+    "record": "67-33"
   },
   {
     "id": "gb-oc",
@@ -359,17 +359,17 @@
     "teamId": "9",
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
-    "experience": 3
+    "experience": 5
   },
   {
     "id": "gb-dc",
-    "firstName": "Jeff",
-    "lastName": "Hafley",
+    "firstName": "Jonathan",
+    "lastName": "Gannon",
     "role": "Defensive Coordinator",
     "teamId": "9",
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
-    "experience": 1
+    "experience": 4
   },
   {
     "id": "hou-hc",
@@ -379,13 +379,13 @@
     "teamId": "34",
     "teamAbbr": "HOU",
     "teamName": "Houston Texans",
-    "experience": 2,
-    "record": "10-7"
+    "experience": 4,
+    "record": "22-12"
   },
   {
     "id": "hou-oc",
-    "firstName": "Bobby",
-    "lastName": "Slowik",
+    "firstName": "Nick",
+    "lastName": "Caley",
     "role": "Offensive Coordinator",
     "teamId": "34",
     "teamAbbr": "HOU",
@@ -400,7 +400,7 @@
     "teamId": "34",
     "teamAbbr": "HOU",
     "teamName": "Houston Texans",
-    "experience": 4
+    "experience": 5
   },
   {
     "id": "ind-hc",
@@ -410,8 +410,8 @@
     "teamId": "11",
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
-    "experience": 2,
-    "record": "9-8"
+    "experience": 4,
+    "record": "18-16"
   },
   {
     "id": "ind-oc",
@@ -421,48 +421,48 @@
     "teamId": "11",
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
-    "experience": 6
+    "experience": 8
   },
   {
     "id": "ind-dc",
-    "firstName": "Gus",
-    "lastName": "Bradley",
+    "firstName": "Lou",
+    "lastName": "Anarumo",
     "role": "Defensive Coordinator",
     "teamId": "11",
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
-    "experience": 12
+    "experience": 8
   },
   {
     "id": "jax-hc",
-    "firstName": "Doug",
-    "lastName": "Pederson",
+    "firstName": "Liam",
+    "lastName": "Coen",
     "role": "Head Coach",
     "teamId": "30",
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
-    "experience": 8,
-    "record": "60-53"
+    "experience": 2,
+    "record": "9-8"
   },
   {
     "id": "jax-oc",
-    "firstName": "Press",
-    "lastName": "Taylor",
+    "firstName": "Grant",
+    "lastName": "Udinski",
     "role": "Offensive Coordinator",
     "teamId": "30",
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
-    "experience": 3
+    "experience": 2
   },
   {
     "id": "jax-dc",
-    "firstName": "Ryan",
-    "lastName": "Nielsen",
+    "firstName": "Anthony",
+    "lastName": "Campanile",
     "role": "Defensive Coordinator",
     "teamId": "30",
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
-    "experience": 2
+    "experience": 3
   },
   {
     "id": "kc-hc",
@@ -472,18 +472,18 @@
     "teamId": "12",
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
-    "experience": 26,
-    "record": "258-144"
+    "experience": 27,
+    "record": "273-144-1"
   },
   {
     "id": "kc-oc",
-    "firstName": "Matt",
-    "lastName": "Nagy",
+    "firstName": "Eric",
+    "lastName": "Bieniemy",
     "role": "Offensive Coordinator",
     "teamId": "12",
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
-    "experience": 6
+    "experience": 9
   },
   {
     "id": "kc-dc",
@@ -493,23 +493,23 @@
     "teamId": "12",
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
-    "experience": 15
+    "experience": 16
   },
   {
     "id": "lv-hc",
-    "firstName": "Antonio",
-    "lastName": "Pierce",
+    "firstName": "Klint",
+    "lastName": "Kubiak",
     "role": "Head Coach",
     "teamId": "13",
     "teamAbbr": "LV",
     "teamName": "Las Vegas Raiders",
-    "experience": 2,
-    "record": "5-4"
+    "experience": 1,
+    "record": "0-0"
   },
   {
     "id": "lv-oc",
-    "firstName": "Luke",
-    "lastName": "Getsy",
+    "firstName": "Andrew",
+    "lastName": "Janocko",
     "role": "Offensive Coordinator",
     "teamId": "13",
     "teamAbbr": "LV",
@@ -518,13 +518,13 @@
   },
   {
     "id": "lv-dc",
-    "firstName": "Patrick",
-    "lastName": "Graham",
+    "firstName": "Rob",
+    "lastName": "Leonard",
     "role": "Defensive Coordinator",
     "teamId": "13",
     "teamAbbr": "LV",
     "teamName": "Las Vegas Raiders",
-    "experience": 5
+    "experience": 3
   },
   {
     "id": "lac-hc",
@@ -534,28 +534,28 @@
     "teamId": "24",
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
-    "experience": 5,
-    "record": "44-19"
+    "experience": 6,
+    "record": "54-26-1"
   },
   {
     "id": "lac-oc",
-    "firstName": "Greg",
-    "lastName": "Roman",
+    "firstName": "Mike",
+    "lastName": "McDaniel",
     "role": "Offensive Coordinator",
     "teamId": "24",
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
-    "experience": 10
+    "experience": 5
   },
   {
     "id": "lac-dc",
-    "firstName": "Jesse",
-    "lastName": "Minter",
+    "firstName": "Chris",
+    "lastName": "O'Leary",
     "role": "Defensive Coordinator",
     "teamId": "24",
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "lar-hc",
@@ -565,18 +565,18 @@
     "teamId": "14",
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
-    "experience": 8,
-    "record": "70-45"
+    "experience": 10,
+    "record": "77-49"
   },
   {
     "id": "lar-oc",
-    "firstName": "Mike",
-    "lastName": "LaFleur",
+    "firstName": "Nate",
+    "lastName": "Scheelhaase",
     "role": "Offensive Coordinator",
     "teamId": "14",
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
-    "experience": 4
+    "experience": 2
   },
   {
     "id": "lar-dc",
@@ -586,33 +586,33 @@
     "teamId": "14",
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
-    "experience": 1
+    "experience": 3
   },
   {
     "id": "mia-hc",
-    "firstName": "Mike",
-    "lastName": "McDaniel",
+    "firstName": "Jeff",
+    "lastName": "Hafley",
     "role": "Head Coach",
     "teamId": "15",
     "teamAbbr": "MIA",
     "teamName": "Miami Dolphins",
-    "experience": 3,
-    "record": "20-14"
+    "experience": 1,
+    "record": "0-0"
   },
   {
     "id": "mia-oc",
-    "firstName": "Frank",
-    "lastName": "Smith",
+    "firstName": "Bobby",
+    "lastName": "Slowik",
     "role": "Offensive Coordinator",
     "teamId": "15",
     "teamAbbr": "MIA",
     "teamName": "Miami Dolphins",
-    "experience": 3
+    "experience": 4
   },
   {
     "id": "mia-dc",
-    "firstName": "Anthony",
-    "lastName": "Weaver",
+    "firstName": "Sean",
+    "lastName": "Duggan",
     "role": "Defensive Coordinator",
     "teamId": "15",
     "teamAbbr": "MIA",
@@ -627,8 +627,8 @@
     "teamId": "16",
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
-    "experience": 3,
-    "record": "20-14"
+    "experience": 5,
+    "record": "34-17"
   },
   {
     "id": "min-oc",
@@ -638,7 +638,7 @@
     "teamId": "16",
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
-    "experience": 3
+    "experience": 5
   },
   {
     "id": "min-dc",
@@ -648,131 +648,131 @@
     "teamId": "16",
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
-    "experience": 5
-  },
-  {
-    "id": "ne-hc",
-    "firstName": "Jerod",
-    "lastName": "Mayo",
-    "role": "Head Coach",
-    "teamId": "17",
-    "teamAbbr": "NE",
-    "teamName": "New England Patriots",
-    "experience": 1,
-    "record": "1-4"
-  },
-  {
-    "id": "ne-oc",
-    "firstName": "Alex",
-    "lastName": "Van Pelt",
-    "role": "Offensive Coordinator",
-    "teamId": "17",
-    "teamAbbr": "NE",
-    "teamName": "New England Patriots",
-    "experience": 6
-  },
-  {
-    "id": "ne-dc",
-    "firstName": "DeMarcus",
-    "lastName": "Covington",
-    "role": "Defensive Coordinator",
-    "teamId": "17",
-    "teamAbbr": "NE",
-    "teamName": "New England Patriots",
-    "experience": 1
-  },
-  {
-    "id": "no-hc",
-    "firstName": "Dennis",
-    "lastName": "Allen",
-    "role": "Head Coach",
-    "teamId": "18",
-    "teamAbbr": "NO",
-    "teamName": "New Orleans Saints",
-    "experience": 6,
-    "record": "24-46"
-  },
-  {
-    "id": "no-oc",
-    "firstName": "Klint",
-    "lastName": "Kubiak",
-    "role": "Offensive Coordinator",
-    "teamId": "18",
-    "teamAbbr": "NO",
-    "teamName": "New Orleans Saints",
-    "experience": 2
-  },
-  {
-    "id": "no-dc",
-    "firstName": "Joe",
-    "lastName": "Woods",
-    "role": "Defensive Coordinator",
-    "teamId": "18",
-    "teamAbbr": "NO",
-    "teamName": "New Orleans Saints",
     "experience": 7
   },
   {
+    "id": "ne-hc",
+    "firstName": "Mike",
+    "lastName": "Vrabel",
+    "role": "Head Coach",
+    "teamId": "17",
+    "teamAbbr": "NE",
+    "teamName": "New England Patriots",
+    "experience": 8,
+    "record": "58-45"
+  },
+  {
+    "id": "ne-oc",
+    "firstName": "Josh",
+    "lastName": "McDaniels",
+    "role": "Offensive Coordinator",
+    "teamId": "17",
+    "teamAbbr": "NE",
+    "teamName": "New England Patriots",
+    "experience": 15
+  },
+  {
+    "id": "ne-dc",
+    "firstName": "Zak",
+    "lastName": "Kuhr",
+    "role": "Defensive Coordinator",
+    "teamId": "17",
+    "teamAbbr": "NE",
+    "teamName": "New England Patriots",
+    "experience": 2
+  },
+  {
+    "id": "no-hc",
+    "firstName": "Kellen",
+    "lastName": "Moore",
+    "role": "Head Coach",
+    "teamId": "18",
+    "teamAbbr": "NO",
+    "teamName": "New Orleans Saints",
+    "experience": 2,
+    "record": "8-9"
+  },
+  {
+    "id": "no-oc",
+    "firstName": "Doug",
+    "lastName": "Nussmeier",
+    "role": "Offensive Coordinator",
+    "teamId": "18",
+    "teamAbbr": "NO",
+    "teamName": "New Orleans Saints",
+    "experience": 6
+  },
+  {
+    "id": "no-dc",
+    "firstName": "Brandon",
+    "lastName": "Staley",
+    "role": "Defensive Coordinator",
+    "teamId": "18",
+    "teamAbbr": "NO",
+    "teamName": "New Orleans Saints",
+    "experience": 6
+  },
+  {
     "id": "nyg-hc",
-    "firstName": "Brian",
-    "lastName": "Daboll",
+    "firstName": "John",
+    "lastName": "Harbaugh",
     "role": "Head Coach",
     "teamId": "19",
     "teamAbbr": "NYG",
     "teamName": "New York Giants",
-    "experience": 3,
-    "record": "15-18"
+    "experience": 19,
+    "record": "172-109"
   },
   {
     "id": "nyg-oc",
-    "firstName": "Mike",
-    "lastName": "Kafka",
+    "firstName": "Matt",
+    "lastName": "Nagy",
     "role": "Offensive Coordinator",
+    "teamId": "19",
+    "teamAbbr": "NYG",
+    "teamName": "New York Giants",
+    "experience": 8
+  },
+  {
+    "id": "nyg-dc",
+    "firstName": "Dennard",
+    "lastName": "Wilson",
+    "role": "Defensive Coordinator",
     "teamId": "19",
     "teamAbbr": "NYG",
     "teamName": "New York Giants",
     "experience": 3
   },
   {
-    "id": "nyg-dc",
-    "firstName": "Shane",
-    "lastName": "Bowen",
-    "role": "Defensive Coordinator",
-    "teamId": "19",
-    "teamAbbr": "NYG",
-    "teamName": "New York Giants",
-    "experience": 4
-  },
-  {
     "id": "nyj-hc",
-    "firstName": "Jeff",
-    "lastName": "Ulbrich",
+    "firstName": "Aaron",
+    "lastName": "Glenn",
     "role": "Head Coach",
     "teamId": "20",
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
-    "experience": 1,
-    "record": "0-0"
+    "experience": 2,
+    "record": "5-12"
   },
   {
     "id": "nyj-oc",
-    "firstName": "Todd",
-    "lastName": "Downing",
+    "firstName": "Frank",
+    "lastName": "Reich",
     "role": "Offensive Coordinator",
     "teamId": "20",
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
-    "experience": 3
+    "experience": 9
   },
   {
     "id": "nyj-dc",
-    "firstName": "Ron",
-    "lastName": "Middleton",
+    "firstName": "Brian",
+    "lastName": "Duker",
     "role": "Defensive Coordinator",
     "teamId": "20",
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "phi-hc",
@@ -782,18 +782,18 @@
     "teamId": "21",
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
-    "experience": 4,
-    "record": "34-17"
+    "experience": 6,
+    "record": "48-23"
   },
   {
     "id": "phi-oc",
-    "firstName": "Kellen",
-    "lastName": "Moore",
+    "firstName": "Sean",
+    "lastName": "Mannion",
     "role": "Offensive Coordinator",
     "teamId": "21",
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
-    "experience": 6
+    "experience": 2
   },
   {
     "id": "phi-dc",
@@ -803,23 +803,23 @@
     "teamId": "21",
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
-    "experience": 16
+    "experience": 24
   },
   {
     "id": "pit-hc",
     "firstName": "Mike",
-    "lastName": "Tomlin",
+    "lastName": "McCarthy",
     "role": "Head Coach",
     "teamId": "23",
     "teamAbbr": "PIT",
     "teamName": "Pittsburgh Steelers",
-    "experience": 18,
-    "record": "173-100"
+    "experience": 19,
+    "record": "167-102-2"
   },
   {
     "id": "pit-oc",
-    "firstName": "Arthur",
-    "lastName": "Smith",
+    "firstName": "Brian",
+    "lastName": "Angelichio",
     "role": "Offensive Coordinator",
     "teamId": "23",
     "teamAbbr": "PIT",
@@ -828,8 +828,8 @@
   },
   {
     "id": "pit-dc",
-    "firstName": "Teryl",
-    "lastName": "Austin",
+    "firstName": "Patrick",
+    "lastName": "Graham",
     "role": "Defensive Coordinator",
     "teamId": "23",
     "teamAbbr": "PIT",
@@ -844,8 +844,8 @@
     "teamId": "25",
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
-    "experience": 8,
-    "record": "64-51"
+    "experience": 10,
+    "record": "76-50"
   },
   {
     "id": "sf-oc",
@@ -855,17 +855,17 @@
     "teamId": "25",
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "sf-dc",
-    "firstName": "Nick",
-    "lastName": "Sorensen",
+    "firstName": "Raheem",
+    "lastName": "Morris",
     "role": "Defensive Coordinator",
     "teamId": "25",
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
-    "experience": 1
+    "experience": 8
   },
   {
     "id": "sea-hc",
@@ -875,18 +875,18 @@
     "teamId": "26",
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
-    "experience": 1,
-    "record": "3-2"
+    "experience": 3,
+    "record": "21-13"
   },
   {
     "id": "sea-oc",
-    "firstName": "Ryan",
-    "lastName": "Grubb",
+    "firstName": "Brian",
+    "lastName": "Fleury",
     "role": "Offensive Coordinator",
     "teamId": "26",
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
-    "experience": 1
+    "experience": 2
   },
   {
     "id": "sea-dc",
@@ -896,7 +896,7 @@
     "teamId": "26",
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
-    "experience": 1
+    "experience": 3
   },
   {
     "id": "tb-hc",
@@ -906,59 +906,59 @@
     "teamId": "27",
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
-    "experience": 6,
-    "record": "43-58"
+    "experience": 9,
+    "record": "49-62"
   },
   {
     "id": "tb-oc",
-    "firstName": "Liam",
-    "lastName": "Coen",
+    "firstName": "Zac",
+    "lastName": "Robinson",
     "role": "Offensive Coordinator",
     "teamId": "27",
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
-    "experience": 2
+    "experience": 3
   },
   {
     "id": "tb-dc",
-    "firstName": "Kacy",
-    "lastName": "Rodgers",
+    "firstName": "Todd",
+    "lastName": "Bowles",
     "role": "Defensive Coordinator",
     "teamId": "27",
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
-    "experience": 6
+    "experience": 14
   },
   {
     "id": "ten-hc",
-    "firstName": "Brian",
-    "lastName": "Callahan",
+    "firstName": "Robert",
+    "lastName": "Saleh",
     "role": "Head Coach",
     "teamId": "10",
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
-    "experience": 1,
-    "record": "1-3"
+    "experience": 5,
+    "record": "24-37"
   },
   {
     "id": "ten-oc",
-    "firstName": "Nick",
-    "lastName": "Holz",
+    "firstName": "Brian",
+    "lastName": "Daboll",
     "role": "Offensive Coordinator",
     "teamId": "10",
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
-    "experience": 1
+    "experience": 10
   },
   {
     "id": "ten-dc",
-    "firstName": "Dennard",
-    "lastName": "Wilson",
+    "firstName": "Gus",
+    "lastName": "Bradley",
     "role": "Defensive Coordinator",
     "teamId": "10",
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
-    "experience": 1
+    "experience": 12
   },
   {
     "id": "wsh-hc",
@@ -968,27 +968,27 @@
     "teamId": "28",
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
-    "experience": 7,
-    "record": "47-44"
+    "experience": 8,
+    "record": "55-52"
   },
   {
     "id": "wsh-oc",
-    "firstName": "Kliff",
-    "lastName": "Kingsbury",
+    "firstName": "David",
+    "lastName": "Blough",
     "role": "Offensive Coordinator",
     "teamId": "28",
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
-    "experience": 5
+    "experience": 2
   },
   {
     "id": "wsh-dc",
-    "firstName": "Joe",
-    "lastName": "Whitt Jr.",
+    "firstName": "Daronte",
+    "lastName": "Jones",
     "role": "Defensive Coordinator",
     "teamId": "28",
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
-    "experience": 1
+    "experience": 2
   }
 ]
