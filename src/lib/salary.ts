@@ -45,6 +45,46 @@ export const SALARIES: Salary[] = [
   { playerId: '13977',   teamId: '23', capHit: 16000000, totalValue: 45000000,  guaranteedMoney: 29000000,  yearsRemaining: 2, aav: 15000000, signingBonus: 10000000 }, // Cameron Heyward
   { playerId: '4037333', teamId: '23', capHit: 14000000, totalValue: 68000000,  guaranteedMoney: 27000000,  yearsRemaining: 3, aav: 17000000, signingBonus: 16000000 }, // Alex Highsmith
   { playerId: '4361411', teamId: '23', capHit: 12000000, totalValue: 48400000,  guaranteedMoney: 23380000,  yearsRemaining: 4, aav: 12100000, signingBonus: 10500000 }, // Pat Freiermuth
+  // Cincinnati Bengals
+  { playerId: '3915511', teamId: '4',  capHit: 55000000, totalValue: 275000000, guaranteedMoney: 219000000, yearsRemaining: 4, aav: 55000000, signingBonus: 40000000 }, // Joe Burrow
+  { playerId: '4362628', teamId: '4',  capHit: 32000000, totalValue: 140000000, guaranteedMoney: 95000000,  yearsRemaining: 4, aav: 35000000, signingBonus: 30000000 }, // Ja'Marr Chase
+  // Detroit Lions
+  { playerId: '3046779', teamId: '8',  capHit: 53000000, totalValue: 212000000, guaranteedMoney: 170000000, yearsRemaining: 4, aav: 53000000, signingBonus: 73000000 }, // Jared Goff
+  { playerId: '4374302', teamId: '8',  capHit: 30000000, totalValue: 120010000, guaranteedMoney: 77000000,  yearsRemaining: 4, aav: 30002500, signingBonus: 16500000 }, // Amon-Ra St. Brown
+  // Chicago Bears
+  { playerId: '4431611', teamId: '3',  capHit: 10500000, totalValue: 39486057,  guaranteedMoney: 39486057,  yearsRemaining: 3, aav: 9871514,  signingBonus: 25537132 }, // Caleb Williams
+  { playerId: '3134690', teamId: '3',  capHit: 25000000, totalValue: 98000000,  guaranteedMoney: 72865000,  yearsRemaining: 3, aav: 24500000, signingBonus: 20000000 }, // Montez Sweat
+  // Cleveland Browns
+  { playerId: '3122840', teamId: '5',  capHit: 63977000, totalValue: 230000000, guaranteedMoney: 230000000, yearsRemaining: 1, aav: 46000000, signingBonus: 44965000 }, // Deshaun Watson
+  // Atlanta Falcons
+  { playerId: '3672833', teamId: '1',  capHit: 22000000, totalValue: 105000000, guaranteedMoney: 63000000,  yearsRemaining: 3, aav: 20500000, signingBonus: 18000000 }, // Chris Lindstrom
+  // Indianapolis Colts
+  { playerId: '4242335', teamId: '11', capHit: 15400000, totalValue: 42000000,  guaranteedMoney: 26500000,  yearsRemaining: 2, aav: 14000000, signingBonus: 10248000 }, // Jonathan Taylor
+  // Las Vegas Raiders
+  { playerId: '3916655', teamId: '13', capHit: 28500000, totalValue: 94000000,  guaranteedMoney: 53000000,  yearsRemaining: 2, aav: 23500000, signingBonus: 13000000 }, // Maxx Crosby
+  { playerId: '14880',   teamId: '13', capHit: 45000000, totalValue: 180000000, guaranteedMoney: 100000000, yearsRemaining: 2, aav: 45000000, signingBonus: 50000000 }, // Kirk Cousins
+  // Seattle Seahawks
+  { playerId: '2971622', teamId: '26', capHit: 21000000, totalValue: 64500000,  guaranteedMoney: 43850000,  yearsRemaining: 2, aav: 21500000, signingBonus: 26150000 }, // Leonard Williams
+  { playerId: '4430878', teamId: '26', capHit: 8000000,  totalValue: 14417307,  guaranteedMoney: 14417307,  yearsRemaining: 2, aav: 3604327,  signingBonus: 7485314  }, // Jaxon Smith-Njigba
+  // Carolina Panthers
+  { playerId: '4035495', teamId: '29', capHit: 24000000, totalValue: 96000000,  guaranteedMoney: 63165000,  yearsRemaining: 4, aav: 24000000, signingBonus: 23850000 }, // Derrick Brown
+  { playerId: '4685720', teamId: '29', capHit: 10200000, totalValue: 37955071,  guaranteedMoney: 37955071,  yearsRemaining: 2, aav: 9488768,  signingBonus: 24603688 }, // Bryce Young
+  // Tennessee Titans
+  { playerId: '3925357', teamId: '10', capHit: 23000000, totalValue: 92000000,  guaranteedMoney: 50000000,  yearsRemaining: 3, aav: 23000000, signingBonus: 20000000 }, // Calvin Ridley
+  // New Orleans Saints
+  { playerId: '3054850', teamId: '18', capHit: 17500000, totalValue: 49000000,  guaranteedMoney: 34000000,  yearsRemaining: 2, aav: 24500000, signingBonus: 13000000 }, // Alvin Kamara
+  // New York Giants
+  { playerId: '4035631', teamId: '19', capHit: 28000000, totalValue: 141000000, guaranteedMoney: 87500000,  yearsRemaining: 4, aav: 28200000, signingBonus: 35000000 }, // Brian Burns
+  { playerId: '4259566', teamId: '19', capHit: 23000000, totalValue: 117500000, guaranteedMoney: 67000000,  yearsRemaining: 4, aav: 23500000, signingBonus: 15000000 }, // Andrew Thomas
+  // New York Jets
+  { playerId: '15864',   teamId: '20', capHit: 31000000, totalValue: 75000000,   guaranteedMoney: 40000000,  yearsRemaining: 1, aav: 25000000, signingBonus: 26100000 }, // Geno Smith
+  { playerId: '4569618', teamId: '20', capHit: 9500000,  totalValue: 20554006,  guaranteedMoney: 20554006,  yearsRemaining: 1, aav: 5138502,  signingBonus: 12128368 }, // Garrett Wilson
+  // New England Patriots
+  { playerId: '4372030', teamId: '17', capHit: 20000000, totalValue: 83000000,   guaranteedMoney: 41800000,  yearsRemaining: 4, aav: 20750000, signingBonus: 18000000 }, // Christian Barmore
+  { playerId: '4431452', teamId: '17', capHit: 9500000,  totalValue: 36639764,  guaranteedMoney: 36639764,  yearsRemaining: 3, aav: 9159941,  signingBonus: 23467064 }, // Drake Maye
+  // Washington Commanders
+  { playerId: '4426348', teamId: '28', capHit: 10000000, totalValue: 37746650,  guaranteedMoney: 37746650,  yearsRemaining: 3, aav: 9436663,  signingBonus: 24272108 }, // Jayden Daniels
+  { playerId: '3121422', teamId: '28', capHit: 24000000, totalValue: 71000000,   guaranteedMoney: 53154000,  yearsRemaining: 1, aav: 23200000, signingBonus: 28000000 }, // Terry McLaurin
 ];
 
 /** Build a Map for O(1) lookup by playerId */
@@ -125,6 +165,31 @@ export const PLAYER_METADATA: Record<string, PlayerSalaryMeta> = {
   '13977':   { name: 'Cameron Heyward', position: 'DT', teamAbbr: 'PIT' },
   '4037333': { name: 'Alex Highsmith', position: 'LB', teamAbbr: 'PIT' },
   '4361411': { name: 'Pat Freiermuth', position: 'TE', teamAbbr: 'PIT' },
+  '3915511': { name: 'Joe Burrow', position: 'QB', teamAbbr: 'CIN' },
+  '4362628': { name: 'Ja\'Marr Chase', position: 'WR', teamAbbr: 'CIN' },
+  '3046779': { name: 'Jared Goff', position: 'QB', teamAbbr: 'DET' },
+  '4374302': { name: 'Amon-Ra St. Brown', position: 'WR', teamAbbr: 'DET' },
+  '4431611': { name: 'Caleb Williams', position: 'QB', teamAbbr: 'CHI' },
+  '3134690': { name: 'Montez Sweat', position: 'DE', teamAbbr: 'CHI' },
+  '3122840': { name: 'Deshaun Watson', position: 'QB', teamAbbr: 'CLE' },
+  '3672833': { name: 'Chris Lindstrom', position: 'G', teamAbbr: 'ATL' },
+  '4242335': { name: 'Jonathan Taylor', position: 'RB', teamAbbr: 'IND' },
+  '3916655': { name: 'Maxx Crosby', position: 'DE', teamAbbr: 'LV' },
+  '14880':   { name: 'Kirk Cousins', position: 'QB', teamAbbr: 'LV' },
+  '2971622': { name: 'Leonard Williams', position: 'DT', teamAbbr: 'SEA' },
+  '4430878': { name: 'Jaxon Smith-Njigba', position: 'WR', teamAbbr: 'SEA' },
+  '4035495': { name: 'Derrick Brown', position: 'DT', teamAbbr: 'CAR' },
+  '4685720': { name: 'Bryce Young', position: 'QB', teamAbbr: 'CAR' },
+  '3925357': { name: 'Calvin Ridley', position: 'WR', teamAbbr: 'TEN' },
+  '3054850': { name: 'Alvin Kamara', position: 'RB', teamAbbr: 'NO' },
+  '4035631': { name: 'Brian Burns', position: 'LB', teamAbbr: 'NYG' },
+  '4259566': { name: 'Andrew Thomas', position: 'OT', teamAbbr: 'NYG' },
+  '15864':   { name: 'Geno Smith', position: 'QB', teamAbbr: 'NYJ' },
+  '4569618': { name: 'Garrett Wilson', position: 'WR', teamAbbr: 'NYJ' },
+  '4372030': { name: 'Christian Barmore', position: 'DT', teamAbbr: 'NE' },
+  '4431452': { name: 'Drake Maye', position: 'QB', teamAbbr: 'NE' },
+  '4426348': { name: 'Jayden Daniels', position: 'QB', teamAbbr: 'WSH' },
+  '3121422': { name: 'Terry McLaurin', position: 'WR', teamAbbr: 'WSH' },
 };
 
 export function getPlayerMeta(playerId: string): PlayerSalaryMeta {
