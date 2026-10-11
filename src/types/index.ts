@@ -153,6 +153,50 @@ export interface DepthChartEntry {
   playerName?: string;
 }
 
+export interface DepthChartAthlete {
+  id: string;
+  displayName: string;
+  shortName?: string;
+  jersey?: string;
+  headshot?: { href: string; alt?: string };
+  injuries?: Array<{
+    status: string;
+    date?: string;
+    type?: { id?: string; name?: string; description?: string; abbreviation?: string };
+    shortComment?: string;
+    longComment?: string;
+  }>;
+  rank: number;
+  slot?: number;
+  athlete?: any;
+}
+
+export interface DepthChartPosition {
+  key?: string;
+  position: {
+    id?: string;
+    name: string;
+    displayName: string;
+    abbreviation: string;
+    parent?: { id?: string; name?: string; displayName?: string; abbreviation?: string };
+  };
+  athletes: DepthChartAthlete[];
+}
+
+export interface DepthChartGroup {
+  id: string;
+  name: string;
+  category: 'Offense' | 'Defense' | 'Special Teams' | 'Other';
+  positions: DepthChartPosition[];
+}
+
+export interface TeamDepthChart {
+  team?: any;
+  season?: any;
+  groups: DepthChartGroup[];
+  items?: DepthChartPosition[];
+}
+
 export type SearchResultType = 'player' | 'team' | 'coach' | 'game';
 
 export interface SearchResult {

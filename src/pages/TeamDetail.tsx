@@ -322,6 +322,21 @@ export default function TeamDetail() {
               {stadium.surface ? ` · ${stadium.surface}` : ''}
             </p>
           )}
+
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-3">
+            <Link
+              to={`/depth-charts?team=${team.id}`}
+              className="inline-flex items-center gap-1.5 bg-black/40 hover:bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-white/20 backdrop-blur-sm transition-all shadow"
+            >
+              <span>📋</span> View Depth Chart
+            </Link>
+            <Link
+              to={`/salaries?team=${team.id}`}
+              className="inline-flex items-center gap-1.5 bg-black/20 hover:bg-black/40 text-white text-xs font-semibold px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm transition-all"
+            >
+              <span>💰</span> Team Salaries
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -449,9 +464,17 @@ export default function TeamDetail() {
         {/* ── 6. Roster Table ──────────────────────────────── */}
         <section>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-            <h2 className="text-xl font-bold text-white">
-              Team Roster {allPlayers.length > 0 && <span className="text-gray-400 text-base font-normal">({allPlayers.length} players)</span>}
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl font-bold text-white">
+                Team Roster {allPlayers.length > 0 && <span className="text-gray-400 text-base font-normal">({allPlayers.length} players)</span>}
+              </h2>
+              <Link
+                to={`/depth-charts?team=${team.id}`}
+                className="text-xs text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-2 flex items-center gap-1"
+              >
+                <span>📋</span> Depth Chart
+              </Link>
+            </div>
             <div className="flex overflow-x-auto touch-scroll bg-gray-900 rounded-xl p-1 border border-gray-800 w-full sm:w-auto scrollbar-none">
               {(['ALL', 'OFFENSE', 'DEFENSE', 'SPECIAL TEAMS'] as const).map(tab => (
                 <button

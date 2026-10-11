@@ -1,4 +1,5 @@
 // ESPN API wrapper with 5-minute cache + persistent localStorage offline fallback + timeout
+import type { TeamDepthChart, DepthChartGroup, DepthChartPosition, DepthChartAthlete } from '../types';
 
 const CACHE = new Map<string, { data: unknown; timestamp: number }>();
 const TTL = 5 * 60 * 1000; // 5 minutes
@@ -96,12 +97,151 @@ export const api = {
   fetchPlayerBio: (playerId: string) =>
     fetchWithCache<any>(`${ESPN_COMMON}/athletes/${playerId}`),
 
-  fetchDepthChart: async (teamId: string) => {
+  fetchDepthChart: async (teamId: string): Promise<TeamDepthChart> => {
     try {
-      const res = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/depthchart`);
-      if (res && res.items && res.items.length > 0) return res;
-    } catch {}
+      const res = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/depthcharts`);
+      if (res && res.depthchart) {
+        // Fetch roster in background or cache for jersey numbers and headshot fallbacks
+        let rosterMap: Record<string, any> = {};
+        try {
+          const rosterRes = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/roster?limit=100`);
+          if (rosterRes?.athletes) {
+            rosterRes.athletes.forEach((grp: any) => {
+              (grp.items || []).forEach((p: any) => {
+                if (p.id) rosterMap[String(p.id)] = p;
+              });
+            });
+          }
+        } catch {}
 
+        const OFFENSE_KEYS = ['qb', 'rb', 'fb', 'wr1', 'wr2', 'wr3', 'wr', 'te', 'lt', 'lg', 'c', 'rg', 'rt'];
+        const DEFENSE_KEYS = ['lde', 'nt', 'ldt', 'rdt', 'rde', 'wlb', 'mlb', 'lilb', 'rilb', 'slb', 'lcb', 'rcb', 'nb', 'ss', 'fs'];
+        const SPECIAL_KEYS = ['pk', 'p', 'h', 'ls', 'pr', 'kr'];
+
+        const getOrderIndex = (key: string, list: string[]) => {
+          const idx = list.indexOf((key || '').toLowerCase());
+          return idx === -1 ? 999 : idx;
+        };
+
+        const POSITION_DISPLAY_MAP: Record<string, { abbr: string; name: string }> = {
+          qb: { abbr: 'QB', name: 'Quarterback' },
+          rb: { abbr: 'RB', name: 'Running Back' },
+          fb: { abbr: 'FB', name: 'Fullback' },
+          wr1: { abbr: 'WR1', name: 'Wide Receiver 1' },
+          wr2: { abbr: 'WR2', name: 'Wide Receiver 2' },
+          wr3: { abbr: 'WR3', name: 'Wide Receiver 3' },
+          wr: { abbr: 'WR', name: 'Wide Receiver' },
+          te: { abbr: 'TE', name: 'Tight End' },
+          lt: { abbr: 'LT', name: 'Left Tackle' },
+          lg: { abbr: 'LG', name: 'Left Guard' },
+          c: { abbr: 'C', name: 'Center' },
+          rg: { abbr: 'RG', name: 'Right Guard' },
+          rt: { abbr: 'RT', name: 'Right Tackle' },
+          lde: { abbr: 'LDE', name: 'Left Defensive End' },
+          nt: { abbr: 'NT', name: 'Nose Tackle' },
+          ldt: { abbr: 'LDT', name: 'Left Defensive Tackle' },
+          rdt: { abbr: 'RDT', name: 'Right Defensive Tackle' },
+          rde: { abbr: 'RDE', name: 'Right Defensive End' },
+          wlb: { abbr: 'WLB', name: 'Weakside Linebacker' },
+          mlb: { abbr: 'MLB', name: 'Middle Linebacker' },
+          lilb: { abbr: 'LILB', name: 'Left Inside Linebacker' },
+          rilb: { abbr: 'RILB', name: 'Right Inside Linebacker' },
+          slb: { abbr: 'SLB', name: 'Strongside Linebacker' },
+          lcb: { abbr: 'LCB', name: 'Left Cornerback' },
+          rcb: { abbr: 'RCB', name: 'Right Cornerback' },
+          nb: { abbr: 'NB', name: 'Nickelback' },
+          ss: { abbr: 'SS', name: 'Strong Safety' },
+          fs: { abbr: 'FS', name: 'Free Safety' },
+          pk: { abbr: 'PK', name: 'Place Kicker' },
+          p: { abbr: 'P', name: 'Punter' },
+          h: { abbr: 'H', name: 'Holder' },
+          ls: { abbr: 'LS', name: 'Long Snapper' },
+          pr: { abbr: 'PR', name: 'Punt Returner' },
+          kr: { abbr: 'KR', name: 'Kick Returner' },
+        };
+
+        const rawGroups = Object.values(res.depthchart) as any[];
+        const parsedGroups: DepthChartGroup[] = [];
+
+        for (const grp of rawGroups) {
+          const gName = (grp.name || '').trim();
+          let category: 'Offense' | 'Defense' | 'Special Teams' | 'Other' = 'Other';
+          if (grp.id === '21' || gName.toLowerCase().includes('offense') || gName.includes('WR') || gName.includes('TE')) {
+            category = 'Offense';
+          } else if (grp.id === '15' || grp.id === '16' || gName.toLowerCase().includes('defense') || gName.endsWith(' D')) {
+            category = 'Defense';
+          } else if (grp.id === '18' || gName.toLowerCase().includes('special')) {
+            category = 'Special Teams';
+          }
+
+          const orderList = category === 'Offense' ? OFFENSE_KEYS : category === 'Defense' ? DEFENSE_KEYS : SPECIAL_KEYS;
+
+          const sortedPosKeys = Object.keys(grp.positions || {}).sort(
+            (a, b) => getOrderIndex(a, orderList) - getOrderIndex(b, orderList)
+          );
+
+          const positions: DepthChartPosition[] = [];
+
+          for (const posKey of sortedPosKeys) {
+            const posData = grp.positions[posKey];
+            const meta = POSITION_DISPLAY_MAP[posKey.toLowerCase()];
+            const posObj = {
+              id: posData?.position?.id || posKey,
+              name: meta?.name || posData?.position?.name || posKey.toUpperCase(),
+              displayName: meta?.name || posData?.position?.displayName || posKey.toUpperCase(),
+              abbreviation: meta?.abbr || posData?.position?.abbreviation || posKey.toUpperCase(),
+              parent: posData?.position?.parent,
+            };
+
+            const athletes: DepthChartAthlete[] = (posData?.athletes || []).map((a: any, idx: number) => {
+              const matched = rosterMap[String(a.id)];
+              const athleteObj: DepthChartAthlete = {
+                id: String(a.id),
+                displayName: a.displayName || matched?.displayName || 'Unknown Player',
+                shortName: a.shortName || matched?.shortName || a.displayName,
+                jersey: matched?.jersey || a.jersey || (matched?.jerseyNumber ? String(matched.jerseyNumber) : undefined),
+                headshot: matched?.headshot?.href
+                  ? matched.headshot
+                  : { href: `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${a.id}.png&w=96&h=70` },
+                injuries: a.injuries && a.injuries.length > 0 ? a.injuries : matched?.injuries || [],
+                rank: idx + 1,
+                slot: a.slot || idx + 1,
+              };
+              athleteObj.athlete = athleteObj; // backward-compatibility
+              return athleteObj;
+            });
+
+            positions.push({
+              key: posKey,
+              position: posObj,
+              athletes,
+            });
+          }
+
+          parsedGroups.push({
+            id: grp.id,
+            name: grp.name,
+            category,
+            positions,
+          });
+        }
+
+        // Order groups: Offense -> Defense -> Special Teams -> Other
+        const GROUP_ORDER = ['Offense', 'Defense', 'Special Teams', 'Other'];
+        parsedGroups.sort((a, b) => GROUP_ORDER.indexOf(a.category) - GROUP_ORDER.indexOf(b.category));
+
+        return {
+          team: res.team,
+          season: res.season,
+          groups: parsedGroups,
+          items: parsedGroups.flatMap(g => g.positions),
+        };
+      }
+    } catch (err) {
+      console.warn('Official ESPN depthcharts failed, falling back:', err);
+    }
+
+    // Fallback: roster-based
     try {
       const roster = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/roster?limit=100`);
       const posMap: Record<string, any[]> = {};
@@ -112,13 +252,27 @@ export const api = {
           posMap[pos].push(p);
         });
       });
-      const items = Object.keys(posMap).map(pos => ({
-        position: { abbreviation: pos, name: pos },
-        athletes: posMap[pos].map((athlete, idx) => ({ rank: idx + 1, athlete }))
+      const items: DepthChartPosition[] = Object.keys(posMap).map(pos => ({
+        key: pos.toLowerCase(),
+        position: { abbreviation: pos, name: pos, displayName: pos },
+        athletes: posMap[pos].map((athlete, idx) => {
+          const aObj: DepthChartAthlete = {
+            id: String(athlete.id),
+            displayName: athlete.displayName,
+            jersey: athlete.jersey,
+            headshot: athlete.headshot?.href
+              ? athlete.headshot
+              : { href: `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${athlete.id}.png&w=96&h=70` },
+            injuries: athlete.injuries || [],
+            rank: idx + 1,
+          };
+          aObj.athlete = aObj;
+          return aObj;
+        }),
       }));
-      return { items };
+      return { groups: [{ id: '0', name: 'Roster', category: 'Other', positions: items }], items };
     } catch {
-      return { items: [] };
+      return { groups: [], items: [] };
     }
   },
 
