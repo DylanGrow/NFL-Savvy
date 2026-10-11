@@ -56,6 +56,8 @@ export default function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/"                    element={<Home />} />
+              <Route path="/home"                element={<Home />} />
+              <Route path="/index"               element={<Home />} />
               <Route path="/teams"               element={<Teams />} />
               <Route path="/teams/:teamId"        element={<TeamDetail />} />
               <Route path="/players"             element={<Players />} />

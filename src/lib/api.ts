@@ -1,5 +1,4 @@
-// ESPN API wrapper with 5-minute in-memory cache
-// No unused imports — types used only in JSDoc/comments
+// ESPN API wrapper with 5-minute cache + persistent localStorage offline fallback + timeout
 
 const CACHE = new Map<string, { data: unknown; timestamp: number }>();
 const TTL = 5 * 60 * 1000; // 5 minutes
@@ -8,16 +7,60 @@ const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl';
 const ESPN_COMMON = 'https://site.api.espn.com/apis/common/v3/sports/football/nfl';
 const ESPN_V2 = 'https://site.api.espn.com/apis/v2/sports/football/nfl';
 
-async function fetchWithCache<T>(url: string): Promise<T> {
-  const cached = CACHE.get(url);
-  if (cached && Date.now() - cached.timestamp < TTL) {
-    return cached.data as T;
+function getPersistentCache<T>(key: string): { data: T; isExpired: boolean } | null {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    const raw = localStorage.getItem('nfl_api_' + key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const isExpired = Date.now() - parsed.timestamp > TTL;
+    return { data: parsed.data as T, isExpired };
+  } catch {
+    return null;
   }
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
-  const data = await res.json();
-  CACHE.set(url, { data, timestamp: Date.now() });
-  return data as T;
+}
+
+function setPersistentCache(key: string, data: unknown) {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    localStorage.setItem('nfl_api_' + key, JSON.stringify({ data, timestamp: Date.now() }));
+  } catch {}
+}
+
+async function fetchWithCache<T>(url: string, timeoutMs = 8000): Promise<T> {
+  const inMem = CACHE.get(url);
+  if (inMem && Date.now() - inMem.timestamp < TTL) {
+    return inMem.data as T;
+  }
+
+  const persistent = getPersistentCache<T>(url);
+  if (persistent && !persistent.isExpired) {
+    CACHE.set(url, { data: persistent.data, timestamp: Date.now() });
+    return persistent.data;
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
+    const data = await res.json();
+    CACHE.set(url, { data, timestamp: Date.now() });
+    setPersistentCache(url, data);
+    return data as T;
+  } catch (err) {
+    clearTimeout(timer);
+    // Return stale persistent or in-memory cache on network error or timeout
+    if (persistent?.data) {
+      return persistent.data;
+    }
+    if (inMem?.data) {
+      return inMem.data as T;
+    }
+    throw err;
+  }
 }
 
 export const api = {
@@ -120,5 +163,14 @@ export const api = {
   fetchGamePlayByPlay: (gameId: string) =>
     fetchWithCache<any>(`${ESPN_BASE}/playbyplay?event=${gameId}`),
 
-  clearCache: () => CACHE.clear(),
+  clearCache: () => {
+    CACHE.clear();
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith('nfl_api_'))
+          .forEach(k => localStorage.removeItem(k));
+      }
+    } catch {}
+  },
 };
