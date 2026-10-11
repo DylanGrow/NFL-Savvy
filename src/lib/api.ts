@@ -130,8 +130,11 @@ export const api = {
 
   fetchLeagueLeaders: async (stat = 'passing') => {
     try {
-      const data = await fetchWithCache<any>(`${ESPN_BASE}/statistics`);
-      const cats = data?.stats?.categories || [];
+      // Official ESPN 2026 Regular Season League Leaders API
+      const data = await fetchWithCache<any>(
+        'https://site.api.espn.com/apis/site/v3/sports/football/nfl/leaders?season=2026&seasontype=2'
+      );
+      const cats = data?.leaders?.categories || [];
       const statMap: Record<string, string> = {
         passing: 'passingYards',
         rushing: 'rushingYards',
@@ -147,16 +150,74 @@ export const api = {
           c.displayName?.toLowerCase().includes(stat.toLowerCase())
       );
       if (!category) return [];
-      return (category.leaders || []).map((l: any) => ({
-        name: l.athlete?.displayName || l.athlete?.fullName || 'Athlete',
-        headshot: l.athlete?.headshot?.href || l.athlete?.headshot,
-        team: l.team?.abbreviation || l.team?.displayName || '',
-        statLine: `${l.displayValue || l.value} ${category.displayName || ''}`.trim(),
-        value: l.value || 0,
-        athleteId: l.athlete?.id,
-      }));
+      return (category.leaders || []).map((l: any) => {
+        const rawVal = l.displayValue || l.value || '0';
+        const numVal = Number(rawVal);
+        const formattedVal = !isNaN(numVal) && numVal >= 1000 ? numVal.toLocaleString() : rawVal;
+        const catLabel = category.displayName || '';
+        return {
+          name: l.athlete?.displayName || l.athlete?.fullName || 'Athlete',
+          headshot:
+            l.athlete?.headshot?.href ||
+            l.athlete?.headshot ||
+            (l.athlete?.id
+              ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${l.athlete.id}.png&w=96&h=70`
+              : undefined),
+          team: l.team?.abbreviation || l.team?.displayName || '',
+          statLine: `${formattedVal} ${catLabel}`.trim(),
+          value: l.value || numVal || 0,
+          athleteId: l.athlete?.id,
+          position: l.athlete?.position?.abbreviation,
+        };
+      });
     } catch {
       return [];
+    }
+  },
+
+  fetchAllLeagueLeaders: async () => {
+    try {
+      const data = await fetchWithCache<any>(
+        'https://site.api.espn.com/apis/site/v3/sports/football/nfl/leaders?season=2026&seasontype=2'
+      );
+      const cats = data?.leaders?.categories || [];
+      const result: Record<string, any[]> = {};
+      const statMap: Record<string, string> = {
+        passing: 'passingYards',
+        rushing: 'rushingYards',
+        receiving: 'receivingYards',
+        sacks: 'sacks',
+        tackles: 'totalTackles',
+        interceptions: 'interceptions',
+      };
+      Object.entries(statMap).forEach(([key, targetName]) => {
+        const category = cats.find((c: any) => c.name?.toLowerCase() === targetName.toLowerCase());
+        if (category) {
+          result[key] = (category.leaders || []).slice(0, 5).map((l: any) => {
+            const rawVal = l.displayValue || l.value || '0';
+            const numVal = Number(rawVal);
+            const formattedVal = !isNaN(numVal) && numVal >= 1000 ? numVal.toLocaleString() : rawVal;
+            const catLabel = category.displayName || '';
+            return {
+              name: l.athlete?.displayName || l.athlete?.fullName || 'Athlete',
+              headshot:
+                l.athlete?.headshot?.href ||
+                l.athlete?.headshot ||
+                (l.athlete?.id
+                  ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${l.athlete.id}.png&w=96&h=70`
+                  : undefined),
+              team: l.team?.abbreviation || l.team?.displayName || '',
+              statLine: `${formattedVal} ${catLabel}`.trim(),
+              value: l.value || numVal || 0,
+              athleteId: l.athlete?.id,
+              position: l.athlete?.position?.abbreviation,
+            };
+          });
+        }
+      });
+      return result;
+    } catch {
+      return {};
     }
   },
 
