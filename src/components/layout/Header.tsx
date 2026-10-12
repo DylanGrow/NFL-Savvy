@@ -56,10 +56,22 @@ export function Header() {
             <div className="flex-shrink-0 flex items-center">
               <Link 
                 to="/" 
-                className="flex items-center gap-2 text-white font-extrabold text-lg sm:text-xl tracking-tight focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md p-1 -ml-1 touch-target"
+                className="flex items-center gap-2 text-white font-extrabold text-lg sm:text-xl tracking-tight focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md p-1 -ml-1 touch-target group"
                 aria-label="NFL Savvy Homepage"
               >
-                <span role="img" aria-label="shield" className="text-2xl select-none">🛡️</span>
+                <svg viewBox="0 0 64 64" className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 drop-shadow group-hover:scale-105 transition-transform" aria-hidden="true">
+                  <path d="M32 3 C42 6.5 52 8 57 9.5 L57 31 C57 46.5 45.5 56.5 32 61.5 C18.5 56.5 7 46.5 7 31 L7 9.5 C12 8 22 6.5 32 3 Z" fill="#cbd5e1" />
+                  <path d="M32 6.2 C40.8 9.2 49.5 10.5 53.8 11.8 L53.8 30.8 C53.8 44.3 43.7 53.2 32 57.8 C20.3 53.2 10.2 44.3 10.2 30.8 L10.2 11.8 C14.5 10.5 23.2 9.2 32 6.2 Z" fill="#013369" />
+                  <path d="M32 6.2 C40.8 9.2 49.5 10.5 53.8 11.8 L53.8 20.5 C46 18 39 18 32 21 C25 18 18 18 10.2 20.5 L10.2 11.8 C14.5 10.5 23.2 9.2 32 6.2 Z" fill="#d50a0a" />
+                  <path d="M10.2 20.5 C18 18 25 18 32 21 C39 18 46 18 53.8 20.5" fill="none" stroke="#ffffff" strokeWidth="1.8" />
+                  <g transform="translate(32, 36) rotate(-32)">
+                    <path d="M-16,0 C-10.5,-9.5 10.5,-9.5 16,0 C10.5,9.5 -10.5,9.5 -16,0 Z" fill="#b45309" stroke="#ffffff" strokeWidth="1.6" />
+                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" />
+                    <line x1="-3.5" y1="-2.5" x2="-3.5" y2="2.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                    <line x1="0" y1="-2.5" x2="0" y2="2.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                    <line x1="3.5" y1="-2.5" x2="3.5" y2="2.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                  </g>
+                </svg>
                 <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
                   NFL Savvy
                 </span>

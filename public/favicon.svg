@@ -1,11 +1,122 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- Shield background -->
-  <path d="M16 2 L28 7 L28 18 Q28 26 16 30 Q4 26 4 18 L4 7 Z" fill="#013369"/>
-  <!-- Football shape -->
-  <ellipse cx="16" cy="16" rx="7" ry="5" fill="none" stroke="white" stroke-width="1.5"/>
-  <!-- Laces -->
-  <line x1="16" y1="13" x2="16" y2="19" stroke="white" stroke-width="1"/>
-  <line x1="14" y1="14.5" x2="18" y2="14.5" stroke="white" stroke-width="0.8"/>
-  <line x1="14" y1="16" x2="18" y2="16" stroke="white" stroke-width="0.8"/>
-  <line x1="14" y1="17.5" x2="18" y2="17.5" stroke="white" stroke-width="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Deep NFL Navy Shield Gradient -->
+    <linearGradient id="shieldNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b468c"/>
+      <stop offset="50%" stop-color="#013369"/>
+      <stop offset="100%" stop-color="#011633"/>
+    </linearGradient>
+
+    <!-- Metallic Silver / Chrome Border Gradient -->
+    <linearGradient id="chromeRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="35%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- Championship Red Top Banner -->
+    <linearGradient id="redBanner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+
+    <!-- Pro Pigskin Leather Gradient -->
+    <linearGradient id="pigskin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="35%" stop-color="#b45309"/>
+      <stop offset="85%" stop-color="#78350f"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+
+    <filter id="drop" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Metallic Shield Crest -->
+  <path
+    d="M32 3 C42 6.5 52 8 57 9.5 L57 31 C57 46.5 45.5 56.5 32 61.5 C18.5 56.5 7 46.5 7 31 L7 9.5 C12 8 22 6.5 32 3 Z"
+    fill="url(#chromeRim)"
+    filter="url(#drop)"
+  />
+
+  <!-- Inner Navy Shield Body -->
+  <path
+    d="M32 6.2 C40.8 9.2 49.5 10.5 53.8 11.8 L53.8 30.8 C53.8 44.3 43.7 53.2 32 57.8 C20.3 53.2 10.2 44.3 10.2 30.8 L10.2 11.8 C14.5 10.5 23.2 9.2 32 6.2 Z"
+    fill="url(#shieldNavy)"
+  />
+
+  <!-- Crimson Top Crown Wave -->
+  <path
+    d="M32 6.2 C40.8 9.2 49.5 10.5 53.8 11.8 L53.8 20.5 C46 18 39 18 32 21 C25 18 18 18 10.2 20.5 L10.2 11.8 C14.5 10.5 23.2 9.2 32 6.2 Z"
+    fill="url(#redBanner)"
+  />
+
+  <!-- White Divider Curve -->
+  <path
+    d="M10.2 20.5 C18 18 25 18 32 21 C39 18 46 18 53.8 20.5"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="1.6"
+  />
+
+  <!-- 8 Division Stars (4 Left, 4 Right) -->
+  <g fill="#ffffff" opacity="0.95">
+    <circle cx="15.5" cy="14.5" r="1.3"/>
+    <circle cx="20.5" cy="13.8" r="1.3"/>
+    <circle cx="25.5" cy="13.5" r="1.3"/>
+    <circle cx="18" cy="17.2" r="1.2"/>
+
+    <circle cx="48.5" cy="14.5" r="1.3"/>
+    <circle cx="43.5" cy="13.8" r="1.3"/>
+    <circle cx="38.5" cy="13.5" r="1.3"/>
+    <circle cx="46" cy="17.2" r="1.2"/>
+  </g>
+
+  <!-- Subtle Analytics Trend Line in Background -->
+  <polyline
+    points="14,45 22,41 28,43 36,34 43,36 50,27"
+    fill="none"
+    stroke="#38bdf8"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.4"
+  />
+
+  <!-- Center 3D Angled Football -->
+  <g transform="translate(32, 36) rotate(-32)" filter="url(#drop)">
+    <!-- Football Body -->
+    <path
+      d="M-16.5,0 C-11,-10 11,-10 16.5,0 C11,10 -11,10 -16.5,0 Z"
+      fill="url(#pigskin)"
+      stroke="#ffffff"
+      stroke-width="1.5"
+      stroke-linejoin="round"
+    />
+
+    <!-- White Tip Stripes -->
+    <path
+      d="M-12,-5 C-10.5,-1.5 -10.5,1.5 -12,5"
+      stroke="#ffffff"
+      stroke-width="2"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      d="M12,-5 C10.5,-1.5 10.5,1.5 12,5"
+      stroke="#ffffff"
+      stroke-width="2"
+      stroke-linecap="round"
+      fill="none"
+    />
+
+    <!-- Laces -->
+    <line x1="-6.5" y1="0" x2="6.5" y2="0" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="-4.5" y1="-2.8" x2="-4.5" y2="2.8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-1.5" y1="-2.8" x2="-1.5" y2="2.8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1.5" y1="-2.8" x2="1.5" y2="2.8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4.5" y1="-2.8" x2="4.5" y2="2.8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
 </svg>
