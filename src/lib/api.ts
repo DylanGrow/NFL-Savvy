@@ -97,6 +97,9 @@ export const api = {
   fetchPlayerBio: (playerId: string) =>
     fetchWithCache<any>(`${ESPN_COMMON}/athletes/${playerId}`),
 
+  fetchPlayerOverview: (playerId: string) =>
+    fetchWithCache<any>(`${ESPN_COMMON}/athletes/${playerId}/overview`),
+
   fetchDepthChart: async (teamId: string): Promise<TeamDepthChart> => {
     try {
       const res = await fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/depthcharts`);
