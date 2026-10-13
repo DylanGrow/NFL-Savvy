@@ -279,8 +279,26 @@ export const api = {
     }
   },
 
-  fetchInjuries: (teamId: string) =>
-    fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/injuries`),
+  fetchLeagueInjuries: () =>
+    fetchWithCache<any>('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries'),
+
+  fetchInjuries: async (teamId: string) => {
+    try {
+      const leagueInjuries = await api.fetchLeagueInjuries();
+      if (leagueInjuries?.injuries && Array.isArray(leagueInjuries.injuries)) {
+        const teamObj = leagueInjuries.injuries.find((t: any) => String(t.id) === String(teamId));
+        if (teamObj) {
+          return {
+            team: { id: teamObj.id, displayName: teamObj.displayName },
+            injuries: teamObj.injuries || [],
+          };
+        }
+      }
+    } catch (e) {
+      console.warn('League injuries fetch failed, falling back:', e);
+    }
+    return fetchWithCache<any>(`${ESPN_BASE}/teams/${teamId}/injuries`);
+  },
 
   fetchStatistics: () =>
     fetchWithCache<any>(`${ESPN_BASE}/statistics`),

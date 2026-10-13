@@ -425,39 +425,91 @@ export default function TeamDetail() {
         {/* ── 5. Injury Report ─────────────────────────────── */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Injury Report ({injuries.length})</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <span>🏥</span> Injury Report ({injuries.length})
+              </h2>
+              <Link
+                to="/injuries"
+                className="text-xs text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-2"
+              >
+                League Injury Wire &rarr;
+              </Link>
+            </div>
             {injuries.length > 0 && (
               <button
                 onClick={() => setInjuriesExpanded(!injuriesExpanded)}
-                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-xs sm:text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 bg-gray-900 border border-gray-800 rounded-lg"
               >
-                {injuriesExpanded ? 'Collapse ▲' : 'Expand ▼'}
+                {injuriesExpanded ? 'Collapse ▲' : 'Expand All ▼'}
               </button>
             )}
           </div>
           {injuries.length === 0 ? (
-            <p className="text-gray-500 italic">No injuries reported this week.</p>
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 text-center text-gray-500">
+              <p>No active injuries reported on official NFL wire for {team.name}.</p>
+            </div>
           ) : injuriesExpanded ? (
-            <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden shadow-lg">
               <div className="divide-y divide-gray-800">
-                {injuries.map((inj, i) => (
-                  <div key={i} className="p-4 flex items-center justify-between hover:bg-gray-800/50 transition-colors">
-                    <div>
-                      <p className="font-medium">{inj.athlete?.displayName ?? 'Unknown Player'}</p>
-                      <p className="text-sm text-gray-400">
-                        {inj.athlete?.position?.abbreviation} · {inj.type ?? inj.longComment ?? ''}
-                      </p>
+                {injuries.map((inj, i) => {
+                  const athlete = inj.athlete || {};
+                  const st = inj.status?.name || inj.type?.description || (typeof inj.status === 'string' ? inj.status : 'Injured');
+                  const bodyPart = inj.details?.type || (typeof inj.type === 'string' ? inj.type : '');
+                  const note = inj.longComment || inj.shortComment || '';
+                  const stLower = st.toLowerCase();
+                  const isOut = stLower.includes('out') || stLower.includes('ir') || stLower.includes('reserve');
+                  const isQ = stLower.includes('question') || stLower.includes('doubt');
+
+                  return (
+                    <div key={i} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-gray-800/40 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={athlete.headshot?.href || `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${athlete.id}.png&w=48&h=48`}
+                          alt=""
+                          className="w-10 h-10 rounded-full bg-gray-800 object-cover shrink-0 border border-gray-700"
+                          onError={e => { e.currentTarget.src = 'https://a.espncdn.com/combiner/i?img=/i/headshots/noplayer.png&w=48&h=48'; }}
+                        />
+                        <div>
+                          <Link
+                            to={athlete.id ? `/players/${athlete.id}` : '#'}
+                            className="font-bold text-sm text-gray-200 hover:text-blue-400 transition"
+                          >
+                            {athlete.displayName ?? 'Unknown Player'}
+                          </Link>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            <span className="text-amber-400 font-semibold">{athlete.position?.abbreviation}</span>
+                            {bodyPart && <span> · 🩺 {bodyPart}</span>}
+                            {inj.details?.returnDate && <span className="text-emerald-400 font-mono"> · Target: {inj.details.returnDate}</span>}
+                          </p>
+                          {note && (
+                            <p className="text-[11px] text-gray-400 mt-1 line-clamp-1 italic max-w-xl">
+                              "{note}"
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <Badge
+                        variant={isOut ? 'danger' : isQ ? 'warning' : 'default'}
+                        label={st}
+                      />
                     </div>
-                    <Badge
-                      variant={inj.status === 'Out' || inj.status === 'OUT' ? 'danger' : inj.status === 'Questionable' ? 'warning' : 'default'}
-                      label={inj.status ?? 'Unknown'}
-                    />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">Click "Expand" to view {injuries.length} injury report entries.</p>
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between">
+              <span className="text-gray-400 text-xs sm:text-sm">
+                {injuries.length} player{injuries.length === 1 ? '' : 's'} on official injury list.
+              </span>
+              <button
+                onClick={() => setInjuriesExpanded(true)}
+                className="text-xs text-blue-400 hover:text-blue-300 font-bold"
+              >
+                View Details &rarr;
+              </button>
+            </div>
           )}
         </section>
 
@@ -522,7 +574,11 @@ export default function TeamDetail() {
                 <tbody className="divide-y divide-gray-800 text-sm">
                   {filteredRoster.map((player: any) => {
                     const salary = salaries.find(s => s.playerId === player.id);
-                    const injury = injuries.find(i => i.athlete?.id === player.id);
+                    const injury = injuries.find(i => String(i.athlete?.id) === String(player.id));
+                    const injDesc = injury ? (injury.status?.name || injury.type?.description || (typeof injury.status === 'string' ? injury.status : 'Injured')) : '';
+                    const isOut = injDesc.toLowerCase().includes('out') || injDesc.toLowerCase().includes('ir') || injDesc.toLowerCase().includes('reserve');
+                    const isQ = injDesc.toLowerCase().includes('question') || injDesc.toLowerCase().includes('doubt');
+
                     return (
                       <tr key={player.id} className="hover:bg-gray-800/50 transition-colors">
                         <td className="px-4 py-3 text-gray-400 font-mono">{player.jersey ?? '--'}</td>
@@ -545,7 +601,7 @@ export default function TeamDetail() {
                         </td>
                         <td className="px-4 py-3">
                           {injury ? (
-                            <Badge variant={injury.status === 'Out' || injury.status === 'OUT' ? 'danger' : 'warning'} label={injury.status ?? 'Injured'} />
+                            <Badge variant={isOut ? 'danger' : isQ ? 'warning' : 'info'} label={injDesc} />
                           ) : (
                             <Badge variant="success" label="Active" />
                           )}

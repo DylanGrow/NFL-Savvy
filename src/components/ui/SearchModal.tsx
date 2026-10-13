@@ -111,7 +111,31 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           id: r.id,
           name: `Ref ${r.referee} #${r.jerseyNumber}`,
           subtitle: `Crew Chief • ${r.experience} yrs exp • Avg ${r.penaltyStats?.avgPenaltiesPerGame || 14} flags/gm`,
-          url: `/games`
+          url: `/referees`
+        });
+      }
+    });
+
+    // 5. Hub Navigation Shortcuts
+    const HUB_PAGES = [
+      { name: 'Injury Report & Medical Wire', keywords: ['injury', 'injuries', 'ir', 'medical', 'hurt'], subtitle: '32-Team Injury Wire, practice status & return dates', url: '/injuries' },
+      { name: 'Trade Analyzer', keywords: ['trade', 'analyzer', 'picks', 'swap'], subtitle: 'Simulate blockbuster trades with cap impacts & draft picks', url: '/trade-analyzer' },
+      { name: 'Head-to-Head Comparator', keywords: ['compare', 'comparator', 'h2h', 'versus', 'matchup'], subtitle: 'Compare players or franchises side-by-side', url: '/comparator' },
+      { name: 'Depth Charts', keywords: ['depth', 'depth chart', 'string', 'starter'], subtitle: '1st/2nd/3rd string rosters across all 32 teams', url: '/depth-charts' },
+      { name: '2026 Standings & Playoff Picture', keywords: ['standings', 'playoff', 'division', 'seed', 'race'], subtitle: 'Divisional races, wild card hunt & seeding', url: '/standings' },
+      { name: 'Salaries & Cap Allocation', keywords: ['salary', 'salaries', 'cap', 'payroll', 'money', 'contract'], subtitle: 'Team cap space, contracts & top earners', url: '/salaries' },
+      { name: 'Coaching Directory', keywords: ['coach', 'coaches', 'staff', 'coordinator'], subtitle: 'Head coaches, OCs, and DCs across all 32 franchises', url: '/coaches' },
+      { name: 'Referees & Officiating Crews', keywords: ['ref', 'referee', 'referees', 'penalty', 'flags', 'crew'], subtitle: 'Crew chiefs, penalty tendencies & home win %', url: '/referees' },
+    ];
+
+    HUB_PAGES.forEach(page => {
+      if (page.keywords.some(kw => kw.includes(q) || q.includes(kw)) || page.name.toLowerCase().includes(q)) {
+        matched.unshift({
+          type: 'team',
+          id: page.url,
+          name: `⚡ ${page.name}`,
+          subtitle: page.subtitle,
+          url: page.url
         });
       }
     });

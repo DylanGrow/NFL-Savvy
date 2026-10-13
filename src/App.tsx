@@ -13,6 +13,7 @@ const Players     = lazy(() => import('./pages/Players'));
 const PlayerDetail= lazy(() => import('./pages/PlayerDetail'));
 const Games       = lazy(() => import('./pages/Games'));
 const GameDetail  = lazy(() => import('./pages/GameDetail'));
+const Injuries    = lazy(() => import('./pages/Injuries'));
 const Salaries    = lazy(() => import('./pages/Salaries'));
 const Coaches     = lazy(() => import('./pages/Coaches'));
 const Standings   = lazy(() => import('./pages/Standings'));
@@ -64,6 +65,7 @@ export default function App() {
               <Route path="/players/:playerId"   element={<PlayerDetail />} />
               <Route path="/games"               element={<Games />} />
               <Route path="/games/:gameId"       element={<GameDetail />} />
+              <Route path="/injuries"            element={<Injuries />} />
               <Route path="/salaries"            element={<Salaries />} />
               <Route path="/coaches"             element={<Coaches />} />
               <Route path="/standings"           element={<Standings />} />

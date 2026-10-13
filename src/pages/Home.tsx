@@ -124,19 +124,32 @@ export default function Home() {
         if (localStandings) setStandings(localStandings);
       }
 
-      // ── Fast Injury Check ───────────────────────────────────
-      // Non-blocking query to keep Home page ultra-responsive
-      api.fetchInjuries('6')
+      // ── Live League-Wide Injury Check ──────────────────────
+      api.fetchLeagueInjuries()
         .then(res => {
-          const items = res?.injuries || [];
-          if (items.length > 0) {
-            const parsed = items.slice(0, 6).map((inj: any) => ({
-              name: inj.athlete?.displayName || 'Player',
-              team: 'DAL',
-              status: inj.status || 'Questionable',
-              id: inj.athlete?.id,
-            }));
-            setInjuries(parsed);
+          const allTeams = res?.injuries || [];
+          if (allTeams.length > 0) {
+            const parsed: any[] = [];
+            // Pick notable injured athletes across teams
+            for (const tm of allTeams) {
+              const teamAbbr = tm.abbreviation || tm.displayName?.split(' ').pop() || 'NFL';
+              for (const inj of (tm.injuries || [])) {
+                if (inj?.athlete && parsed.length < 7) {
+                  const statusDesc = inj.status?.name || inj.type?.description || 'Questionable';
+                  const detail = inj.details?.type || '';
+                  parsed.push({
+                    name: inj.athlete.displayName,
+                    team: teamAbbr,
+                    status: statusDesc,
+                    detail,
+                    id: String(inj.athlete.id),
+                  });
+                }
+              }
+            }
+            if (parsed.length > 0) {
+              setInjuries(parsed);
+            }
           }
         })
         .catch(() => {});
@@ -611,27 +624,42 @@ export default function Home() {
             <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
               <span>🏥</span> Notable Injuries
             </h2>
-            <span className="text-xs text-gray-500 font-medium">Updated 2026 Season</span>
+            <Link to="/injuries" className="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-semibold">
+              Full Injury Tracker &rarr;
+            </Link>
           </div>
           <ul className="bg-gray-900 border border-gray-800 rounded-2xl p-4 divide-y divide-gray-800">
-            {injuries.map((inj, i) => (
-              <li
-                key={i}
-                onClick={() => inj.id && navigate(`/players/${inj.id}`)}
-                className={`py-3 flex justify-between items-center transition ${inj.id ? 'cursor-pointer hover:bg-gray-850 -mx-2 px-2 rounded-lg' : ''}`}
-              >
-                <span className="font-medium text-sm text-gray-200">
-                  {inj.name} <span className="text-xs text-gray-400 font-normal ml-1 font-mono">({inj.team})</span>
-                </span>
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${
-                  inj.status === 'Out' ? 'bg-red-950/80 text-red-400 border-red-800/60' :
-                  inj.status === 'Questionable' ? 'bg-yellow-950/80 text-yellow-400 border-yellow-800/60' :
-                  'bg-gray-800 text-gray-300 border-gray-700'
-                }`}>
-                  {inj.status}
-                </span>
-              </li>
-            ))}
+            {injuries.map((inj, i) => {
+              const stLower = (inj.status || '').toLowerCase();
+              const isOut = stLower.includes('out') || stLower.includes('ir') || stLower.includes('reserve');
+              const isQ = stLower.includes('questionable') || stLower.includes('doubt');
+              return (
+                <li
+                  key={i}
+                  onClick={() => inj.id && navigate(`/players/${inj.id}`)}
+                  className={`py-3 flex justify-between items-center transition ${inj.id ? 'cursor-pointer hover:bg-gray-850 -mx-2 px-2 rounded-lg' : ''}`}
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="font-medium text-sm text-gray-200 truncate">
+                      {inj.name}
+                    </span>
+                    <span className="text-xs text-gray-400 font-mono flex-shrink-0">({inj.team})</span>
+                    {inj.detail && (
+                      <span className="hidden sm:inline-block text-[11px] px-1.5 py-0.5 rounded bg-gray-800 text-gray-300 border border-gray-700">
+                        {inj.detail}
+                      </span>
+                    )}
+                  </div>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded border whitespace-nowrap ml-2 ${
+                    isOut ? 'bg-red-950/80 text-red-400 border-red-800/60' :
+                    isQ ? 'bg-yellow-950/80 text-yellow-400 border-yellow-800/60' :
+                    'bg-gray-800 text-gray-300 border-gray-700'
+                  }`}>
+                    {inj.status}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
