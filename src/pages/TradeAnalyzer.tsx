@@ -1,373 +1,840 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { api } from '../lib/api';
-import { SALARIES, formatSalary, PLAYER_METADATA, getPlayerMeta } from '../lib/salary';
-import type { Salary } from '../types';
+import { getSalary, formatSalary, NFL_CAP_2026 } from '../lib/salary';
+import { fetchTeamsData } from '../lib/data';
+import type { Team } from '../types';
 
-interface Team {
+interface TradablePlayer {
   id: string;
-  displayName: string;
-  logo: string;
-  color: string;
+  name: string;
+  position: string;
+  jersey?: string;
+  teamId: string;
+  age?: number;
+  experience?: number;
+  capHit: number;
+  isEstimatedSalary?: boolean;
+  photoUrl?: string;
 }
 
-const PLAYER_NAMES: Record<string, { name: string; position: string }> = PLAYER_METADATA;
+interface DraftPick {
+  id: string;
+  year: number;
+  round: number;
+  name: string;
+  teamId: string;
+  valuePoints: number;
+}
 
 const POSITION_WEIGHTS: Record<string, number> = {
-  'QB': 1.5,
-  'EDGE': 1.2,
-  'WR': 1.0,
-  'RB': 0.8,
+  QB: 1.6,
+  EDGE: 1.35,
+  DE: 1.3,
+  WR: 1.25,
+  LT: 1.25,
+  OT: 1.2,
+  CB: 1.2,
+  DT: 1.15,
+  TE: 1.05,
+  LB: 1.0,
+  S: 1.0,
+  G: 0.95,
+  C: 0.95,
+  RT: 0.95,
+  RB: 0.85,
+  K: 0.5,
+  P: 0.45,
+  LS: 0.35,
 };
+
+const DRAFT_PICK_TEMPLATES = [
+  { round: 1, year: 2026, name: '2026 1st Round Pick', valuePoints: 1000 },
+  { round: 2, year: 2026, name: '2026 2nd Round Pick', valuePoints: 450 },
+  { round: 3, year: 2026, name: '2026 3rd Round Pick', valuePoints: 220 },
+  { round: 4, year: 2026, name: '2026 4th Round Pick', valuePoints: 100 },
+  { round: 5, year: 2026, name: '2026 5th-7th Rd Pick', valuePoints: 45 },
+  { round: 1, year: 2027, name: '2027 1st Round Pick', valuePoints: 850 },
+  { round: 2, year: 2027, name: '2027 2nd Round Pick', valuePoints: 380 },
+];
+
+function estimateCapHit(p: any): { capHit: number; isEstimated: boolean } {
+  const sal = getSalary(p.id);
+  if (sal) return { capHit: sal.capHit, isEstimated: false };
+
+  const exp = p.experience?.years || 0;
+  const pos = (p.position?.abbreviation || '').toUpperCase();
+
+  if (pos === 'QB') {
+    if (exp >= 8) return { capHit: 32000000, isEstimated: true };
+    if (exp >= 4) return { capHit: 18000000, isEstimated: true };
+    return { capHit: 6500000, isEstimated: true };
+  }
+  if (['EDGE', 'DE', 'WR', 'LT', 'OT', 'CB'].includes(pos)) {
+    if (exp >= 6) return { capHit: 18000000, isEstimated: true };
+    if (exp >= 3) return { capHit: 9500000, isEstimated: true };
+    return { capHit: 3200000, isEstimated: true };
+  }
+  if (['DT', 'LB', 'S', 'TE', 'RT', 'G', 'C'].includes(pos)) {
+    if (exp >= 6) return { capHit: 12000000, isEstimated: true };
+    if (exp >= 3) return { capHit: 6500000, isEstimated: true };
+    return { capHit: 2400000, isEstimated: true };
+  }
+  if (pos === 'RB') {
+    if (exp >= 5) return { capHit: 8500000, isEstimated: true };
+    return { capHit: 2800000, isEstimated: true };
+  }
+  return { capHit: 1800000, isEstimated: true };
+}
 
 export default function TradeAnalyzer() {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [teamA, setTeamA] = useState<string>('');
-  const [teamB, setTeamB] = useState<string>('');
-  
-  // Players being traded FROM Team A TO Team B
-  const [tradingA, setTradingA] = useState<Salary[]>([]);
-  // Players being traded FROM Team B TO Team A
-  const [tradingB, setTradingB] = useState<Salary[]>([]);
+  const [loadingTeams, setLoadingTeams] = useState(true);
+
+  const [teamAId, setTeamAId] = useState<string>('');
+  const [teamBId, setTeamBId] = useState<string>('');
+
+  const [rosterA, setRosterA] = useState<TradablePlayer[]>([]);
+  const [rosterB, setRosterB] = useState<TradablePlayer[]>([]);
+  const [loadingRosterA, setLoadingRosterA] = useState(false);
+  const [loadingRosterB, setLoadingRosterB] = useState(false);
+
+  // Selected trade items from each side
+  const [tradingPlayersA, setTradingPlayersA] = useState<TradablePlayer[]>([]);
+  const [tradingPicksA, setTradingPicksA] = useState<DraftPick[]>([]);
+
+  const [tradingPlayersB, setTradingPlayersB] = useState<TradablePlayer[]>([]);
+  const [tradingPicksB, setTradingPicksB] = useState<DraftPick[]>([]);
+
+  // Search & Filter
+  const [searchA, setSearchA] = useState('');
+  const [posFilterA, setPosFilterA] = useState('ALL');
+
+  const [searchB, setSearchB] = useState('');
+  const [posFilterB, setPosFilterB] = useState('ALL');
 
   const [showModal, setShowModal] = useState(false);
 
+  // Initial load: 32 NFL teams
   useEffect(() => {
     document.title = 'Trade Analyzer | NFL Hub';
-    async function load() {
-      try {
-        const data = await api.fetchTeams();
-        const t = data.sports[0].leagues[0].teams.map((item: any) => ({
-          id: item.team.id,
-          displayName: item.team.displayName,
-          logo: item.team.logos?.[0]?.href || '',
-          color: item.team.color,
-        }));
-        setTeams(t.sort((a: Team, b: Team) => a.displayName.localeCompare(b.displayName)));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
+    fetchTeamsData()
+      .then((ts) => {
+        setTeams(ts);
+        if (ts.length >= 2) {
+          setTeamAId(ts[0].id);
+          setTeamBId(ts[1].id);
+        }
+      })
+      .finally(() => setLoadingTeams(false));
   }, []);
 
-  const rosterA = useMemo(() => {
-    return SALARIES.filter(s => s.teamId === teamA && !tradingA.find(t => t.playerId === s.playerId));
-  }, [teamA, tradingA]);
-
-  const rosterB = useMemo(() => {
-    return SALARIES.filter(s => s.teamId === teamB && !tradingB.find(t => t.playerId === s.playerId));
-  }, [teamB, tradingB]);
-
-  const handleDragStart = (e: React.DragEvent, player: Salary, sourceTeam: 'A' | 'B', isTradeList: boolean) => {
-    e.dataTransfer.setData('application/json', JSON.stringify({ player, sourceTeam, isTradeList }));
-  };
-
-  const handleDrop = (e: React.DragEvent, dropTarget: 'A' | 'B', isTradeList: boolean) => {
-    e.preventDefault();
-    try {
-      const data = JSON.parse(e.dataTransfer.getData('application/json'));
-      const { player, sourceTeam, isTradeList: fromTradeList } = data;
-      
-      // If dropping into A's getting (tradingB) list, it means B is giving
-      if (dropTarget === 'A' && isTradeList && sourceTeam === 'B' && !fromTradeList) {
-        setTradingB(prev => [...prev, player]);
-      }
-      // If dropping into B's getting (tradingA) list, it means A is giving
-      else if (dropTarget === 'B' && isTradeList && sourceTeam === 'A' && !fromTradeList) {
-        setTradingA(prev => [...prev, player]);
-      }
-      // If removing from A's giving (tradingA) list back to A's roster
-      else if (dropTarget === 'A' && !isTradeList && sourceTeam === 'A' && fromTradeList) {
-        setTradingA(prev => prev.filter(p => p.playerId !== player.playerId));
-      }
-      // If removing from B's giving (tradingB) list back to B's roster
-      else if (dropTarget === 'B' && !isTradeList && sourceTeam === 'B' && fromTradeList) {
-        setTradingB(prev => prev.filter(p => p.playerId !== player.playerId));
-      }
-    } catch (err) {
-      // ignore
+  // Fetch Team A Roster
+  useEffect(() => {
+    if (!teamAId) {
+      setRosterA([]);
+      setTradingPlayersA([]);
+      setTradingPicksA([]);
+      return;
     }
+    setLoadingRosterA(true);
+    setTradingPlayersA([]);
+    setTradingPicksA([]);
+
+    api
+      .fetchRoster(teamAId)
+      .then((data) => {
+        const raw = (data?.athletes || []).flatMap((g: any) => g.items || []);
+        const seen = new Set<string>();
+        const players: TradablePlayer[] = [];
+        for (const p of raw) {
+          if (!p?.id || seen.has(String(p.id))) continue;
+          seen.add(String(p.id));
+          const { capHit, isEstimated } = estimateCapHit(p);
+          players.push({
+            id: String(p.id),
+            name: p.fullName || p.displayName || `Player ${p.id}`,
+            position: (p.position?.abbreviation || 'UNK').toUpperCase(),
+            jersey: p.jersey,
+            teamId: teamAId,
+            age: p.age,
+            experience: p.experience?.years,
+            capHit,
+            isEstimatedSalary: isEstimated,
+            photoUrl: `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${p.id}.png&w=48&h=35`,
+          });
+        }
+        setRosterA(players);
+      })
+      .catch(() => setRosterA([]))
+      .finally(() => setLoadingRosterA(false));
+  }, [teamAId]);
+
+  // Fetch Team B Roster
+  useEffect(() => {
+    if (!teamBId) {
+      setRosterB([]);
+      setTradingPlayersB([]);
+      setTradingPicksB([]);
+      return;
+    }
+    setLoadingRosterB(true);
+    setTradingPlayersB([]);
+    setTradingPicksB([]);
+
+    api
+      .fetchRoster(teamBId)
+      .then((data) => {
+        const raw = (data?.athletes || []).flatMap((g: any) => g.items || []);
+        const seen = new Set<string>();
+        const players: TradablePlayer[] = [];
+        for (const p of raw) {
+          if (!p?.id || seen.has(String(p.id))) continue;
+          seen.add(String(p.id));
+          const { capHit, isEstimated } = estimateCapHit(p);
+          players.push({
+            id: String(p.id),
+            name: p.fullName || p.displayName || `Player ${p.id}`,
+            position: (p.position?.abbreviation || 'UNK').toUpperCase(),
+            jersey: p.jersey,
+            teamId: teamBId,
+            age: p.age,
+            experience: p.experience?.years,
+            capHit,
+            isEstimatedSalary: isEstimated,
+            photoUrl: `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${p.id}.png&w=48&h=35`,
+          });
+        }
+        setRosterB(players);
+      })
+      .catch(() => setRosterB([]))
+      .finally(() => setLoadingRosterB(false));
+  }, [teamBId]);
+
+  const teamAObj = useMemo(() => teams.find((t) => t.id === teamAId), [teams, teamAId]);
+  const teamBObj = useMemo(() => teams.find((t) => t.id === teamBId), [teams, teamBId]);
+
+  // Filtered available rosters
+  const availableRosterA = useMemo(() => {
+    const tradingIds = new Set(tradingPlayersA.map((p) => p.id));
+    return rosterA.filter((p) => {
+      if (tradingIds.has(p.id)) return false;
+      if (posFilterA !== 'ALL' && p.position !== posFilterA) return false;
+      if (searchA.trim() && !p.name.toLowerCase().includes(searchA.trim().toLowerCase())) return false;
+      return true;
+    });
+  }, [rosterA, tradingPlayersA, posFilterA, searchA]);
+
+  const availableRosterB = useMemo(() => {
+    const tradingIds = new Set(tradingPlayersB.map((p) => p.id));
+    return rosterB.filter((p) => {
+      if (tradingIds.has(p.id)) return false;
+      if (posFilterB !== 'ALL' && p.position !== posFilterB) return false;
+      if (searchB.trim() && !p.name.toLowerCase().includes(searchB.trim().toLowerCase())) return false;
+      return true;
+    });
+  }, [rosterB, tradingPlayersB, posFilterB, searchB]);
+
+  // Toggle Player Trade Selection
+  const togglePlayerA = (p: TradablePlayer) => {
+    setTradingPlayersA((prev) =>
+      prev.some((x) => x.id === p.id) ? prev.filter((x) => x.id !== p.id) : [...prev, p]
+    );
   };
 
-  const getPlayerDisplay = (playerId?: string) => {
-    if (!playerId) return 'Unknown Player';
-    return PLAYER_NAMES[playerId]?.name || `Player \${playerId}`;
+  const togglePlayerB = (p: TradablePlayer) => {
+    setTradingPlayersB((prev) =>
+      prev.some((x) => x.id === p.id) ? prev.filter((x) => x.id !== p.id) : [...prev, p]
+    );
   };
 
-  const getPlayerPosition = (playerId?: string) => {
-    if (!playerId) return 'UNK';
-    return PLAYER_NAMES[playerId]?.position || 'UNK';
+  // Toggle Draft Pick Trade Selection
+  const togglePickA = (template: typeof DRAFT_PICK_TEMPLATES[0]) => {
+    const pickId = `${teamAId}_${template.year}_r${template.round}`;
+    setTradingPicksA((prev) =>
+      prev.some((x) => x.id === pickId)
+        ? prev.filter((x) => x.id !== pickId)
+        : [...prev, { ...template, id: pickId, teamId: teamAId }]
+    );
   };
 
-  const calculateValue = (players: Salary[]) => {
+  const togglePickB = (template: typeof DRAFT_PICK_TEMPLATES[0]) => {
+    const pickId = `${teamBId}_${template.year}_r${template.round}`;
+    setTradingPicksB((prev) =>
+      prev.some((x) => x.id === pickId)
+        ? prev.filter((x) => x.id !== pickId)
+        : [...prev, { ...template, id: pickId, teamId: teamBId }]
+    );
+  };
+
+  const resetTrade = () => {
+    setTradingPlayersA([]);
+    setTradingPicksA([]);
+    setTradingPlayersB([]);
+    setTradingPicksB([]);
+  };
+
+  // Trade Value & Cap Calculations
+  const calculatePlayerPoints = (players: TradablePlayer[]) => {
     return players.reduce((sum, p) => {
-      const pos = getPlayerPosition(p.playerId);
-      const weight = POSITION_WEIGHTS[pos] || 1.0;
-      return sum + (p.capHit * weight);
+      const weight = POSITION_WEIGHTS[p.position] || 1.0;
+      // Normalizes cap hit into approximate value points: $10M ~ 350 pts
+      const basePts = (p.capHit / 1000000) * 35;
+      return sum + basePts * weight;
     }, 0);
   };
 
-  const capHitA = tradingA.reduce((sum, p) => sum + p.capHit, 0);
-  const capHitB = tradingB.reduce((sum, p) => sum + p.capHit, 0);
-  
-  const valueA = calculateValue(tradingA); // Value A is giving up
-  const valueB = calculateValue(tradingB); // Value B is giving up
-
-  const resetTrade = () => {
-    setTradingA([]);
-    setTradingB([]);
+  const calculatePickPoints = (picks: DraftPick[]) => {
+    return picks.reduce((sum, pk) => sum + pk.valuePoints, 0);
   };
 
-  const togglePlayerTrade = (p: Salary, source: 'A'|'B', isTradeList: boolean) => {
-    if (source === 'A') {
-      if (isTradeList) {
-        setTradingA(prev => prev.filter(x => x.playerId !== p.playerId));
-      } else {
-        if (!tradingA.some(x => x.playerId === p.playerId)) setTradingA(prev => [...prev, p]);
-      }
-    } else {
-      if (isTradeList) {
-        setTradingB(prev => prev.filter(x => x.playerId !== p.playerId));
-      } else {
-        if (!tradingB.some(x => x.playerId === p.playerId)) setTradingB(prev => [...prev, p]);
-      }
-    }
+  const capOutA = tradingPlayersA.reduce((sum, p) => sum + p.capHit, 0);
+  const capInA = tradingPlayersB.reduce((sum, p) => sum + p.capHit, 0);
+  const netCapA = capInA - capOutA;
+
+  const capOutB = capInA;
+  const capInB = capOutA;
+  const netCapB = capInB - capOutB;
+
+  const totalPointsA = calculatePlayerPoints(tradingPlayersA) + calculatePickPoints(tradingPicksA);
+  const totalPointsB = calculatePlayerPoints(tradingPlayersB) + calculatePickPoints(tradingPicksB);
+
+  // Compute Trade Grades
+  const computeTradeGrade = (ptsOut: number, ptsIn: number) => {
+    if (ptsOut === 0 && ptsIn === 0) return { grade: 'N/A', label: 'No Trade' };
+    const ratio = ptsIn / (ptsOut || 1);
+    if (ratio >= 1.35) return { grade: 'A+', label: 'Huge Win', color: 'text-emerald-400' };
+    if (ratio >= 1.15) return { grade: 'A', label: 'Favorable', color: 'text-emerald-300' };
+    if (ratio >= 0.9) return { grade: 'B+', label: 'Fair Trade', color: 'text-blue-400' };
+    if (ratio >= 0.75) return { grade: 'B', label: 'Acceptable', color: 'text-amber-400' };
+    if (ratio >= 0.55) return { grade: 'C', label: 'Overpaid', color: 'text-orange-400' };
+    return { grade: 'D', label: 'Severe Loss', color: 'text-rose-400' };
   };
 
-  const renderPlayer = (p: Salary, source: 'A'|'B', isTradeList: boolean) => (
-    <div
-      key={p.playerId}
-      draggable
-      onDragStart={(e) => handleDragStart(e, p, source, isTradeList)}
-      tabIndex={0}
-      role="button"
-      aria-label={`${isTradeList ? 'Remove' : 'Add'} ${getPlayerDisplay(p.playerId)} ${isTradeList ? 'from' : 'to'} trade`}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          togglePlayerTrade(p, source, isTradeList);
-        }
-      }}
-      className="bg-gray-800 border border-gray-700 p-3 rounded-lg mb-2 cursor-grab active:cursor-grabbing hover:bg-gray-750 transition flex items-center justify-between gap-2 focus-visible:ring-2 focus-visible:ring-blue-500"
-    >
-      <div className="flex-1 min-w-0">
-        <div className="font-semibold text-gray-100 flex justify-between items-center">
-          <span className="truncate">{getPlayerDisplay(p.playerId)}</span>
-          <span className="text-gray-400 text-xs bg-gray-900 px-1.5 py-0.5 rounded ml-2">{getPlayerPosition(p.playerId)}</span>
-        </div>
-        <div className="text-xs text-gray-400 mt-0.5">Cap: {formatSalary(p.capHit)}</div>
-      </div>
-      
-      {/* Touch / Click Button */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          togglePlayerTrade(p, source, isTradeList);
-        }}
-        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-colors touch-target min-h-[36px] ${
-          isTradeList 
-            ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30 border border-red-500/30' 
-            : 'bg-blue-600/30 text-blue-300 hover:bg-blue-600/50 border border-blue-500/40'
-        }`}
-      >
-        {isTradeList ? '✕ Remove' : '+ Trade'}
-      </button>
-    </div>
-  );
+  const gradeA = computeTradeGrade(totalPointsA, totalPointsB);
+  const gradeB = computeTradeGrade(totalPointsB, totalPointsA);
+
+  const POSITIONS = ['ALL', 'QB', 'RB', 'WR', 'TE', 'OL', 'DL', 'LB', 'CB', 'S'];
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="app-container py-4 sm:py-8 space-y-6 sm:space-y-8 font-sans text-gray-100">
+      {/* ── Header Bar ─────────────────────────────────────────────── */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl gap-4 shadow-xl">
         <div>
-          <h1 className="text-3xl font-bold text-gray-100">Trade Analyzer</h1>
-          <p className="text-gray-400 mt-1">Drag and drop players to build a trade package.</p>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">NFL Trade Analyzer</h1>
+          <p className="text-xs sm:text-sm text-gray-400 mt-1">
+            Simulate blockbuster multi-player trades & draft pick packages with live cap feasibility checks.
+          </p>
         </div>
-        <div className="space-x-3">
-          <button onClick={resetTrade} className="px-4 py-2 bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition">Reset</button>
-          <button 
-            disabled={tradingA.length === 0 && tradingB.length === 0}
-            onClick={() => setShowModal(true)} 
-            className="px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition disabled:opacity-50"
+
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <button
+            onClick={resetTrade}
+            className="px-4 py-2.5 bg-gray-950 hover:bg-gray-850 text-gray-300 rounded-xl border border-gray-800 text-xs sm:text-sm font-semibold transition"
           >
-            Analyze Trade
+            Clear Trade
+          </button>
+          <button
+            disabled={
+              tradingPlayersA.length === 0 &&
+              tradingPicksA.length === 0 &&
+              tradingPlayersB.length === 0 &&
+              tradingPicksB.length === 0
+            }
+            onClick={() => setShowModal(true)}
+            className="flex-1 sm:flex-initial px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition disabled:opacity-40"
+          >
+            Analyze Trade Results →
           </button>
         </div>
       </div>
 
-      {loading ? (
-        <div className="h-64 flex items-center justify-center text-gray-400">Loading teams...</div>
+      {loadingTeams ? (
+        <div className="h-64 flex items-center justify-center text-gray-500">Loading NFL franchises...</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* TEAM A */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-gray-200">Team A</h2>
-            <select
-              value={teamA}
-              onChange={(e) => { setTeamA(e.target.value); setTradingA([]); }}
-              className="w-full bg-gray-900 border border-gray-700 text-gray-100 rounded p-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select Team A</option>
-              {teams.map(t => (
-                <option key={t.id} value={t.id}>{t.displayName}</option>
-              ))}
-            </select>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* Roster A */}
-              <div 
-                className="bg-gray-900/50 rounded-xl p-4 border border-gray-800 min-h-[400px]"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, 'A', false)}
-              >
-                <h3 className="text-sm font-medium text-gray-400 uppercase mb-3">Roster</h3>
-                {rosterA.length === 0 && teamA && <div className="text-gray-500 text-sm italic">No tradable players found.</div>}
-                {rosterA.map(p => renderPlayer(p, 'A', false))}
+          {/* ══════════════════════ TEAM A PANEL ══════════════════════ */}
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-5">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-3">
+                {teamAObj && (
+                  <img
+                    src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/${teamAObj.abbreviation.toLowerCase()}.png&w=48&h=48`}
+                    alt=""
+                    className="w-10 h-10 object-contain bg-gray-950 p-1 rounded-xl border border-gray-800"
+                  />
+                )}
+                <div>
+                  <h2 className="text-lg font-bold text-white">Team A</h2>
+                  <span className="text-xs text-gray-400 font-mono">
+                    Giving {tradingPlayersA.length} Players + {tradingPicksA.length} Picks
+                  </span>
+                </div>
               </div>
 
-              {/* Giving A (Getting B) */}
-              <div 
-                className="bg-blue-900/20 rounded-xl p-4 border border-blue-900/50 min-h-[400px]"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, 'B', true)}
+              <select
+                value={teamAId}
+                onChange={(e) => setTeamAId(e.target.value)}
+                className="bg-gray-950 border border-gray-800 text-white rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <h3 className="text-sm font-medium text-blue-400 uppercase mb-3">Giving (To B)</h3>
-                {tradingA.length === 0 && <div className="text-gray-500 text-sm italic">Drag players here.</div>}
-                {tradingA.map(p => renderPlayer(p, 'A', true))}
+                {teams.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.city} {t.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Trade Package Selected by Team A */}
+            <div className="bg-blue-950/20 border border-blue-900/40 rounded-xl p-3.5 space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-blue-400 uppercase tracking-wider">
+                <span>{teamAObj?.name || 'Team A'} Trade Package</span>
+                <span>{formatSalary(capOutA)} Cap</span>
+              </div>
+
+              {tradingPlayersA.length === 0 && tradingPicksA.length === 0 ? (
+                <p className="text-gray-500 text-xs italic py-2">Click "+ Trade" on players or draft picks below.</p>
+              ) : (
+                <div className="space-y-1.5">
+                  {tradingPlayersA.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center justify-between bg-gray-950 border border-gray-800 px-3 py-1.5 rounded-lg text-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold font-mono text-gray-300">{p.position}</span>
+                        <span className="text-white font-medium">{p.name}</span>
+                        <span className="text-gray-500 font-mono">{formatSalary(p.capHit)}</span>
+                      </div>
+                      <button
+                        onClick={() => togglePlayerA(p)}
+                        className="text-rose-400 hover:text-rose-300 font-bold px-1.5 py-0.5 rounded hover:bg-rose-950/40"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+
+                  {tradingPicksA.map((pk) => (
+                    <div
+                      key={pk.id}
+                      className="flex items-center justify-between bg-indigo-950/50 border border-indigo-800/60 px-3 py-1.5 rounded-lg text-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-indigo-300">🎟️ {pk.name}</span>
+                        <span className="text-[10px] text-indigo-400 font-mono">({pk.valuePoints} pts)</span>
+                      </div>
+                      <button
+                        onClick={() => togglePickA(pk)}
+                        className="text-rose-400 hover:text-rose-300 font-bold px-1.5 py-0.5 rounded hover:bg-rose-950/40"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Team A Draft Picks Picker */}
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 block">
+                Include Draft Picks
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {DRAFT_PICK_TEMPLATES.map((tmpl) => {
+                  const pickId = `${teamAId}_${tmpl.year}_r${tmpl.round}`;
+                  const isSelected = tradingPicksA.some((pk) => pk.id === pickId);
+                  return (
+                    <button
+                      key={tmpl.name}
+                      onClick={() => togglePickA(tmpl)}
+                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border transition ${
+                        isSelected
+                          ? 'bg-blue-600 text-white border-blue-500'
+                          : 'bg-gray-950 text-gray-400 border-gray-800 hover:text-white hover:bg-gray-800'
+                      }`}
+                    >
+                      {tmpl.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Team A Roster Browser */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+                  Roster ({availableRosterA.length})
+                </span>
+                <input
+                  type="text"
+                  placeholder="Filter player..."
+                  value={searchA}
+                  onChange={(e) => setSearchA(e.target.value)}
+                  className="bg-gray-950 border border-gray-800 text-white text-xs px-2.5 py-1 rounded-lg w-36 outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Position Filter */}
+              <div className="flex overflow-x-auto touch-scroll gap-1 pb-1 scrollbar-none">
+                {POSITIONS.map((pos) => (
+                  <button
+                    key={pos}
+                    onClick={() => setPosFilterA(pos)}
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md transition ${
+                      posFilterA === pos ? 'bg-blue-600 text-white' : 'bg-gray-950 text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {pos}
+                  </button>
+                ))}
+              </div>
+
+              <div className="bg-gray-950 rounded-xl p-2 border border-gray-800 max-h-72 overflow-y-auto space-y-1">
+                {loadingRosterA ? (
+                  <p className="text-gray-500 text-xs py-4 text-center">Loading {teamAObj?.name} roster...</p>
+                ) : availableRosterA.length === 0 ? (
+                  <p className="text-gray-500 text-xs py-4 text-center">No available players found.</p>
+                ) : (
+                  availableRosterA.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-850 transition text-xs"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <img
+                          src={p.photoUrl}
+                          alt=""
+                          className="w-7 h-7 rounded-full bg-gray-800 object-cover flex-shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="truncate">
+                          <span className="font-bold text-white mr-1.5">{p.name}</span>
+                          <span className="font-mono text-gray-400 text-[10px]">{p.position}</span>
+                          <span className="text-gray-500 text-[10px] ml-1.5 font-mono">{formatSalary(p.capHit)}</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => togglePlayerA(p)}
+                        className="bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white px-2 py-1 rounded font-bold text-[11px] transition"
+                      >
+                        + Trade
+                      </button>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
 
-          {/* TEAM B */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-gray-200">Team B</h2>
-            <select
-              value={teamB}
-              onChange={(e) => { setTeamB(e.target.value); setTradingB([]); }}
-              className="w-full bg-gray-900 border border-gray-700 text-gray-100 rounded p-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select Team B</option>
-              {teams.map(t => (
-                <option key={t.id} value={t.id}>{t.displayName}</option>
-              ))}
-            </select>
-
-            <div className="grid grid-cols-2 gap-4">
-               {/* Giving B (Getting A) */}
-               <div 
-                className="bg-blue-900/20 rounded-xl p-4 border border-blue-900/50 min-h-[400px]"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, 'A', true)}
-              >
-                <h3 className="text-sm font-medium text-blue-400 uppercase mb-3">Giving (To A)</h3>
-                {tradingB.length === 0 && <div className="text-gray-500 text-sm italic">Drag players here.</div>}
-                {tradingB.map(p => renderPlayer(p, 'B', true))}
+          {/* ══════════════════════ TEAM B PANEL ══════════════════════ */}
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-5">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-3">
+                {teamBObj && (
+                  <img
+                    src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/${teamBObj.abbreviation.toLowerCase()}.png&w=48&h=48`}
+                    alt=""
+                    className="w-10 h-10 object-contain bg-gray-950 p-1 rounded-xl border border-gray-800"
+                  />
+                )}
+                <div>
+                  <h2 className="text-lg font-bold text-white">Team B</h2>
+                  <span className="text-xs text-gray-400 font-mono">
+                    Giving {tradingPlayersB.length} Players + {tradingPicksB.length} Picks
+                  </span>
+                </div>
               </div>
 
-              {/* Roster B */}
-              <div 
-                className="bg-gray-900/50 rounded-xl p-4 border border-gray-800 min-h-[400px]"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, 'B', false)}
+              <select
+                value={teamBId}
+                onChange={(e) => setTeamBId(e.target.value)}
+                className="bg-gray-950 border border-gray-800 text-white rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <h3 className="text-sm font-medium text-gray-400 uppercase mb-3">Roster</h3>
-                {rosterB.length === 0 && teamB && <div className="text-gray-500 text-sm italic">No tradable players found.</div>}
-                {rosterB.map(p => renderPlayer(p, 'B', false))}
+                {teams.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.city} {t.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Trade Package Selected by Team B */}
+            <div className="bg-amber-950/20 border border-amber-900/40 rounded-xl p-3.5 space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-amber-400 uppercase tracking-wider">
+                <span>{teamBObj?.name || 'Team B'} Trade Package</span>
+                <span>{formatSalary(capOutB)} Cap</span>
+              </div>
+
+              {tradingPlayersB.length === 0 && tradingPicksB.length === 0 ? (
+                <p className="text-gray-500 text-xs italic py-2">Click "+ Trade" on players or draft picks below.</p>
+              ) : (
+                <div className="space-y-1.5">
+                  {tradingPlayersB.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center justify-between bg-gray-950 border border-gray-800 px-3 py-1.5 rounded-lg text-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold font-mono text-gray-300">{p.position}</span>
+                        <span className="text-white font-medium">{p.name}</span>
+                        <span className="text-gray-500 font-mono">{formatSalary(p.capHit)}</span>
+                      </div>
+                      <button
+                        onClick={() => togglePlayerB(p)}
+                        className="text-rose-400 hover:text-rose-300 font-bold px-1.5 py-0.5 rounded hover:bg-rose-950/40"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+
+                  {tradingPicksB.map((pk) => (
+                    <div
+                      key={pk.id}
+                      className="flex items-center justify-between bg-indigo-950/50 border border-indigo-800/60 px-3 py-1.5 rounded-lg text-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-indigo-300">🎟️ {pk.name}</span>
+                        <span className="text-[10px] text-indigo-400 font-mono">({pk.valuePoints} pts)</span>
+                      </div>
+                      <button
+                        onClick={() => togglePickB(pk)}
+                        className="text-rose-400 hover:text-rose-300 font-bold px-1.5 py-0.5 rounded hover:bg-rose-950/40"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Team B Draft Picks Picker */}
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 block">
+                Include Draft Picks
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {DRAFT_PICK_TEMPLATES.map((tmpl) => {
+                  const pickId = `${teamBId}_${tmpl.year}_r${tmpl.round}`;
+                  const isSelected = tradingPicksB.some((pk) => pk.id === pickId);
+                  return (
+                    <button
+                      key={tmpl.name}
+                      onClick={() => togglePickB(tmpl)}
+                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border transition ${
+                        isSelected
+                          ? 'bg-amber-600 text-white border-amber-500'
+                          : 'bg-gray-950 text-gray-400 border-gray-800 hover:text-white hover:bg-gray-800'
+                      }`}
+                    >
+                      {tmpl.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Team B Roster Browser */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+                  Roster ({availableRosterB.length})
+                </span>
+                <input
+                  type="text"
+                  placeholder="Filter player..."
+                  value={searchB}
+                  onChange={(e) => setSearchB(e.target.value)}
+                  className="bg-gray-950 border border-gray-800 text-white text-xs px-2.5 py-1 rounded-lg w-36 outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Position Filter */}
+              <div className="flex overflow-x-auto touch-scroll gap-1 pb-1 scrollbar-none">
+                {POSITIONS.map((pos) => (
+                  <button
+                    key={pos}
+                    onClick={() => setPosFilterB(pos)}
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md transition ${
+                      posFilterB === pos ? 'bg-amber-600 text-white' : 'bg-gray-950 text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {pos}
+                  </button>
+                ))}
+              </div>
+
+              <div className="bg-gray-950 rounded-xl p-2 border border-gray-800 max-h-72 overflow-y-auto space-y-1">
+                {loadingRosterB ? (
+                  <p className="text-gray-500 text-xs py-4 text-center">Loading {teamBObj?.name} roster...</p>
+                ) : availableRosterB.length === 0 ? (
+                  <p className="text-gray-500 text-xs py-4 text-center">No available players found.</p>
+                ) : (
+                  availableRosterB.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-850 transition text-xs"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <img
+                          src={p.photoUrl}
+                          alt=""
+                          className="w-7 h-7 rounded-full bg-gray-800 object-cover flex-shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="truncate">
+                          <span className="font-bold text-white mr-1.5">{p.name}</span>
+                          <span className="font-mono text-gray-400 text-[10px]">{p.position}</span>
+                          <span className="text-gray-500 text-[10px] ml-1.5 font-mono">{formatSalary(p.capHit)}</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => togglePlayerB(p)}
+                        className="bg-amber-600/30 hover:bg-amber-600 text-amber-300 hover:text-white px-2 py-1 rounded font-bold text-[11px] transition"
+                      >
+                        + Trade
+                      </button>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Trade Summary Panel */}
-      <div className="bg-gray-900 rounded-xl p-6 border border-gray-800 mt-8">
-        <h3 className="text-lg font-bold text-gray-100 mb-4">Trade Summary</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h4 className="text-md font-semibold text-gray-300">Team A</h4>
-            <div className="mt-2 space-y-1 text-sm text-gray-400">
-              <p>Cap Traded: <span className="text-red-400">{formatSalary(capHitA)}</span></p>
-              <p>Cap Received: <span className="text-green-400">{formatSalary(capHitB)}</span></p>
-              <p>Net Cap Impact: <span className="text-gray-100 font-medium">{formatSalary(capHitB - capHitA)}</span></p>
+      {/* ── Summary & Trade Evaluation Bar ──────────────────────────── */}
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 sm:p-7 shadow-xl">
+        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <span>⚖️</span> Trade Value & Cap Evaluation
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-sm text-blue-400">{teamAObj?.name || 'Team A'} Outlook</span>
+              <span className={`text-base font-extrabold ${gradeA.color}`}>
+                Grade: {gradeA.grade} ({gradeA.label})
+              </span>
+            </div>
+            <div className="text-xs text-gray-400 space-y-1 font-mono pt-1">
+              <div className="flex justify-between">
+                <span>Cap Sent Out:</span>
+                <span className="text-rose-400">{formatSalary(capOutA)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Cap Taken On:</span>
+                <span className="text-emerald-400">{formatSalary(capInA)}</span>
+              </div>
+              <div className="flex justify-between border-t border-gray-850 pt-1 font-bold text-white">
+                <span>Net Cap Shift:</span>
+                <span className={netCapA > 0 ? 'text-rose-300' : 'text-emerald-300'}>
+                  {netCapA > 0 ? `+${formatSalary(netCapA)}` : formatSalary(netCapA)}
+                </span>
+              </div>
             </div>
           </div>
-          <div>
-            <h4 className="text-md font-semibold text-gray-300">Team B</h4>
-            <div className="mt-2 space-y-1 text-sm text-gray-400">
-              <p>Cap Traded: <span className="text-red-400">{formatSalary(capHitB)}</span></p>
-              <p>Cap Received: <span className="text-green-400">{formatSalary(capHitA)}</span></p>
-              <p>Net Cap Impact: <span className="text-gray-100 font-medium">{formatSalary(capHitA - capHitB)}</span></p>
+
+          <div className="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-sm text-amber-400">{teamBObj?.name || 'Team B'} Outlook</span>
+              <span className={`text-base font-extrabold ${gradeB.color}`}>
+                Grade: {gradeB.grade} ({gradeB.label})
+              </span>
             </div>
-          </div>
-        </div>
-        
-        <div className="mt-6 pt-6 border-t border-gray-800 flex items-center justify-between">
-          <div>
-            <span className="text-sm text-gray-400">Trade Winner (Statistical Value): </span>
-            <strong className="text-lg text-white ml-2">
-              {valueB > valueA ? 'Team A Wins' : valueA > valueB ? 'Team B Wins' : 'Even Trade'}
-            </strong>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-400">Cap Feasibility:</span>
-            {/* Simple check: just show check if neither net impact is over 15M (arbitrary heuristic) */}
-            {(capHitB - capHitA > 15000000) || (capHitA - capHitB > 15000000) ? (
-              <span className="text-red-500 font-bold flex items-center gap-1">❌ Needs restructuring</span>
-            ) : (
-              <span className="text-green-500 font-bold flex items-center gap-1">✅ Passes</span>
-            )}
+            <div className="text-xs text-gray-400 space-y-1 font-mono pt-1">
+              <div className="flex justify-between">
+                <span>Cap Sent Out:</span>
+                <span className="text-rose-400">{formatSalary(capOutB)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Cap Taken On:</span>
+                <span className="text-emerald-400">{formatSalary(capInB)}</span>
+              </div>
+              <div className="flex justify-between border-t border-gray-850 pt-1 font-bold text-white">
+                <span>Net Cap Shift:</span>
+                <span className={netCapB > 0 ? 'text-rose-300' : 'text-emerald-300'}>
+                  {netCapB > 0 ? `+${formatSalary(netCapB)}` : formatSalary(netCapB)}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* ── Modal Breakdown ─────────────────────────────────────────── */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
-          <div className="bg-gray-900 border border-gray-700 rounded-xl max-w-2xl w-full p-6 space-y-6">
-            <h2 className="text-2xl font-bold text-gray-100">Trade Analysis</h2>
-            
-            <div className="space-y-4 text-gray-300">
-              <div>
-                <strong>Side A gives:</strong> {tradingA.length ? tradingA.map(p => getPlayerDisplay(p.playerId)).join(', ') : 'Nothing'}
-              </div>
-              <div>
-                <strong>Side B gives:</strong> {tradingB.length ? tradingB.map(p => getPlayerDisplay(p.playerId)).join(', ') : 'Nothing'}
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex justify-between items-center border-b border-gray-800 pb-3">
+              <h3 className="text-xl font-extrabold text-white">Trade Analysis Breakdown</h3>
+              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-white font-bold text-lg">
+                ✕
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div className="bg-gray-950 p-3.5 rounded-xl border border-gray-800 space-y-2">
+                <div className="font-bold text-blue-400">{teamAObj?.name} Receives:</div>
+                {tradingPlayersB.length === 0 && tradingPicksB.length === 0 ? (
+                  <p className="text-gray-500 italic">None</p>
+                ) : (
+                  <ul className="space-y-1 text-gray-300">
+                    {tradingPlayersB.map((p) => (
+                      <li key={p.id}>• {p.name} ({p.position})</li>
+                    ))}
+                    {tradingPicksB.map((pk) => (
+                      <li key={pk.id} className="text-indigo-300">• {pk.name}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <p>
-                  {valueB > valueA 
-                    ? `Side A receives more statistical position value (\${formatSalary(valueB)}) compared to what they gave up (\${formatSalary(valueA)}). Side A is arguably upgrading their roster.`
-                    : valueA > valueB
-                    ? `Side B receives more statistical position value (\${formatSalary(valueA)}) compared to what they gave up (\${formatSalary(valueB)}). Side B comes out ahead in terms of pure value.`
-                    : 'The trade appears remarkably even in terms of statistical value exchanged.'}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-800/50 p-3 rounded">
-                  <div className="font-semibold mb-1">Team A Cap</div>
-                  <div className={capHitB > capHitA ? 'text-red-400' : 'text-green-400'}>
-                    {(capHitB - capHitA) > 0 ? '+' : ''}{formatSalary(capHitB - capHitA)}
-                  </div>
-                </div>
-                <div className="bg-gray-800/50 p-3 rounded">
-                  <div className="font-semibold mb-1">Team B Cap</div>
-                  <div className={capHitA > capHitB ? 'text-red-400' : 'text-green-400'}>
-                    {(capHitA - capHitB) > 0 ? '+' : ''}{formatSalary(capHitA - capHitB)}
-                  </div>
-                </div>
+              <div className="bg-gray-950 p-3.5 rounded-xl border border-gray-800 space-y-2">
+                <div className="font-bold text-amber-400">{teamBObj?.name} Receives:</div>
+                {tradingPlayersA.length === 0 && tradingPicksA.length === 0 ? (
+                  <p className="text-gray-500 italic">None</p>
+                ) : (
+                  <ul className="space-y-1 text-gray-300">
+                    {tradingPlayersA.map((p) => (
+                      <li key={p.id}>• {p.name} ({p.position})</li>
+                    ))}
+                    {tradingPicksA.map((pk) => (
+                      <li key={pk.id} className="text-indigo-300">• {pk.name}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
 
-            <div className="flex justify-end pt-4 border-t border-gray-800">
-              <button 
+            <div className="p-4 bg-gray-950 rounded-xl border border-gray-800 text-xs sm:text-sm text-gray-300 leading-relaxed">
+              <span className="font-bold text-white block mb-1">Executive Summary:</span>
+              {totalPointsA > totalPointsB ? (
+                <span>
+                  {teamBObj?.name} receives the stronger surplus value package (+{Math.round(totalPointsA - totalPointsB)} pts).
+                  {netCapA < 0 ? ` ${teamAObj?.name} clears ${formatSalary(Math.abs(netCapA))} in salary cap relief.` : ''}
+                </span>
+              ) : (
+                <span>
+                  {teamAObj?.name} secures the superior asset package (+{Math.round(totalPointsB - totalPointsA)} pts).
+                  {netCapB < 0 ? ` ${teamBObj?.name} clears ${formatSalary(Math.abs(netCapB))} in salary cap space.` : ''}
+                </span>
+              )}
+            </div>
+
+            <div className="text-right">
+              <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
+                className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs sm:text-sm font-bold"
               >
-                Close
+                Close Analysis
               </button>
             </div>
           </div>
