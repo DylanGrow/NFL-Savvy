@@ -71,7 +71,7 @@ export default function Standings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [conferences, setConferences] = useState<any[]>([]);
-  const [viewMode, setViewMode] = useState<'division' | 'conference'>('division');
+  const [viewMode, setViewMode] = useState<'division' | 'conference' | 'bracket'>('division');
 
   const loadData = async () => {
     setLoading(true);
@@ -182,10 +182,10 @@ export default function Standings() {
         </div>
 
         {/* View Toggle Tabs */}
-        <div className="flex bg-gray-950 p-1 rounded-xl border border-gray-800 self-stretch sm:self-auto">
+        <div className="flex bg-gray-950 p-1 rounded-xl border border-gray-800 self-stretch sm:self-auto overflow-x-auto">
           <button
             onClick={() => setViewMode('division')}
-            className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] ${
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] whitespace-nowrap ${
               viewMode === 'division' 
                 ? 'bg-blue-600 text-white shadow' 
                 : 'text-gray-400 hover:text-white'
@@ -195,13 +195,23 @@ export default function Standings() {
           </button>
           <button
             onClick={() => setViewMode('conference')}
-            className={`flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] ${
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] whitespace-nowrap ${
               viewMode === 'conference' 
                 ? 'bg-blue-600 text-white shadow' 
                 : 'text-gray-400 hover:text-white'
             }`}
           >
             Playoff Picture
+          </button>
+          <button
+            onClick={() => setViewMode('bracket')}
+            className={`flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] whitespace-nowrap ${
+              viewMode === 'bracket' 
+                ? 'bg-blue-600 text-white shadow' 
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            🏆 Playoff Bracket
           </button>
         </div>
       </div>
@@ -419,6 +429,152 @@ export default function Standings() {
                   </div>
                 </div>
               )}
+
+              {/* Mode 3: Playoff Bracket & Matchups */}
+              {viewMode === 'bracket' && (() => {
+                const sorted = [...entries].sort((a, b) => a.seed - b.seed);
+                const seed1 = sorted[0];
+                const seed2 = sorted[1];
+                const seed3 = sorted[2];
+                const seed4 = sorted[3];
+                const seed5 = sorted[4];
+                const seed6 = sorted[5];
+                const seed7 = sorted[6];
+                const inTheHunt = sorted.slice(7, 11);
+
+                const matchups = [
+                  { highSeed: seed2, lowSeed: seed7, highNum: 2, lowNum: 7, label: 'Wild Card Game 1' },
+                  { highSeed: seed3, lowSeed: seed6, highNum: 3, lowNum: 6, label: 'Wild Card Game 2' },
+                  { highSeed: seed4, lowSeed: seed5, highNum: 4, lowNum: 5, label: 'Wild Card Game 3' },
+                ];
+
+                return (
+                  <div className="space-y-4">
+                    {/* #1 Seed Bye Card */}
+                    {seed1 && (
+                      <div className="bg-gradient-to-r from-emerald-950/40 via-gray-950 to-gray-900 border border-emerald-500/30 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-md font-mono font-extrabold whitespace-nowrap">
+                            #1 SEED
+                          </span>
+                          {seed1.team?.logos?.[0]?.href && (
+                            <img src={seed1.team.logos[0].href} alt="" className="w-9 h-9 object-contain" />
+                          )}
+                          <div>
+                            <h4 className="font-extrabold text-sm sm:text-base text-white">
+                              {seed1.team?.displayName}
+                            </h4>
+                            <p className="text-[11px] text-emerald-400 font-mono">
+                              {seed1.stats.wins ?? seed1.stats.W ?? 0}-{seed1.stats.losses ?? seed1.stats.L ?? 0} · First-Round Bye & Home-Field Advantage
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => navigate(`/teams/${seed1.team?.id}`)}
+                          className="px-3 py-1.5 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-lg text-xs font-semibold text-gray-200 transition"
+                        >
+                          Team Hub &rarr;
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Matchup Cards */}
+                    <div className="space-y-3">
+                      <div className="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center justify-between">
+                        <span>Wild Card Weekend Projections</span>
+                        <span className="text-[10px] text-gray-500 font-normal">Click Compare to simulate</span>
+                      </div>
+
+                      {matchups.map((m, mIdx) => {
+                        if (!m.highSeed || !m.lowSeed) return null;
+                        return (
+                          <div
+                            key={mIdx}
+                            className="bg-gray-950/80 border border-gray-800 rounded-xl p-3.5 space-y-3 hover:border-gray-700 transition"
+                          >
+                            <div className="flex items-center justify-between text-[11px] text-gray-400 font-semibold border-b border-gray-850 pb-2">
+                              <span className="text-gray-300 font-semibold">{m.label}</span>
+                              <span className="text-blue-400 font-mono font-bold">#{m.lowNum} @ #{m.highNum}</span>
+                            </div>
+
+                            {/* Away (Low Seed) */}
+                            <div className="flex items-center justify-between text-xs sm:text-sm">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">
+                                  #{m.lowNum}
+                                </span>
+                                {m.lowSeed.team?.logos?.[0]?.href && (
+                                  <img src={m.lowSeed.team.logos[0].href} alt="" className="w-5 h-5 object-contain" />
+                                )}
+                                <span className="font-semibold text-gray-200 truncate">
+                                  {m.lowSeed.team?.displayName}
+                                </span>
+                              </div>
+                              <span className="font-mono text-gray-400 text-xs font-bold">
+                                {m.lowSeed.stats.wins ?? m.lowSeed.stats.W ?? 0}-{m.lowSeed.stats.losses ?? m.lowSeed.stats.L ?? 0}
+                              </span>
+                            </div>
+
+                            {/* Home (High Seed) */}
+                            <div className="flex items-center justify-between text-xs sm:text-sm">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-mono font-bold">
+                                  #{m.highNum}
+                                </span>
+                                {m.highSeed.team?.logos?.[0]?.href && (
+                                  <img src={m.highSeed.team.logos[0].href} alt="" className="w-5 h-5 object-contain" />
+                                )}
+                                <span className="font-semibold text-gray-200 truncate">
+                                  {m.highSeed.team?.displayName}
+                                </span>
+                              </div>
+                              <span className="font-mono text-gray-400 text-xs font-bold">
+                                {m.highSeed.stats.wins ?? m.highSeed.stats.W ?? 0}-{m.highSeed.stats.losses ?? m.highSeed.stats.L ?? 0}
+                              </span>
+                            </div>
+
+                            <div className="pt-2 border-t border-gray-850 flex items-center justify-between gap-2 text-xs">
+                              <span className="text-[10px] text-gray-500">Host: #{m.highNum} {m.highSeed.team?.name}</span>
+                              <button
+                                onClick={() => navigate(`/comparator?mode=teams&teamA=${m.lowSeed.team?.id}&teamB=${m.highSeed.team?.id}`)}
+                                className="px-2.5 py-1 bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 border border-blue-500/30 rounded-lg text-[11px] font-bold transition flex items-center gap-1"
+                              >
+                                ⚔️ Compare H2H
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* In The Hunt (Seeds #8 to #11) */}
+                    {inTheHunt.length > 0 && (
+                      <div className="bg-gray-950 border border-gray-800 rounded-xl p-3.5 space-y-2 mt-4">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                          <span>🎯</span> In The Hunt (Wild Card Chase)
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          {inTheHunt.map((h, hIdx) => (
+                            <div
+                              key={h.team?.id || hIdx}
+                              onClick={() => navigate(`/teams/${h.team?.id}`)}
+                              className="bg-gray-900/60 p-2 rounded-lg border border-gray-850 flex items-center justify-between cursor-pointer hover:bg-gray-850 transition"
+                            >
+                              <div className="flex items-center gap-1.5 truncate">
+                                <span className="text-gray-500 font-mono text-[10px]">#{hIdx + 8}</span>
+                                <span className="font-semibold text-gray-300 truncate">{h.team?.abbreviation || h.team?.name}</span>
+                              </div>
+                              <span className="font-mono text-gray-400 text-[11px]">
+                                {h.stats.wins ?? h.stats.W ?? 0}-{h.stats.losses ?? h.stats.L ?? 0}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           );
         })}

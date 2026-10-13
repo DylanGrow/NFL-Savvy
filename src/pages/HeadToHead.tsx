@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { getSalary, formatSalary, getTeamCapAllocated, NFL_CAP_2026 } from '../lib/salary';
 import { fetchTeamsData, fetchStadiumsData } from '../lib/data';
@@ -25,7 +26,14 @@ interface ComparedPlayer {
 }
 
 export default function HeadToHead() {
-  const [mode, setMode] = useState<'PLAYERS' | 'TEAMS'>('PLAYERS');
+  const [searchParams] = useSearchParams();
+  const urlTeamA = searchParams.get('teamA');
+  const urlTeamB = searchParams.get('teamB');
+  const urlMode = searchParams.get('mode')?.toUpperCase();
+
+  const [mode, setMode] = useState<'PLAYERS' | 'TEAMS'>(
+    urlMode === 'TEAMS' || urlTeamA || urlTeamB ? 'TEAMS' : 'PLAYERS'
+  );
   const [teams, setTeams] = useState<Team[]>([]);
   const [stadiums, setStadiums] = useState<Record<string, Stadium>>({});
   const [loading, setLoading] = useState(true);
@@ -60,12 +68,19 @@ export default function HeadToHead() {
         const sMap = (stads as Stadium[]).reduce((acc, s) => ({ ...acc, [s.name]: s }), {});
         setStadiums(sMap);
         if (ts.length >= 2) {
-          setTeamAId(ts[0].id);
-          setTeamBId(ts[1].id);
+          const matchedA = urlTeamA
+            ? ts.find(t => t.id === urlTeamA || t.abbreviation.toLowerCase() === urlTeamA.toLowerCase())
+            : null;
+          const matchedB = urlTeamB
+            ? ts.find(t => t.id === urlTeamB || t.abbreviation.toLowerCase() === urlTeamB.toLowerCase())
+            : null;
+
+          setTeamAId(matchedA ? matchedA.id : ts[0].id);
+          setTeamBId(matchedB ? matchedB.id : ts[1].id);
         }
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [urlTeamA, urlTeamB]);
 
   // Fetch Team A Roster
   useEffect(() => {
