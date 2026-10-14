@@ -20,6 +20,8 @@ const Standings   = lazy(() => import('./pages/Standings'));
 const DepthCharts = lazy(() => import('./pages/DepthCharts'));
 const TradeAnalyzer = lazy(() => import('./pages/TradeAnalyzer'));
 const HeadToHead  = lazy(() => import('./pages/HeadToHead'));
+const DraftOrder  = lazy(() => import('./pages/DraftOrder'));
+const Glossary    = lazy(() => import('./pages/Glossary'));
 const ApiSources  = lazy(() => import('./pages/ApiSources'));
 const Referees    = lazy(() => import('./pages/Referees'));
 const NotFound    = lazy(() => import('./pages/NotFound'));
@@ -72,6 +74,9 @@ export default function App() {
               <Route path="/depth-charts"        element={<DepthCharts />} />
               <Route path="/trade-analyzer"      element={<TradeAnalyzer />} />
               <Route path="/comparator"          element={<HeadToHead />} />
+              <Route path="/draft-order"         element={<DraftOrder />} />
+              <Route path="/draft"               element={<DraftOrder />} />
+              <Route path="/glossary"            element={<Glossary />} />
               <Route path="/apis"                element={<ApiSources />} />
               <Route path="/referees"            element={<Referees />} />
               <Route path="*"                    element={<NotFound />} />

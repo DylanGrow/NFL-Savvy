@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { fetchStandingsData } from '../lib/data';
 
@@ -213,6 +213,12 @@ export default function Standings() {
           >
             🏆 Playoff Bracket
           </button>
+          <Link
+            to="/draft-order"
+            className="flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition touch-target min-h-[40px] whitespace-nowrap text-amber-400 hover:text-amber-300 flex items-center justify-center gap-1.5"
+          >
+            <span>🎯</span> Draft Order
+          </Link>
         </div>
       </div>
 

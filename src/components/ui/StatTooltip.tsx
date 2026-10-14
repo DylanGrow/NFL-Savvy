@@ -76,8 +76,8 @@ export function StatTooltip({ statKey, label, className = '' }: StatTooltipProps
       {definition && (
         <div
           role="tooltip"
-          className={`absolute z-50 w-64 max-w-[85vw] p-3 text-xs sm:text-sm text-gray-200 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl transition-all duration-150 bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none ${
-            isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1'
+          className={`absolute z-50 w-64 max-w-[85vw] p-3 text-xs sm:text-sm text-gray-200 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl transition-all duration-150 bottom-full left-1/2 -translate-x-1/2 mb-2 ${
+            isOpen ? 'opacity-100 visible translate-y-0 pointer-events-auto' : 'opacity-0 invisible translate-y-1 pointer-events-none'
           }`}
         >
           <div className="font-semibold text-white mb-1 flex items-center justify-between">
@@ -85,6 +85,16 @@ export function StatTooltip({ statKey, label, className = '' }: StatTooltipProps
             <span className="text-[10px] text-gray-500 font-normal">tap to dismiss</span>
           </div>
           <div className="text-gray-400 text-xs leading-relaxed">{definition}</div>
+          <div className="mt-2 pt-1.5 border-t border-gray-800 text-[10px] flex items-center justify-between">
+            <span className="text-gray-500">Analytics formula</span>
+            <a
+              href="#/glossary"
+              onClick={e => e.stopPropagation()}
+              className="text-blue-400 hover:text-blue-300 font-bold underline"
+            >
+              Glossary Studio &rarr;
+            </a>
+          </div>
           <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-gray-700" />
         </div>
       )}

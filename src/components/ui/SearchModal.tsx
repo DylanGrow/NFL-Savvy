@@ -118,6 +118,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     // 5. Hub Navigation Shortcuts
     const HUB_PAGES = [
+      { name: '2026 NFL Draft Order & Big Board', keywords: ['draft', 'draft order', 'prospect', 'college', 'tankathon', 'picks'], subtitle: 'Reverse standings order, team needs & top 32 college prospects', url: '/draft-order' },
+      { name: 'NFL Analytics Glossary & Passer Rating Studio', keywords: ['glossary', 'rating', 'passer rating', 'formula', 'epa', 'cpoe', 'any/a', 'metrics'], subtitle: 'Interactive passer rating calculator & 40+ analytics definitions', url: '/glossary' },
       { name: 'Injury Report & Medical Wire', keywords: ['injury', 'injuries', 'ir', 'medical', 'hurt'], subtitle: '32-Team Injury Wire, practice status & return dates', url: '/injuries' },
       { name: 'Trade Analyzer', keywords: ['trade', 'analyzer', 'picks', 'swap'], subtitle: 'Simulate blockbuster trades with cap impacts & draft picks', url: '/trade-analyzer' },
       { name: 'Head-to-Head Comparator', keywords: ['compare', 'comparator', 'h2h', 'versus', 'matchup'], subtitle: 'Compare players or franchises side-by-side', url: '/comparator' },
