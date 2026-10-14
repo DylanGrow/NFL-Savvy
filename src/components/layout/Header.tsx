@@ -7,6 +7,7 @@ const navLinks = [
   { name: 'Teams', path: '/teams' },
   { name: 'Players', path: '/players' },
   { name: 'Games', path: '/games' },
+  { name: 'Stadiums & Weather', path: '/stadiums' },
   { name: 'Injuries', path: '/injuries' },
   { name: 'Standings', path: '/standings' },
   { name: 'Draft Order', path: '/draft-order' },

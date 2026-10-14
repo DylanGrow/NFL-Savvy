@@ -22,6 +22,7 @@ const TradeAnalyzer = lazy(() => import('./pages/TradeAnalyzer'));
 const HeadToHead  = lazy(() => import('./pages/HeadToHead'));
 const DraftOrder  = lazy(() => import('./pages/DraftOrder'));
 const Glossary    = lazy(() => import('./pages/Glossary'));
+const Stadiums    = lazy(() => import('./pages/Stadiums'));
 const ApiSources  = lazy(() => import('./pages/ApiSources'));
 const Referees    = lazy(() => import('./pages/Referees'));
 const NotFound    = lazy(() => import('./pages/NotFound'));
@@ -77,6 +78,8 @@ export default function App() {
               <Route path="/draft-order"         element={<DraftOrder />} />
               <Route path="/draft"               element={<DraftOrder />} />
               <Route path="/glossary"            element={<Glossary />} />
+              <Route path="/stadiums"            element={<Stadiums />} />
+              <Route path="/weather"             element={<Stadiums />} />
               <Route path="/apis"                element={<ApiSources />} />
               <Route path="/referees"            element={<Referees />} />
               <Route path="*"                    element={<NotFound />} />

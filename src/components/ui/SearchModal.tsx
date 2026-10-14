@@ -126,6 +126,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       { name: 'Depth Charts', keywords: ['depth', 'depth chart', 'string', 'starter'], subtitle: '1st/2nd/3rd string rosters across all 32 teams', url: '/depth-charts' },
       { name: '2026 Standings & Playoff Picture', keywords: ['standings', 'playoff', 'division', 'seed', 'race'], subtitle: 'Divisional races, wild card hunt & seeding', url: '/standings' },
       { name: 'Salaries & Cap Allocation', keywords: ['salary', 'salaries', 'cap', 'payroll', 'money', 'contract'], subtitle: 'Team cap space, contracts & top earners', url: '/salaries' },
+      { name: 'NFL Stadiums & Weather Center', keywords: ['stadium', 'stadiums', 'weather', 'dome', 'forecast', 'surface', 'turf', 'grass', 'wind'], subtitle: 'All 30 NFL venues, surface types, and live Open-Meteo forecasts', url: '/stadiums' },
       { name: 'Coaching Directory', keywords: ['coach', 'coaches', 'staff', 'coordinator'], subtitle: 'Head coaches, OCs, and DCs across all 32 franchises', url: '/coaches' },
       { name: 'Referees & Officiating Crews', keywords: ['ref', 'referee', 'referees', 'penalty', 'flags', 'crew'], subtitle: 'Crew chiefs, penalty tendencies & home win %', url: '/referees' },
     ];
