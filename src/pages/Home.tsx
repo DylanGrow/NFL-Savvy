@@ -169,33 +169,6 @@ export default function Home() {
     loadData();
   }, [loadData]);
 
-  if (loading && scoreboard.length === 0 && !standings) {
-    return (
-      <div className="app-container py-6 sm:py-8 space-y-6">
-        <div className="h-20 bg-gray-900 border border-gray-800 rounded-2xl animate-pulse" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <SkeletonCard /><SkeletonCard /><SkeletonCard /><SkeletonCard />
-        </div>
-      </div>
-    );
-  }
-
-  if (error && scoreboard.length === 0) {
-    return (
-      <div className="app-container py-12 text-center">
-        <div className="bg-red-950/60 border border-red-800 p-6 rounded-2xl max-w-md mx-auto space-y-4">
-          <p className="text-red-300 font-medium">{error}</p>
-          <button
-            onClick={loadData}
-            className="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition shadow font-semibold text-sm"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const liveGamesCount = scoreboard.filter(e => e.status?.type?.state === 'in').length;
 
   // Extract week-specific top performers from live scoreboard
@@ -250,6 +223,33 @@ export default function Home() {
   const currentDefenseList = useMemo(() => {
     return seasonLeaders[defenseTab] || DEFAULT_SEASON_LEADERS[defenseTab] || [];
   }, [defenseTab, seasonLeaders]);
+
+  if (loading && scoreboard.length === 0 && !standings) {
+    return (
+      <div className="app-container py-6 sm:py-8 space-y-6">
+        <div className="h-20 bg-gray-900 border border-gray-800 rounded-2xl animate-pulse" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <SkeletonCard /><SkeletonCard /><SkeletonCard /><SkeletonCard />
+        </div>
+      </div>
+    );
+  }
+
+  if (error && scoreboard.length === 0) {
+    return (
+      <div className="app-container py-12 text-center">
+        <div className="bg-red-950/60 border border-red-800 p-6 rounded-2xl max-w-md mx-auto space-y-4">
+          <p className="text-red-300 font-medium">{error}</p>
+          <button
+            onClick={loadData}
+            className="px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition shadow font-semibold text-sm"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container py-4 sm:py-8 space-y-8 sm:space-y-10 font-sans text-white">
