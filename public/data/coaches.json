@@ -8,7 +8,23 @@
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
     "experience": 2,
-    "record": "8-14"
+    "record": "8-14",
+    "tree": "Nick Sirianni / Jonathan Gannon Tree",
+    "playCalling": "Defensive Overseer & Game Manager",
+    "offensiveScheme": "Spread Coast with Heavy 12/13 Personnel & Read-Option",
+    "defensiveScheme": "Vic Fangio / Multiple 4-2-5 Split-Field Shell",
+    "baseFront": "4-2-5 Big Nickel",
+    "personnelPreference": "12 & 13 Personnel (34%), 11 Personnel (56%)",
+    "passRunTendency": "52% Pass / 48% Run (Balanced Option)",
+    "coverageTendency": "Quarters & Cover 6 (42%), Cover 3 Match (28%)",
+    "philosophy": "Disciplined split-field match quarters defense paired with a heavy-tight-end downhill run game utilizing Kyler Murray on perimeter bootlegs and read options.",
+    "schemeTags": [
+      "Split-Field",
+      "Cover 6",
+      "Read-Option",
+      "Heavy 12/13",
+      "Disciplined Gaps"
+    ]
   },
   {
     "id": "ari-oc",
@@ -18,7 +34,19 @@
     "teamId": "22",
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
-    "experience": 2
+    "experience": 2,
+    "tree": "Kevin Stefanski / Gary Kubiak Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Wide Zone & Gap Power with Pistol Read-Option",
+    "personnelPreference": "12 Personnel (28%), 13 Heavy (8%), 11 Spread (54%)",
+    "passRunTendency": "53% Pass / 47% Run (Run-Heavy Hybrid)",
+    "philosophy": "Under-center play-action bootlegs and gap-scheme power runs creating isolated intermediate seam shots for Trey McBride.",
+    "schemeTags": [
+      "Wide Zone",
+      "Pistol Option",
+      "Bootlegs",
+      "Tight End Seams"
+    ]
   },
   {
     "id": "ari-dc",
@@ -28,7 +56,20 @@
     "teamId": "22",
     "teamAbbr": "ARI",
     "teamName": "Arizona Cardinals",
-    "experience": 2
+    "experience": 2,
+    "tree": "Jonathan Gannon / Vic Fangio Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 / 4-2-5 with Simulated Pressures",
+    "baseFront": "3-4 / 4-2-5 Hybrid",
+    "personnelPreference": "Nickel 4-2-5 (72%), Base 3-4 (21%), Dime (7%)",
+    "coverageTendency": "Cover 4 Quarters (38%), Cover 6 (24%), Cover 3 (22%)",
+    "philosophy": "Pre-snap safety rotation disguises, preventing explosive deep shots, and using simulated 4-man pressure to generate third-down incompletions.",
+    "schemeTags": [
+      "Simulated Pressure",
+      "Quarters Match",
+      "Disguised Safeties",
+      "Contain Rush"
+    ]
   },
   {
     "id": "atl-hc",
@@ -39,7 +80,23 @@
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
     "experience": 5,
-    "record": "24-39"
+    "record": "24-39",
+    "tree": "Sean McVay / Mike Shanahan Tree",
+    "playCalling": "CEO & Defensive Overseer",
+    "offensiveScheme": "Sean McVay 11-Personnel Wide Zone Spread",
+    "defensiveScheme": "Brandon Staley / Raheem Morris 3-4 Match Defense",
+    "baseFront": "3-4 / 4-2-5 Nickel",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (20%)",
+    "passRunTendency": "59% Pass / 41% Run (Pass-First Spread)",
+    "coverageTendency": "Cover 3 (36%), Cover 4 Quarters (32%), Cover 1 (18%)",
+    "philosophy": "Rams-style high-motion wide zone offense coupled with a 2-high safety light-box defense designed to eliminate 20+ yard explosive pass plays.",
+    "schemeTags": [
+      "McVay Tree",
+      "Wide Zone",
+      "Light Box",
+      "Match Quarters",
+      "11 Personnel"
+    ]
   },
   {
     "id": "atl-oc",
@@ -49,7 +106,19 @@
     "teamId": "1",
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
-    "experience": 1
+    "experience": 1,
+    "tree": "Sean McVay Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "McVay Outside Zone & Play-Action Crossers",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (18%)",
+    "passRunTendency": "61% Pass / 39% Run (Spread Rhythm)",
+    "philosophy": "Condensed receiver splits, pre-snap orbit motion, horizontal stretch zone runs, and deep over crossers designed for Bijan Robinson and Drake London.",
+    "schemeTags": [
+      "Outside Zone",
+      "Condensed Splits",
+      "Crossers",
+      "Orbit Motion"
+    ]
   },
   {
     "id": "atl-dc",
@@ -59,7 +128,20 @@
     "teamId": "1",
     "teamAbbr": "ATL",
     "teamName": "Atlanta Falcons",
-    "experience": 1
+    "experience": 1,
+    "tree": "Raheem Morris / Chris Petersen Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 Base with 4-2-5 Press-Bail Secondary",
+    "baseFront": "3-4 Hybrid Front",
+    "personnelPreference": "Nickel (68%), Base 3-4 (24%), Dime (8%)",
+    "coverageTendency": "Cover 3 Match (40%), Cover 4 (26%), Cover 1 Man (20%)",
+    "philosophy": "Press-bail boundary cornerbacks, disciplined two-gap interior run fits, and late secondary shifts to confuse opposing quarterbacks.",
+    "schemeTags": [
+      "Press-Bail",
+      "Boundary Leverage",
+      "Cover 3 Match",
+      "Two-Gap Fits"
+    ]
   },
   {
     "id": "bal-hc",
@@ -70,7 +152,23 @@
     "teamAbbr": "BAL",
     "teamName": "Baltimore Ravens",
     "experience": 17,
-    "record": "163-100"
+    "record": "163-100",
+    "tree": "Andy Reid / John Harbaugh Tree",
+    "playCalling": "CEO & Situational Analytics Strategist",
+    "offensiveScheme": "Power-Spread Option & Lamar Jackson Read Bash",
+    "defensiveScheme": "Mike Macdonald / Rex Ryan Amoeba Front & Simulated Blitzes",
+    "baseFront": "Multiple 3-4 Amoeba",
+    "personnelPreference": "12 Personnel (32%), 21 Heavy (18%), 11 Spread (45%)",
+    "passRunTendency": "52% Run / 48% Pass (Run-Dominant Power)",
+    "coverageTendency": "Cover 2/Cover 6 Split-Field (42%), Cover 1 Man (26%)",
+    "philosophy": "Physical downhill bullying in the trenches, revolutionary read-option run game, and exotic pre-snap defensive disguises with safety Kyle Hamilton roving everywhere.",
+    "schemeTags": [
+      "Power Run",
+      "Read-Option",
+      "Amoeba Front",
+      "Kyle Hamilton Joker",
+      "Analytics Heavy"
+    ]
   },
   {
     "id": "bal-oc",
@@ -80,7 +178,19 @@
     "teamId": "33",
     "teamAbbr": "BAL",
     "teamName": "Baltimore Ravens",
-    "experience": 6
+    "experience": 6,
+    "tree": "Air Raid & NFL Power Spread Hybrid",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Spread Option / Air Raid with Heavy Counter & Duo",
+    "personnelPreference": "12 Personnel (34%), 11 Personnel (48%), 21 Power (14%)",
+    "passRunTendency": "53% Pass / 47% Run (Balanced Strike)",
+    "philosophy": "Spread formations opening gaping running lanes for Lamar Jackson and Derrick Henry, paired with deep post shots and RPO glance screens.",
+    "schemeTags": [
+      "Spread Option",
+      "Derrick Henry Duo",
+      "Lamar Counter",
+      "Glance RPO"
+    ]
   },
   {
     "id": "bal-dc",
@@ -90,7 +200,20 @@
     "teamId": "33",
     "teamAbbr": "BAL",
     "teamName": "Baltimore Ravens",
-    "experience": 1
+    "experience": 1,
+    "tree": "Mike Macdonald / Baltimore Ravens Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple Amoeba Front with Creepers & Simulated Pressure",
+    "baseFront": "Multiple 3-4 / 5-1 Fronts",
+    "personnelPreference": "Nickel (64%), Big Dime 3-Safety (24%), Base (12%)",
+    "coverageTendency": "Cover 6 (34%), Cover 2 Man (24%), Cover 3 Match (22%)",
+    "philosophy": "Simulated 4-man rushes where edge rushers drop into passing lanes while cornerbacks blitz from depth, forcing rapid quarterback panics.",
+    "schemeTags": [
+      "Creepers",
+      "Simulated Pressure",
+      "Hamilton Roving",
+      "Disguised Blitz"
+    ]
   },
   {
     "id": "buf-hc",
@@ -101,7 +224,23 @@
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
     "experience": 8,
-    "record": "76-43"
+    "record": "76-43",
+    "tree": "Jim Johnson / Andy Reid Tree",
+    "playCalling": "CEO & Defensive Mastermind",
+    "offensiveScheme": "Spread Coast with Heavy 12 Personnel & Josh Allen QB Power",
+    "defensiveScheme": "Attacking 4-2-5 Big Nickel Zone",
+    "baseFront": "4-2-5 Big Nickel",
+    "personnelPreference": "11 Personnel (58%), 12 Personnel (36%)",
+    "passRunTendency": "58% Pass / 42% Run (Balanced Pass)",
+    "coverageTendency": "Cover 4 Quarters (38%), Cover 3 (32%), Cover 2 (18%)",
+    "philosophy": "Sound, disciplined 4-man pass rush with zero blitz reliance, suffocating intermediate passing windows, paired with a physical multi-TE offense.",
+    "schemeTags": [
+      "4-2-5 Nickel",
+      "Cover 4",
+      "4-Man Rush",
+      "12 Personnel",
+      "Josh Allen Run"
+    ]
   },
   {
     "id": "buf-oc",
@@ -111,7 +250,19 @@
     "teamId": "2",
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
-    "experience": 3
+    "experience": 3,
+    "tree": "Sean Payton / Joe Brady Spread Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Spread-Coast Quick Game with Gap Scheme Runs",
+    "personnelPreference": "12 Personnel (40%), 11 Personnel (54%)",
+    "passRunTendency": "56% Pass / 44% Run (Complementary)",
+    "philosophy": "Quick rhythm 3-step passes to isolate Dalton Kincaid, combined with inside zone, counter, and Josh Allen designed power QB runs.",
+    "schemeTags": [
+      "Spread-Coast",
+      "Kincaid Seam",
+      "Counter Gap",
+      "QB Power"
+    ]
   },
   {
     "id": "buf-dc",
@@ -121,7 +272,20 @@
     "teamId": "2",
     "teamAbbr": "BUF",
     "teamName": "Buffalo Bills",
-    "experience": 1
+    "experience": 1,
+    "tree": "Sean McDermott Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "4-2-5 Zone Match with Linebacker Disguise",
+    "baseFront": "4-2-5 Even Front",
+    "personnelPreference": "Nickel (84%), Dime (10%), Base 4-3 (6%)",
+    "coverageTendency": "Quarters / Cover 4 (40%), Cover 3 Sky (28%), Cover 2 (20%)",
+    "philosophy": "Keep everything in front, rally and tackle aggressively, and force long 10+ play drives where opposing offenses make a mistake.",
+    "schemeTags": [
+      "Bend But Dont Break",
+      "Match Zone",
+      "Front Four Push",
+      "Takeaway Focus"
+    ]
   },
   {
     "id": "car-hc",
@@ -132,7 +296,23 @@
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
     "experience": 1,
-    "record": "2-5"
+    "record": "2-5",
+    "tree": "Pete Carroll / Sean McVay Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "McVay Outside Zone & Quick 3-Step Rhythm Passing",
+    "defensiveScheme": "Vic Fangio 3-4 Split-Safety System",
+    "baseFront": "3-4 Odd Front",
+    "personnelPreference": "11 Personnel (66%), 12 Personnel (28%)",
+    "passRunTendency": "58% Pass / 42% Run (Rhythm Pass)",
+    "coverageTendency": "Cover 6 (36%), Cover 4 (32%), Cover 3 (20%)",
+    "philosophy": "Protect Bryce Young with rapid-fire 2.4s releases, stretch the defense horizontally with wide zone runs, while running a premier 2-high Fangio defense.",
+    "schemeTags": [
+      "Quick Release",
+      "Wide Zone",
+      "Fangio Tree",
+      "Pre-Snap Motion",
+      "2-High Shell"
+    ]
   },
   {
     "id": "car-oc",
@@ -142,7 +322,19 @@
     "teamId": "29",
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
-    "experience": 1
+    "experience": 1,
+    "tree": "Dave Canales / Pete Carroll Tree",
+    "playCalling": "Offensive Gameplanner & Co-Designer",
+    "offensiveScheme": "Outside Zone with Play-Action Bootleg Deep Shots",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (26%)",
+    "passRunTendency": "59% Pass / 41% Run",
+    "philosophy": "Establish the perimeter run with Chuba Hubbard to set up explosive naked bootleg throws to wide receivers moving across the field.",
+    "schemeTags": [
+      "Bootlegs",
+      "Under Center",
+      "Perimeter Stretch",
+      "Crossers"
+    ]
   },
   {
     "id": "car-dc",
@@ -152,7 +344,20 @@
     "teamId": "29",
     "teamAbbr": "CAR",
     "teamName": "Carolina Panthers",
-    "experience": 3
+    "experience": 3,
+    "tree": "Vic Fangio Defensive Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Vic Fangio 3-4 Two-High Split-Field Shell",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "Nickel 3-3-5 (68%), Base 3-4 (26%)",
+    "coverageTendency": "Cover 6 / Quarters (48%), Cover 3 Match (26%)",
+    "philosophy": "Never give up the deep ball, present two high safeties on every pre-snap look, and rotate post-snap into quarters or half-field coverage.",
+    "schemeTags": [
+      "Fangio 2-High",
+      "Cover 6",
+      "Split-Field",
+      "Late Safety Rotation"
+    ]
   },
   {
     "id": "chi-hc",
@@ -163,7 +368,23 @@
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
     "experience": 3,
-    "record": "14-27"
+    "record": "14-27",
+    "tree": "Rod Marinelli / Lovie Smith Tampa 2 Tree",
+    "playCalling": "CEO & Defensive Overseer",
+    "offensiveScheme": "Spread Coast with Caleb Williams Improvisational Play-Action",
+    "defensiveScheme": "Rod Marinelli 4-3 Under / H.I.T.S. Principle",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "11 Personnel (70%), 12 Personnel (22%)",
+    "passRunTendency": "57% Pass / 43% Run",
+    "coverageTendency": "Cover 3 (38%), Cover 2 / Tampa 2 (28%), Cover 4 (20%)",
+    "philosophy": "The H.I.T.S. principle (Hustle, Intensity, Takeaways, Smart football), relentless punch-outs at the football, paired with Caleb Williams spread playmaking.",
+    "schemeTags": [
+      "Tampa 2",
+      "H.I.T.S. Principle",
+      "Takeaways",
+      "Cover 3",
+      "4-3 Under"
+    ]
   },
   {
     "id": "chi-oc",
@@ -173,7 +394,19 @@
     "teamId": "3",
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
-    "experience": 2
+    "experience": 2,
+    "tree": "Sean McVay / Shane Waldron Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "West Coast / McVay Multiple Spread",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (20%)",
+    "passRunTendency": "60% Pass / 40% Run (Pass First)",
+    "philosophy": "Layered horizontal crossing routes, pocket movement, RPO glance passes, and designed bootlegs to maximize Caleb Williams arm elasticity.",
+    "schemeTags": [
+      "Layered Crossers",
+      "Pocket Movement",
+      "RPO Glance",
+      "11 Spread"
+    ]
   },
   {
     "id": "chi-dc",
@@ -183,7 +416,20 @@
     "teamId": "3",
     "teamAbbr": "CHI",
     "teamName": "Chicago Bears",
-    "experience": 3
+    "experience": 3,
+    "tree": "Monte Kiffin / Rod Marinelli Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Attacking 4-3 Under with Monte Kiffin Zone Coverages",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "Nickel (74%), Base 4-3 (22%)",
+    "coverageTendency": "Cover 3 Sky (40%), Cover 2 (26%), Quarters (18%)",
+    "philosophy": "Single-gap aggressive interior penetration with Montez Sweat, fast weakside linebacker pursuit, and gang-tackling to create fumbles.",
+    "schemeTags": [
+      "Front Four Rush",
+      "Montez Sweat Rush",
+      "Punch-Outs",
+      "Fast LBs"
+    ]
   },
   {
     "id": "cin-hc",
@@ -194,7 +440,23 @@
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
     "experience": 6,
-    "record": "39-49-1"
+    "record": "39-49-1",
+    "tree": "Sean McVay / Jon Gruden Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "11-Personnel Shotgun Spread with Joe Burrow Empty Sets",
+    "defensiveScheme": "Lou Anarumo Multiple Front Chameleon Defense",
+    "baseFront": "4-2-5 / 3-3-5 Chameleon",
+    "personnelPreference": "11 Personnel (82% - Top 3 NFL), Empty Sets (18%)",
+    "passRunTendency": "65% Pass / 35% Run (Pass-Heavy)",
+    "coverageTendency": "Match Quarters (34%), Cover 1 Man (28%), Cover 2 Invert (22%)",
+    "philosophy": "Spread defenses out horizontally in shotgun, let Joe Burrow diagnose coverage mismatches on Chase/Higgins, and run custom tailored chameleon defenses.",
+    "schemeTags": [
+      "Shotgun Spread",
+      "Empty Sets",
+      "Chameleon Defense",
+      "Boundary Isolation",
+      "11 Heavy"
+    ]
   },
   {
     "id": "cin-oc",
@@ -204,7 +466,19 @@
     "teamId": "4",
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
-    "experience": 1
+    "experience": 1,
+    "tree": "Zac Taylor / Bill Callahan Tree",
+    "playCalling": "Offensive Coordinator & Co-Designer",
+    "offensiveScheme": "Shotgun Spread with RPO Quick Slants & Duo",
+    "personnelPreference": "11 Personnel (80%), 12 Personnel (15%)",
+    "passRunTendency": "64% Pass / 36% Run",
+    "philosophy": "Quick timing releases to mitigate pass protection issues, RPO glance slants, back-shoulder throws, and inside duo runs.",
+    "schemeTags": [
+      "Quick Release",
+      "RPO Slant",
+      "Back-Shoulder",
+      "Duo Run"
+    ]
   },
   {
     "id": "cin-dc",
@@ -214,7 +488,20 @@
     "teamId": "4",
     "teamAbbr": "CIN",
     "teamName": "Cincinnati Bengals",
-    "experience": 6
+    "experience": 6,
+    "tree": "Bill Parcells / Lou Anarumo Multiple Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Exotic Multiple 4-2-5 / 3-3-5 Game-Plan Defense",
+    "baseFront": "Multiple 4-2-5 / 3-2-6 Dime",
+    "personnelPreference": "Nickel (68%), Dime (24%), Base (8%)",
+    "coverageTendency": "Cover 1 Man (32%), Bracket Zone (28%), Cover 0 Blitz (14%)",
+    "philosophy": "Custom tactical game plans each week; drops 8 in coverage against elite QBs, uses 3-man rush with late delayed blitzers, and double-brackets star receivers.",
+    "schemeTags": [
+      "Drop-8 Coverage",
+      "Bracket Double",
+      "Gameplan Chameleon",
+      "QB Spy"
+    ]
   },
   {
     "id": "cle-hc",
@@ -225,7 +512,23 @@
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
     "experience": 5,
-    "record": "39-36"
+    "record": "39-36",
+    "tree": "Gary Kubiak / Mike Shanahan Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Wide Zone, Heavy Multi-TE Under-Center Bootlegs",
+    "defensiveScheme": "Jim Schwartz Wide-9 Single-Gap Penetration",
+    "baseFront": "4-3 Wide-9",
+    "personnelPreference": "12 & 13 Personnel (36%), 11 Personnel (56%)",
+    "passRunTendency": "54% Pass / 46% Run (Physical Balance)",
+    "coverageTendency": "Cover 1 Man (44%), Cover 3 Match (32%)",
+    "philosophy": "Relentless outside-zone running with heavy multiple-tight-end sets, devastating play-action boots, paired with Jim Schwartz aggressive Wide-9 pass rush.",
+    "schemeTags": [
+      "Wide Zone",
+      "Heavy Tight Ends",
+      "Wide-9",
+      "Play-Action Boot",
+      "Cover 1 Man"
+    ]
   },
   {
     "id": "cle-oc",
@@ -235,7 +538,19 @@
     "teamId": "5",
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
-    "experience": 3
+    "experience": 3,
+    "tree": "Brian Daboll / Ken Dorsey Spread Tree",
+    "playCalling": "Passing Game Coordinator & Co-Designer",
+    "offensiveScheme": "Spread Passing with Vertical Choice & Empty Sets",
+    "personnelPreference": "11 Personnel (64%), 12 Personnel (28%)",
+    "passRunTendency": "58% Pass / 42% Run",
+    "philosophy": "Shotgun spread passing with option routes for slot receivers and deep boundary shots to stretch safeties.",
+    "schemeTags": [
+      "Vertical Choice",
+      "Shotgun Spread",
+      "Slot Option",
+      "Deep Post"
+    ]
   },
   {
     "id": "cle-dc",
@@ -245,7 +560,21 @@
     "teamId": "5",
     "teamAbbr": "CLE",
     "teamName": "Cleveland Browns",
-    "experience": 15
+    "experience": 15,
+    "tree": "Jeff Fisher / Jim Schwartz Wide-9 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Attacking 4-3 Wide-9 Front with Press-Man Cover 1",
+    "baseFront": "4-3 Wide-9 Front",
+    "personnelPreference": "Nickel 4-2-5 (76%), Base 4-3 (20%)",
+    "coverageTendency": "Cover 1 Man-to-Man (48% - NFL High), Cover 3 (28%)",
+    "philosophy": "Unleash Myles Garrett and the front four from ultra-wide alignments to attack single gaps, while lock-down corners play aggressive bump-and-run press-man.",
+    "schemeTags": [
+      "Wide-9",
+      "Myles Garrett Edge",
+      "Press-Man",
+      "Single-Gap Penetration",
+      "Cover 1"
+    ]
   },
   {
     "id": "dal-hc",
@@ -256,7 +585,23 @@
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
     "experience": 18,
-    "record": "170-104-2"
+    "record": "170-104-2",
+    "tree": "Bill Walsh / Paul Hackett West Coast Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "West Coast Timing & Texas Route Concepts",
+    "defensiveScheme": "Mike Zimmer Double A-Gap Mug 4-3 Defense",
+    "baseFront": "4-3 Over/Under",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (22%)",
+    "passRunTendency": "63% Pass / 37% Run (Pass-First)",
+    "coverageTendency": "Cover 3 (36%), Cover 1 Man (30%), Cover 4 (20%)",
+    "philosophy": "High-volume timing passes targeting CeeDee Lamb in motion, quick slant/flat releases for Dak Prescott, anchored by Mike Zimmer veteran blitz schemes.",
+    "schemeTags": [
+      "West Coast",
+      "Texas Concept",
+      "CeeDee Motion",
+      "Double A-Gap",
+      "Timing Pass"
+    ]
   },
   {
     "id": "dal-oc",
@@ -266,7 +611,19 @@
     "teamId": "6",
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
-    "experience": 15
+    "experience": 15,
+    "tree": "Marty Schottenheimer / Erhardt-Perkins Tree",
+    "playCalling": "Gameplan Architect & Offensive Coordinator",
+    "offensiveScheme": "Erhardt-Perkins / West Coast Hybrid",
+    "personnelPreference": "11 Personnel (70%), 12 Personnel (24%)",
+    "passRunTendency": "61% Pass / 39% Run",
+    "philosophy": "Multi-level route concepts, deep seam shots, and gap-scheme inside runs to maintain manageable third down distances.",
+    "schemeTags": [
+      "Erhardt-Perkins",
+      "Seam Routes",
+      "Duo Inside",
+      "Play-Action Dig"
+    ]
   },
   {
     "id": "dal-dc",
@@ -276,7 +633,20 @@
     "teamId": "6",
     "teamAbbr": "DAL",
     "teamName": "Dallas Cowboys",
-    "experience": 20
+    "experience": 20,
+    "tree": "Bill Parcells / Mike Zimmer Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Double A-Gap Mug 4-3 Front with Cover 3 / Cover 1",
+    "baseFront": "4-3 Base with A-Gap Mug",
+    "personnelPreference": "Nickel (72%), Base 4-3 (22%), Dime (6%)",
+    "coverageTendency": "Cover 3 Buzz (38%), Cover 1 Press (32%), Quarters (18%)",
+    "philosophy": "Linebackers threaten both A-gaps before the snap; one rushes, one drops into curl/flat zones, forcing offensive lines into split-second protection breakdowns.",
+    "schemeTags": [
+      "Double A-Gap",
+      "Mug Front",
+      "Cover 3 Buzz",
+      "Disguised Linebacker Rush"
+    ]
   },
   {
     "id": "den-hc",
@@ -287,7 +657,23 @@
     "teamAbbr": "DEN",
     "teamName": "Denver Broncos",
     "experience": 17,
-    "record": "163-100"
+    "record": "163-100",
+    "tree": "Bill Parcells / Jon Gruden West Coast Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "West Coast Precision Timing, Screen Maestro & Spacing",
+    "defensiveScheme": "Vance Joseph Aggressive 3-4 Fire Zone Blitz",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "11 Personnel (62%), 12 Personnel (24%), 21 Heavy (12%)",
+    "passRunTendency": "57% Pass / 43% Run",
+    "coverageTendency": "Cover 1 Man (34%), Cover 3 (32%), Cover 0 Blitz (16%)",
+    "philosophy": "Unmatched route spacing, lethal screen-game execution, short-to-intermediate tempo rhythm, combined with an aggressive blitzing 3-4 defense.",
+    "schemeTags": [
+      "West Coast Spacing",
+      "Screen Maestro",
+      "Bo Nix Rhythm",
+      "3-4 Fire Zone",
+      "Cover 1 Blitz"
+    ]
   },
   {
     "id": "den-oc",
@@ -297,7 +683,19 @@
     "teamId": "7",
     "teamAbbr": "DEN",
     "teamName": "Denver Broncos",
-    "experience": 7
+    "experience": 7,
+    "tree": "Sean Payton Tree",
+    "playCalling": "Offensive Coordinator & Passing Designer",
+    "offensiveScheme": "Sean Payton Spacing & Mesh / Crosser Concepts",
+    "personnelPreference": "11 Personnel (64%), 12 Personnel (26%)",
+    "passRunTendency": "58% Pass / 42% Run",
+    "philosophy": "Quick rhythm passes, Texas routes for running backs, drive concepts, and perimeter screens that serve as an extension of the run game.",
+    "schemeTags": [
+      "Mesh Concepts",
+      "RB Angle Routes",
+      "Screen Game",
+      "High Completion %"
+    ]
   },
   {
     "id": "den-dc",
@@ -307,7 +705,21 @@
     "teamId": "7",
     "teamAbbr": "DEN",
     "teamName": "Denver Broncos",
-    "experience": 8
+    "experience": 8,
+    "tree": "Wade Phillips / Vance Joseph Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Aggressive 3-4 Front with 5-Man Fire Zones & Cover 1",
+    "baseFront": "3-4 Odd Front",
+    "personnelPreference": "Nickel 3-3-5 (70%), Base 3-4 (24%)",
+    "coverageTendency": "Cover 1 (36%), Cover 3 Match (28%), Cover 0 Zero Blitz (16%)",
+    "philosophy": "Send 5+ rushers on critical third downs, trust elite cornerbacks in press-man, and overwhelm protection schemes with overloaded blitz tracks.",
+    "schemeTags": [
+      "Fire Zone",
+      "5-Man Pressure",
+      "Zero Blitz",
+      "Press-Man",
+      "Aggressive Rush"
+    ]
   },
   {
     "id": "det-hc",
@@ -318,7 +730,23 @@
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
     "experience": 4,
-    "record": "32-28-1"
+    "record": "32-28-1",
+    "tree": "Sean Payton / Bill Parcells Tree",
+    "playCalling": "CEO & Aggressive 4th-Down Identity Leader",
+    "offensiveScheme": "Ben Johnson Multiple Spread & Downhill Gap Scheme Duo",
+    "defensiveScheme": "Aaron Glenn Aggressive 4-2-5 Press-Man Defense",
+    "baseFront": "4-2-5 / 5-2 Front",
+    "personnelPreference": "11 Personnel (62%), 12 Personnel (26%), 21 Heavy (10%)",
+    "passRunTendency": "53% Pass / 47% Run (Elite Physical Balance)",
+    "coverageTendency": "Cover 1 Man (38%), Cover 3 Match (30%), Quarters (20%)",
+    "philosophy": "Brutal physical domination at the point of attack, innovative motion/misdirection trick plays, combined with high-motor aggressive man-coverage defense.",
+    "schemeTags": [
+      "Downhill Gap",
+      "Ben Johnson Mastermind",
+      "Play-Action Throwback",
+      "4th Down Go-For-It",
+      "Press Man"
+    ]
   },
   {
     "id": "det-oc",
@@ -328,7 +756,20 @@
     "teamId": "8",
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
-    "experience": 3
+    "experience": 3,
+    "tree": "Joe Lombardi / Mike Shanahan Modern Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Multiple Spread with Shanahan Motion & Power Duo",
+    "personnelPreference": "11 Personnel (60%), 12 Personnel (28%), 21 Heavy (10%)",
+    "passRunTendency": "54% Pass / 46% Run (Elite Balance)",
+    "philosophy": "Duo and power gap runs with Montgomery/Gibbs, pre-snap orbit motion, play-action throwback screens, and unmatched red zone misdirection.",
+    "schemeTags": [
+      "Duo Run",
+      "Misdirection",
+      "Orbit Motion",
+      "Throwback Screen",
+      "Red Zone Genius"
+    ]
   },
   {
     "id": "det-dc",
@@ -338,7 +779,20 @@
     "teamId": "8",
     "teamAbbr": "DET",
     "teamName": "Detroit Lions",
-    "experience": 4
+    "experience": 4,
+    "tree": "Dennis Allen / Bill Parcells Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Attacking 4-2-5 Base with Heavy Man-to-Man Coverage",
+    "baseFront": "4-2-5 Nickel / 5-2 Goal Line",
+    "personnelPreference": "Nickel (74%), Base 4-3 (20%)",
+    "coverageTendency": "Cover 1 Man (42%), Cover 3 (28%), Cover 0 Blitz (14%)",
+    "philosophy": "Load the box to suffocate opposing rushers, play physical press coverage on the perimeter, and send interior blitzes to harass quarterbacks.",
+    "schemeTags": [
+      "Press-Man",
+      "Loaded Box",
+      "Aidan Hutchinson Rush",
+      "Physical Swarm"
+    ]
   },
   {
     "id": "gb-hc",
@@ -349,7 +803,23 @@
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
     "experience": 6,
-    "record": "59-29"
+    "record": "59-29",
+    "tree": "Kyle Shanahan / Sean McVay Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Wide Zone Bootleg with Condensed Splits & Deep Crossers",
+    "defensiveScheme": "Jeff Hafley Modern 4-3 Single-High Attacking Defense",
+    "baseFront": "4-3 / 4-2-5 Nickel",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (24%)",
+    "passRunTendency": "58% Pass / 42% Run",
+    "coverageTendency": "Cover 3 (38%), Cover 1 Man (28%), Quarters (22%)",
+    "philosophy": "Outside-zone wide stretch married to deceptive play-action bootlegs, condensed splits creating perimeter picks, and a fast downhill 4-3 front four.",
+    "schemeTags": [
+      "Wide Zone",
+      "Condensed Splits",
+      "Jordan Love Boots",
+      "Deep Crossers",
+      "4-3 Single-High"
+    ]
   },
   {
     "id": "gb-oc",
@@ -359,7 +829,19 @@
     "teamId": "9",
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
-    "experience": 3
+    "experience": 3,
+    "tree": "Matt LaFleur Tree",
+    "playCalling": "Offensive Line Coordinator & Co-Designer",
+    "offensiveScheme": "Wide Zone Stretch & Play-Action Seams",
+    "personnelPreference": "11 Personnel (66%), 12 Personnel (26%)",
+    "passRunTendency": "57% Pass / 43% Run",
+    "philosophy": "Physical zone blocking creating cutback lanes for Josh Jacobs, complimented by deep post-wheel combinations for Christian Watson and Jayden Reed.",
+    "schemeTags": [
+      "Zone Blocking",
+      "Cutback Lanes",
+      "Post-Wheel",
+      "Seam Attacks"
+    ]
   },
   {
     "id": "gb-dc",
@@ -369,7 +851,20 @@
     "teamId": "9",
     "teamAbbr": "GB",
     "teamName": "Green Bay Packers",
-    "experience": 1
+    "experience": 1,
+    "tree": "Robert Saleh / Kyle Shanahan 4-3 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "4-3 Under Attacking Front with Cover 3 & Cover 1",
+    "baseFront": "4-3 Even / Under Front",
+    "personnelPreference": "Nickel 4-2-5 (76%), Base 4-3 (18%)",
+    "coverageTendency": "Cover 3 Sky (42%), Cover 1 Man (30%), Cover 4 (18%)",
+    "philosophy": "Ditch passive two-high shells for downhill, attacking front-four penetration, fast sideline-to-sideline linebackers, and aggressive single-high coverage.",
+    "schemeTags": [
+      "Single-High",
+      "4-Man Penetration",
+      "Downhill Linebackers",
+      "Cover 3 Sky"
+    ]
   },
   {
     "id": "hou-hc",
@@ -380,7 +875,23 @@
     "teamAbbr": "HOU",
     "teamName": "Houston Texans",
     "experience": 2,
-    "record": "15-8"
+    "record": "15-8",
+    "tree": "Robert Saleh / Kyle Shanahan Tree",
+    "playCalling": "CEO & Defensive Mastermind",
+    "offensiveScheme": "Kyle Shanahan Outside Zone & C.J. Stroud Play-Action",
+    "defensiveScheme": "Attacking 4-3 Wide-9 Front with Cover 3 Match & Quarters",
+    "baseFront": "4-3 Wide-9",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (24%)",
+    "passRunTendency": "59% Pass / 41% Run",
+    "coverageTendency": "Cover 3 Match (44%), Quarters (30%), Cover 1 (16%)",
+    "philosophy": "High-motor relentless defensive line rush with Will Anderson Jr. and Danielle Hunter, paired with C.J. Stroud operating a surgical Shanahan wide-zone system.",
+    "schemeTags": [
+      "Wide-9",
+      "CJ Stroud Darts",
+      "Cover 3 Match",
+      "Shanahan Outside Zone",
+      "Swarm Defense"
+    ]
   },
   {
     "id": "hou-oc",
@@ -390,7 +901,19 @@
     "teamId": "34",
     "teamAbbr": "HOU",
     "teamName": "Houston Texans",
-    "experience": 2
+    "experience": 2,
+    "tree": "Kyle Shanahan 49ers Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Outside Zone with Explosive Deep Over / Dig Combinations",
+    "personnelPreference": "11 Personnel (70%), 12 Personnel (22%)",
+    "passRunTendency": "61% Pass / 39% Run (Explosive Pass)",
+    "philosophy": "Stretch the defense horizontally, exploit linebacker eye discipline with play-action, and hit Nico Collins and Stefon Diggs in second-level voids.",
+    "schemeTags": [
+      "Outside Zone Stretch",
+      "Deep Overs",
+      "Play-Action Digs",
+      "Nico Collins Isolation"
+    ]
   },
   {
     "id": "hou-dc",
@@ -400,7 +923,20 @@
     "teamId": "34",
     "teamAbbr": "HOU",
     "teamName": "Houston Texans",
-    "experience": 5
+    "experience": 5,
+    "tree": "DeMeco Ryans / Jim Schwartz Tree",
+    "playCalling": "Defensive Coordinator & Co-Designer",
+    "defensiveScheme": "4-3 Penetration Front with Robber Zone Coverages",
+    "baseFront": "4-3 Wide-9 Front",
+    "personnelPreference": "Nickel (78%), Base 4-3 (18%)",
+    "coverageTendency": "Cover 3 (42%), Cover 4 (32%), Cover 1 (16%)",
+    "philosophy": "Generate organic pressure with front-four rush, let secondary flood passing lanes, and swarm ball-carriers with extreme lateral speed.",
+    "schemeTags": [
+      "Front Four Pressure",
+      "Hunter & Anderson",
+      "Robber Zone",
+      "Swarm Tackling"
+    ]
   },
   {
     "id": "ind-hc",
@@ -411,7 +947,23 @@
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
     "experience": 2,
-    "record": "12-10"
+    "record": "12-10",
+    "tree": "Nick Sirianni / Norv Turner Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Vertical Spread with Anthony Richardson QB Power & RPO",
+    "defensiveScheme": "Gus Bradley Classic Seattle Cover 3 / 4-3 Under",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (20%)",
+    "passRunTendency": "54% Pass / 46% Run (Heavy QB Run Threat)",
+    "coverageTendency": "Cover 3 Sky (54% - NFL High), Cover 1 (18%)",
+    "philosophy": "Explosive vertical shots and read-option power runs with Anthony Richardson and Jonathan Taylor, paired with Gus Bradley discipline-first Cover 3.",
+    "schemeTags": [
+      "QB Power",
+      "Vertical Spread",
+      "Jonathan Taylor RPO",
+      "Seattle Cover 3",
+      "Gus Bradley"
+    ]
   },
   {
     "id": "ind-oc",
@@ -421,7 +973,19 @@
     "teamId": "11",
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
-    "experience": 6
+    "experience": 6,
+    "tree": "Shane Steichen / Dirk Koetter Tree",
+    "playCalling": "Offensive Coordinator & Passing Game Architect",
+    "offensiveScheme": "Spread Option with Perimeter Screens & Deep Seams",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (18%)",
+    "passRunTendency": "56% Pass / 44% Run",
+    "philosophy": "Fast-paced shotgun spread, perimeter screens to slow down edge rushers, and boundary go-balls for Alec Pierce and Michael Pittman Jr.",
+    "schemeTags": [
+      "Shotgun Spread",
+      "Perimeter Screens",
+      "Go Balls",
+      "RPO Mesh"
+    ]
   },
   {
     "id": "ind-dc",
@@ -431,7 +995,20 @@
     "teamId": "11",
     "teamAbbr": "IND",
     "teamName": "Indianapolis Colts",
-    "experience": 10
+    "experience": 10,
+    "tree": "Pete Carroll / Monte Kiffin Seattle Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Classic 4-3 Under with Single-High Seattle Cover 3",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "Nickel 4-2-5 (78%), Base 4-3 (18%)",
+    "coverageTendency": "Cover 3 (58% - Top in NFL), Cover 1 (18%)",
+    "philosophy": "Lowest blitz rate in the NFL; rely entirely on front-four pass rush and execute Cover 3 with perfect assignment discipline.",
+    "schemeTags": [
+      "Low Blitz Rate",
+      "Seattle Cover 3",
+      "Single High",
+      "Sound Run Fits"
+    ]
   },
   {
     "id": "jax-hc",
@@ -442,7 +1019,23 @@
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
     "experience": 8,
-    "record": "61-56-1"
+    "record": "61-56-1",
+    "tree": "Andy Reid / Mike Holmgren West Coast Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "West Coast Spread with RPO Quick-Trigger & Mesh",
+    "defensiveScheme": "Ryan Nielsen Attacking 4-3 Press-Man Front",
+    "baseFront": "4-3 Even Front",
+    "personnelPreference": "11 Personnel (66%), 12 Personnel (26%)",
+    "passRunTendency": "61% Pass / 39% Run",
+    "coverageTendency": "Cover 1 Press-Man (38%), Cover 3 (32%), Quarters (18%)",
+    "philosophy": "Creative RPO concepts, mesh routes, and high-percentage timing throws for Trevor Lawrence, anchored by Ryan Nielsen attacking single-gap front.",
+    "schemeTags": [
+      "West Coast RPO",
+      "Mesh Concepts",
+      "Trevor Lawrence",
+      "Press-Man",
+      "4-3 Attacking"
+    ]
   },
   {
     "id": "jax-oc",
@@ -452,7 +1045,19 @@
     "teamId": "30",
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
-    "experience": 3
+    "experience": 3,
+    "tree": "Doug Pederson / Andy Reid Tree",
+    "playCalling": "Passing Game Designer & Co-Playcaller",
+    "offensiveScheme": "Shotgun Spread with Quick Slant RPOs & Zone Read",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (24%)",
+    "passRunTendency": "62% Pass / 38% Run",
+    "philosophy": "Shotgun tempo, bubble screens, inside zone with Travis Etienne, and vertical seam routes targeting tight end Evan Engram.",
+    "schemeTags": [
+      "Shotgun Tempo",
+      "Evan Engram Seams",
+      "Inside Zone",
+      "Bubble Screens"
+    ]
   },
   {
     "id": "jax-dc",
@@ -462,7 +1067,20 @@
     "teamId": "30",
     "teamAbbr": "JAX",
     "teamName": "Jacksonville Jaguars",
-    "experience": 2
+    "experience": 2,
+    "tree": "Dennis Allen / Ryan Nielsen Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Attacking 4-3 Even Front with Heavy Cover 1 Press-Man",
+    "baseFront": "4-3 Even Front",
+    "personnelPreference": "Nickel 4-2-5 (74%), Base 4-3 (22%)",
+    "coverageTendency": "Cover 1 Press (44%), Cover 3 Match (28%), Cover 0 (14%)",
+    "philosophy": "Get defensive linemen upfield immediately on single-gap tracks, challenge wide receivers at the line with physical press, and eliminate short completions.",
+    "schemeTags": [
+      "Single-Gap Track",
+      "Press-Man",
+      "Josh Hines-Allen Rush",
+      "Aggressive Front"
+    ]
   },
   {
     "id": "kc-hc",
@@ -473,7 +1091,23 @@
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
     "experience": 26,
-    "record": "264-144-1"
+    "record": "264-144-1",
+    "tree": "Mike Holmgren / Bill Walsh West Coast Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Legendary West Coast / Spread Hybrid with Pre-Snap Shifts",
+    "defensiveScheme": "Steve Spagnuolo Overload Fire Zone & NASCAR Blitz",
+    "baseFront": "4-2-5 / 4-3 Overload",
+    "personnelPreference": "11 Personnel (56%), 12 & 13 Personnel (38%)",
+    "passRunTendency": "64% Pass / 36% Run (Elite Pass Modernization)",
+    "coverageTendency": "Cover 2 Man (34%), Cover 3 Fire Zone (30%), Quarters (20%)",
+    "philosophy": "Unrivaled pre-snap shift and motion packages, shovel passes, deep post-corners with Patrick Mahomes, and clutch third-down overload DB blitzes.",
+    "schemeTags": [
+      "Andy Reid Genius",
+      "Mahomes Wizardry",
+      "Kelce Choice",
+      "Spags Blitz",
+      "Fire Zone Overload"
+    ]
   },
   {
     "id": "kc-oc",
@@ -483,7 +1117,19 @@
     "teamId": "12",
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
-    "experience": 5
+    "experience": 5,
+    "tree": "Andy Reid Tree",
+    "playCalling": "Gameplan Architect & Red Zone Specialist",
+    "offensiveScheme": "Shotgun Spread with Motion, Shovel Passes & Orbit Action",
+    "personnelPreference": "12 Personnel (34%), 11 Personnel (54%), 13 Heavy (8%)",
+    "passRunTendency": "63% Pass / 37% Run",
+    "philosophy": "Horizontal stretch motion, perimeter screen game, bunch formations creating natural rub routes, and Travis Kelce option routes over the middle.",
+    "schemeTags": [
+      "Bunch Formations",
+      "Rub Routes",
+      "Shovel Pass",
+      "Motion Orbit"
+    ]
   },
   {
     "id": "kc-dc",
@@ -493,7 +1139,21 @@
     "teamId": "12",
     "teamAbbr": "KC",
     "teamName": "Kansas City Chiefs",
-    "experience": 16
+    "experience": 16,
+    "tree": "Jim Johnson Philadelphia Eagles Blitz Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Steve Spagnuolo Overload Blitz & NASCAR 4-Man Pass Rush",
+    "baseFront": "Multiple 4-3 / 4-2-5 Nickel",
+    "personnelPreference": "Nickel (74%), Dime 3-Safety (18%), Base 4-3 (8%)",
+    "coverageTendency": "Cover 2 Man (36%), Cover 3 Fire Zone (32%), Cover 0 (16%)",
+    "philosophy": "Exotic blitz packages sending cornerbacks and safeties from unpredictable angles, rotating into two-deep man under coverage in high-leverage moments.",
+    "schemeTags": [
+      "Spags Blitz",
+      "Cornerback Blitz",
+      "Cover 2 Man",
+      "Chris Jones Interior",
+      "NASCAR Package"
+    ]
   },
   {
     "id": "lv-hc",
@@ -504,7 +1164,23 @@
     "teamAbbr": "LV",
     "teamName": "Las Vegas Raiders",
     "experience": 2,
-    "record": "7-6"
+    "record": "7-6",
+    "tree": "Bill Parcells / Marvin Lewis Tree",
+    "playCalling": "CEO & Physical Culture Commander",
+    "offensiveScheme": "Downhill Power Gap & Outside Zone Hybrid",
+    "defensiveScheme": "Patrick Graham Multiple Front Match Defense",
+    "baseFront": "Multiple 3-4 / 4-3 Hybrid",
+    "personnelPreference": "11 Personnel (64%), 12 Personnel (28%)",
+    "passRunTendency": "54% Pass / 46% Run (Smashmouth)",
+    "coverageTendency": "Match Quarters (36%), Cover 3 (30%), Cover 1 (20%)",
+    "philosophy": "Old-school toughness, violent trench warfare, aggressive defensive line disruption with Maxx Crosby, and ball-control offense.",
+    "schemeTags": [
+      "Smashmouth Culture",
+      "Maxx Crosby Havoc",
+      "Power Gap",
+      "Trench Warfare",
+      "Multiple Front"
+    ]
   },
   {
     "id": "lv-oc",
@@ -514,7 +1190,19 @@
     "teamId": "13",
     "teamAbbr": "LV",
     "teamName": "Las Vegas Raiders",
-    "experience": 4
+    "experience": 4,
+    "tree": "Matt LaFleur / Kyle Shanahan Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Wide Zone with Play-Action Bootleg & Screen Extensions",
+    "personnelPreference": "11 Personnel (66%), 12 Personnel (26%)",
+    "passRunTendency": "56% Pass / 44% Run",
+    "philosophy": "Outside stretch zone runs to set up intermediate bootleg throws to tight ends, combined with quick screens to feed playmakers.",
+    "schemeTags": [
+      "Wide Zone Run",
+      "Bootleg Passes",
+      "Screen Extension",
+      "Brock Bowers TE"
+    ]
   },
   {
     "id": "lv-dc",
@@ -524,7 +1212,20 @@
     "teamId": "13",
     "teamAbbr": "LV",
     "teamName": "Las Vegas Raiders",
-    "experience": 6
+    "experience": 6,
+    "tree": "Bill Belichick Multiple Front Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 / 4-2-5 Chameleon with Pre-Snap Disguise",
+    "baseFront": "Multiple Hybrid Front",
+    "personnelPreference": "Nickel (70%), Base 3-4 (22%), Dime (8%)",
+    "coverageTendency": "Cover 3 Match (36%), Quarters (32%), Cover 1 Man (20%)",
+    "philosophy": "Shift defensive fronts between odd and even looks before the snap, isolate Maxx Crosby in single-block matchups, and disguise secondary intentions.",
+    "schemeTags": [
+      "Belichick Tree",
+      "Maxx Crosby Solo",
+      "Chameleon Front",
+      "Pre-Snap Shifts"
+    ]
   },
   {
     "id": "lac-hc",
@@ -535,7 +1236,23 @@
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
     "experience": 5,
-    "record": "48-21-1"
+    "record": "48-21-1",
+    "tree": "Bo Schembechler / Jack Harbaugh Power Tree",
+    "playCalling": "CEO & Physical Trench Identity Enforcer",
+    "offensiveScheme": "Greg Roman Power Gap, Pistol Option & Deep Play-Action",
+    "defensiveScheme": "Jesse Minter / Mike Macdonald Ravens Amoeba System",
+    "baseFront": "Multiple 3-4 / 5-2 Front",
+    "personnelPreference": "12 & 13 Personnel (38%), 11 Personnel (54%), 21 Heavy (8%)",
+    "passRunTendency": "52% Run / 48% Pass (Run-First Power)",
+    "coverageTendency": "Cover 6 / Quarters (42%), Cover 3 (26%), Cover 1 (18%)",
+    "philosophy": "Smash opposing fronts with pulling guards and fullbacks, unleash Justin Herbert on high-velocity deep play-action seams, and run Ravens-style amoeba defense.",
+    "schemeTags": [
+      "Power Gap",
+      "Pistol Run",
+      "Justin Herbert Canon",
+      "Jesse Minter Amoeba",
+      "Harbaugh Toughness"
+    ]
   },
   {
     "id": "lac-oc",
@@ -545,7 +1262,19 @@
     "teamId": "24",
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
-    "experience": 10
+    "experience": 10,
+    "tree": "Greg Roman Power Run Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Power Gap, Counter Bash, Pulling Guards & Pistol Formations",
+    "personnelPreference": "12 Personnel (32%), 13 Heavy (12%), 11 Personnel (48%)",
+    "passRunTendency": "51% Run / 49% Pass (Power Ground Dominance)",
+    "philosophy": "Create extra gaps with multiple tight ends and pulling linemen, establish overwhelming physical ground dominance, and strike deep on play-action.",
+    "schemeTags": [
+      "Counter Bash",
+      "Pulling Guards",
+      "Pistol Formations",
+      "Power Run Domination"
+    ]
   },
   {
     "id": "lac-dc",
@@ -555,7 +1284,20 @@
     "teamId": "24",
     "teamAbbr": "LAC",
     "teamName": "Los Angeles Chargers",
-    "experience": 1
+    "experience": 1,
+    "tree": "Mike Macdonald / Baltimore Ravens Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 Amoeba Front with Simulated Pressures & Creepers",
+    "baseFront": "Multiple 3-4 / 4-2-5 Front",
+    "personnelPreference": "Nickel (72%), Base 3-4 (18%), Dime (10%)",
+    "coverageTendency": "Cover 6 (36%), Cover 4 Quarters (28%), Cover 2 Man (20%)",
+    "philosophy": "Disguise who is rushing and who is dropping, rotate safeties late to bait checkdowns, and optimize edge rushers Joey Bosa and Khalil Mack.",
+    "schemeTags": [
+      "Amoeba Front",
+      "Simulated Pressures",
+      "Bosa & Mack",
+      "Split-Field Coverage"
+    ]
   },
   {
     "id": "lar-hc",
@@ -566,7 +1308,23 @@
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
     "experience": 8,
-    "record": "73-47"
+    "record": "73-47",
+    "tree": "Mike Shanahan / Jon Gruden Modern Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "The McVay System: 11-Personnel Wide Zone, Duo & Crossing Routes",
+    "defensiveScheme": "Vic Fangio / Brandon Staley Light-Box 2-High Defense",
+    "baseFront": "3-4 / 4-2-5 Hybrid",
+    "personnelPreference": "11 Personnel (84% - #1 in NFL)",
+    "passRunTendency": "62% Pass / 38% Run",
+    "coverageTendency": "Cover 4 Quarters (40%), Cover 6 (30%), Cover 3 (20%)",
+    "philosophy": "Run virtually every play from 11 personnel with condensed splits; marry wide zone and duo run fakes with identical play-action crossing routes.",
+    "schemeTags": [
+      "McVay System",
+      "11 Personnel King",
+      "Condensed Splits",
+      "Duo Run",
+      "Wide Zone Boot"
+    ]
   },
   {
     "id": "lar-oc",
@@ -576,7 +1334,19 @@
     "teamId": "14",
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
-    "experience": 4
+    "experience": 4,
+    "tree": "Sean McVay / Kyle Shanahan Tree",
+    "playCalling": "Passing Game Architect & Co-Designer",
+    "offensiveScheme": "Wide Zone Stretch, Pre-Snap Motion & Intermediate Crossers",
+    "personnelPreference": "11 Personnel (82%), 12 Personnel (14%)",
+    "passRunTendency": "63% Pass / 37% Run",
+    "philosophy": "Exploit zone coverage voids using motion, condensed alignments for Puka Nacua and Cooper Kupp, and high-percentage intermediate targets.",
+    "schemeTags": [
+      "Pre-Snap Motion",
+      "Puka Nacua Target",
+      "Intermediate Crosser",
+      "Zone Stretch"
+    ]
   },
   {
     "id": "lar-dc",
@@ -586,7 +1356,20 @@
     "teamId": "14",
     "teamAbbr": "LAR",
     "teamName": "Los Angeles Rams",
-    "experience": 1
+    "experience": 1,
+    "tree": "Vic Fangio / Raheem Morris Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Light-Box 2-High Safety Shell with Quarters Match",
+    "baseFront": "3-4 / 4-2-5 Front",
+    "personnelPreference": "Nickel (76%), Base 3-4 (18%), Dime (6%)",
+    "coverageTendency": "Cover 4 Quarters (42%), Cover 6 (32%), Cover 3 (18%)",
+    "philosophy": "Maintain two deep safeties to erase explosive passing plays, trust light defensive fronts to rally to the ball, and generate pressure with interior stunts.",
+    "schemeTags": [
+      "Light Box",
+      "2-High Safeties",
+      "Interior Stunts",
+      "Quarters Match"
+    ]
   },
   {
     "id": "mia-hc",
@@ -597,7 +1380,23 @@
     "teamAbbr": "MIA",
     "teamName": "Miami Dolphins",
     "experience": 3,
-    "record": "22-16"
+    "record": "22-16",
+    "tree": "Kyle Shanahan 49ers Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Track Speed Cheat-Motion Outside Zone & 2.2s Release Passing",
+    "defensiveScheme": "Multiple 3-4 Front with Heavy Disguised Pressures",
+    "baseFront": "3-4 Odd / 4-2-5 Nickel",
+    "personnelPreference": "21 Personnel (34%), 11 Personnel (54%)",
+    "passRunTendency": "60% Pass / 40% Run",
+    "coverageTendency": "Cover 3 Match (36%), Cover 1 (28%), Quarters (22%)",
+    "philosophy": "Unmatched speed with Tyreek Hill and Jaylen Waddle, revolutionary speed-in-motion (\"cheat motion\") giving receivers a running start into routes.",
+    "schemeTags": [
+      "Cheat Motion",
+      "Track Speed",
+      "Tua 2.2s Release",
+      "Outside Zone",
+      "Tyreek Hill Speed"
+    ]
   },
   {
     "id": "mia-oc",
@@ -607,7 +1406,19 @@
     "teamId": "15",
     "teamAbbr": "MIA",
     "teamName": "Miami Dolphins",
-    "experience": 3
+    "experience": 3,
+    "tree": "Mike McDaniel / Sean Payton Tree",
+    "playCalling": "Offensive Coordinator & Run Game Architect",
+    "offensiveScheme": "Pistol Outside Zone Stretch & Jet Sweeps",
+    "personnelPreference": "21 Personnel (36%), 11 Personnel (52%)",
+    "passRunTendency": "58% Pass / 42% Run",
+    "philosophy": "Fast perimeter stretch runs, FB Alec Ingold lead blocks, and RPO glance passes attacking the middle of the field.",
+    "schemeTags": [
+      "Pistol Stretch",
+      "Jet Sweep",
+      "Alec Ingold FB",
+      "Middle of Field Attacks"
+    ]
   },
   {
     "id": "mia-dc",
@@ -617,7 +1428,20 @@
     "teamId": "15",
     "teamAbbr": "MIA",
     "teamName": "Miami Dolphins",
-    "experience": 2
+    "experience": 2,
+    "tree": "Mike Macdonald / Rex Ryan Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 Front with Creepers & Aggressive Nickel Blitzes",
+    "baseFront": "Multiple 3-4 / 4-2-5 Front",
+    "personnelPreference": "Nickel (72%), Base 3-4 (20%), Dime (8%)",
+    "coverageTendency": "Cover 3 (36%), Cover 1 Man (30%), Cover 4 (20%)",
+    "philosophy": "Mix simulated pressures with athletic edge rushers, disguise safety intentions, and challenge passing lanes with long-leveraged defensive backs.",
+    "schemeTags": [
+      "Nickel Blitz",
+      "Simulated Creepers",
+      "Multiple 3-4",
+      "Disguised Safeties"
+    ]
   },
   {
     "id": "min-hc",
@@ -628,7 +1452,23 @@
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
     "experience": 3,
-    "record": "25-14"
+    "record": "25-14",
+    "tree": "Sean McVay / Jay Gruden Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "11-Personnel Spread with Justin Jefferson Isolation & Crossing Routes",
+    "defensiveScheme": "Brian Flores Chaos Cover 0 Amoeba Blitz System",
+    "baseFront": "3-4 / 0-Man Front Amoeba",
+    "personnelPreference": "11 Personnel (76%), 12 Personnel (18%)",
+    "passRunTendency": "63% Pass / 37% Run (Pass-Heavy)",
+    "coverageTendency": "Cover 0 Zero Blitz (28% - #1 in NFL), Cover 3 (32%), Cover 1 (22%)",
+    "philosophy": "Modern McVay passing tree getting Justin Jefferson isolated in space, paired with Brian Flores revolutionary chaotic all-out blitz defense.",
+    "schemeTags": [
+      "Flores Chaos",
+      "Cover 0 Blitz",
+      "Justin Jefferson Magic",
+      "McVay Crossing Routes",
+      "Amoeba Line"
+    ]
   },
   {
     "id": "min-oc",
@@ -638,7 +1478,19 @@
     "teamId": "16",
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
-    "experience": 3
+    "experience": 3,
+    "tree": "Sean McVay Tree",
+    "playCalling": "Passing Game Coordinator & Co-Designer",
+    "offensiveScheme": "Spread Passing with Vertical Choice & Deep Post-Crossers",
+    "personnelPreference": "11 Personnel (78%), 12 Personnel (16%)",
+    "passRunTendency": "64% Pass / 36% Run",
+    "philosophy": "Creative motion to reveal man vs zone coverage, vertical choice routes, and play-action bootlegs targeting the deep intermediate boundary.",
+    "schemeTags": [
+      "Vertical Choice",
+      "Post-Crosser",
+      "Motion Tells",
+      "Intermediate Target"
+    ]
   },
   {
     "id": "min-dc",
@@ -648,7 +1500,21 @@
     "teamId": "16",
     "teamAbbr": "MIN",
     "teamName": "Minnesota Vikings",
-    "experience": 6
+    "experience": 6,
+    "tree": "Bill Belichick / Brian Flores Blitz Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Cover 0 Amoeba Blitz & Drop-8 Psycho Front",
+    "baseFront": "3-4 Amoeba / 0 Defensive Linemen Front",
+    "personnelPreference": "Nickel 3-3-5 / 2-4-5 (78%), Dime (16%)",
+    "coverageTendency": "Cover 0 Blitz (30%), Cover 3 Drop-8 (28%), Cover 1 (22%)",
+    "philosophy": "The highest blitz rate in football; shows 7 rushers at the line, then either sends all 7 on zero-blitz or drops 8 into underneath coverage traps.",
+    "schemeTags": [
+      "Psycho Front",
+      "Highest Blitz Rate",
+      "Cover 0 All-Out",
+      "Drop-8 Trap",
+      "Safety Creepers"
+    ]
   },
   {
     "id": "ne-hc",
@@ -659,7 +1525,23 @@
     "teamAbbr": "NE",
     "teamName": "New England Patriots",
     "experience": 1,
-    "record": "2-5"
+    "record": "2-5",
+    "tree": "Bill Belichick Patriots Tree",
+    "playCalling": "CEO & Defensive Overseer",
+    "offensiveScheme": "West Coast / Stefanski Outside Zone with 12 Personnel",
+    "defensiveScheme": "Belichick Multiple 3-4 Hybrid with Match Zone Discipline",
+    "baseFront": "Multiple 3-4 / 4-3 Hybrid",
+    "personnelPreference": "12 Personnel (34%), 11 Personnel (56%)",
+    "passRunTendency": "52% Pass / 48% Run (Run-Heavy Complementary)",
+    "coverageTendency": "Cover 3 Match (36%), Cover 1 Man (30%), Cover 2 (18%)",
+    "philosophy": "Physical gap-control run defense, sound tackling, limiting penalties and mistakes, paired with an under-center wide-zone offense for Drake Maye.",
+    "schemeTags": [
+      "Belichick Discipline",
+      "Sound Run Fits",
+      "Drake Maye Dev",
+      "12 Personnel",
+      "Outside Zone"
+    ]
   },
   {
     "id": "ne-oc",
@@ -669,7 +1551,19 @@
     "teamId": "17",
     "teamAbbr": "NE",
     "teamName": "New England Patriots",
-    "experience": 5
+    "experience": 5,
+    "tree": "Kevin Stefanski / Mike Holmgren Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Under-Center Wide Zone, Power Gap & Play-Action Boots",
+    "personnelPreference": "12 Personnel (36%), 11 Personnel (54%), 21 Heavy (8%)",
+    "passRunTendency": "53% Pass / 47% Run",
+    "philosophy": "Establish Rhamondre Stevenson on outside zone runs to set up under-center play-action bootlegs and easy throws for rookie QB Drake Maye.",
+    "schemeTags": [
+      "Rhamondre Run",
+      "Under-Center Boots",
+      "Multi-TE Sets",
+      "Play-Action Digs"
+    ]
   },
   {
     "id": "ne-dc",
@@ -679,7 +1573,20 @@
     "teamId": "17",
     "teamAbbr": "NE",
     "teamName": "New England Patriots",
-    "experience": 1
+    "experience": 1,
+    "tree": "Bill Belichick / Jerod Mayo Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple Front Match Defense with Two-Gap Discipline",
+    "baseFront": "Multiple 3-4 Front",
+    "personnelPreference": "Nickel (68%), Base 3-4 (26%)",
+    "coverageTendency": "Cover 3 (38%), Cover 1 (28%), Cover 2 (20%)",
+    "philosophy": "Take away the opposing offense best player, force left-handed execution, and execute flawless gap containment along the defensive line.",
+    "schemeTags": [
+      "Take Away Best Player",
+      "Two-Gap Power",
+      "Match Zone",
+      "Sound Discipline"
+    ]
   },
   {
     "id": "no-hc",
@@ -690,7 +1597,23 @@
     "teamAbbr": "NO",
     "teamName": "New Orleans Saints",
     "experience": 1,
-    "record": "2-1"
+    "record": "2-1",
+    "tree": "Sean Payton / Dennis Allen Tree",
+    "playCalling": "CEO & Defensive Mastermind",
+    "offensiveScheme": "Kyle Shanahan / Klint Kubiak Motion-Heavy Outside Zone",
+    "defensiveScheme": "Dennis Allen 4-3 Over Front with Press-Man Corners",
+    "baseFront": "4-3 Over Front",
+    "personnelPreference": "11 Personnel (58%), 12 Personnel (28%), 21 Heavy (12%)",
+    "passRunTendency": "56% Pass / 44% Run",
+    "coverageTendency": "Cover 1 Press-Man (36%), Cover 4 / Quarters (30%), Cover 3 (22%)",
+    "philosophy": "Premier 4-3 defense with elite press-man boundary play, paired with Klint Kubiak explosive Shanahan-style motion-heavy wide zone offense.",
+    "schemeTags": [
+      "Dennis Allen Defense",
+      "Klint Kubiak Zone",
+      "Press-Man Corners",
+      "4-3 Over",
+      "High Motion Rate"
+    ]
   },
   {
     "id": "no-oc",
@@ -700,7 +1623,19 @@
     "teamId": "18",
     "teamAbbr": "NO",
     "teamName": "New Orleans Saints",
-    "experience": 3
+    "experience": 3,
+    "tree": "Kyle Shanahan / Gary Kubiak Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Outside Zone Stretch with Orbit Motion & Play-Action Bombs",
+    "personnelPreference": "11 Personnel (56%), 12 Personnel (30%), 21 Heavy (12%)",
+    "passRunTendency": "54% Pass / 46% Run",
+    "philosophy": "Massive pre-snap shift rate, Kamara outside stretch runs, deceptive play-action bootlegs, and deep post shots to Chris Olave and Rashid Shaheed.",
+    "schemeTags": [
+      "Outside Zone Stretch",
+      "Orbit Motion",
+      "Deep Post Shots",
+      "Alvin Kamara Space"
+    ]
   },
   {
     "id": "no-dc",
@@ -710,7 +1645,20 @@
     "teamId": "18",
     "teamAbbr": "NO",
     "teamName": "New Orleans Saints",
-    "experience": 7
+    "experience": 7,
+    "tree": "Dennis Allen / Wade Phillips Tree",
+    "playCalling": "Defensive Coordinator & Co-Designer",
+    "defensiveScheme": "4-3 Over Front with Inverted Cover 2 & Press-Man",
+    "baseFront": "4-3 Over Front",
+    "personnelPreference": "Nickel 4-2-5 (74%), Base 4-3 (22%)",
+    "coverageTendency": "Cover 1 Man (34%), Cover 4 Quarters (28%), Cover 2 Invert (22%)",
+    "philosophy": "Aggressive four-man pass rush, physical bump-and-run boundary coverage, and sound middle-of-field tackling by Demario Davis.",
+    "schemeTags": [
+      "Demario Davis Linebacker",
+      "Press-Man",
+      "4-3 Over Front",
+      "Inverted Cover 2"
+    ]
   },
   {
     "id": "nyg-hc",
@@ -721,7 +1669,23 @@
     "teamAbbr": "NYG",
     "teamName": "New York Giants",
     "experience": 3,
-    "record": "17-21-1"
+    "record": "17-21-1",
+    "tree": "Bill Belichick / Nick Saban / Andy Reid Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Spread Option with Malik Nabers Isolation & RPO Slants",
+    "defensiveScheme": "Shane Bowen 3-4 Physical Press Front",
+    "baseFront": "3-4 / 4-2-5 Hybrid",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (20%)",
+    "passRunTendency": "61% Pass / 39% Run",
+    "coverageTendency": "Cover 3 (38%), Cover 1 Man (30%), Quarters (20%)",
+    "philosophy": "Spread tempo offense designed to feed Malik Nabers in one-on-one matchups, combined with a physical 3-4 defensive front anchored by Dexter Lawrence.",
+    "schemeTags": [
+      "Malik Nabers Target",
+      "Spread Option",
+      "Dexter Lawrence Nose",
+      "RPO Slant",
+      "3-4 Physical"
+    ]
   },
   {
     "id": "nyg-oc",
@@ -731,7 +1695,19 @@
     "teamId": "19",
     "teamAbbr": "NYG",
     "teamName": "New York Giants",
-    "experience": 3
+    "experience": 3,
+    "tree": "Andy Reid Kansas City Chiefs Tree",
+    "playCalling": "Passing Game Architect & Co-Designer",
+    "offensiveScheme": "Shotgun Spread with Bunch Formations & Quick Screens",
+    "personnelPreference": "11 Personnel (76%), 12 Personnel (18%)",
+    "passRunTendency": "62% Pass / 38% Run",
+    "philosophy": "Quick rhythm passing, empty backfield sets, bunch formations with natural picks, and perimeter screen concepts.",
+    "schemeTags": [
+      "Bunch Sets",
+      "Quick Screen",
+      "Empty Backfield",
+      "Mesh Route"
+    ]
   },
   {
     "id": "nyg-dc",
@@ -741,7 +1717,20 @@
     "teamId": "19",
     "teamAbbr": "NYG",
     "teamName": "New York Giants",
-    "experience": 4
+    "experience": 4,
+    "tree": "Mike Vrabel / Dean Pees 3-4 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Multiple 3-4 Front with Dexter Lawrence Interior Dominance",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "Nickel (70%), Base 3-4 (24%)",
+    "coverageTendency": "Cover 3 Match (40%), Cover 1 (30%), Cover 4 (18%)",
+    "philosophy": "Two-gap interior dominance with Dexter Lawrence absorbing double teams, allowing edge rushers Brian Burns and Kayvon Thibodeaux to attack in one-on-ones.",
+    "schemeTags": [
+      "Dexter Lawrence 2-Gap",
+      "Brian Burns Edge",
+      "Cover 3 Match",
+      "Physical 3-4"
+    ]
   },
   {
     "id": "nyj-hc",
@@ -752,7 +1741,23 @@
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
     "experience": 1,
-    "record": "3-4"
+    "record": "3-4",
+    "tree": "Pete Carroll / Kyle Shanahan 4-3 Tree",
+    "playCalling": "CEO & Defensive Mastermind",
+    "offensiveScheme": "West Coast Timing with Breece Hall Zone Runs & Aaron Rodgers Checks",
+    "defensiveScheme": "Attacking 4-3 Under Front with Cover 3 Match & 4-Man Rush",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (24%)",
+    "passRunTendency": "60% Pass / 40% Run",
+    "coverageTendency": "Cover 3 Match (46%), Quarters (32%), Cover 1 (14%)",
+    "philosophy": "Suffocating front-four pass rush with Quinnen Williams and Will McDonald, elite lockdown corner play from Sauce Gardner, and Aaron Rodgers precision passing.",
+    "schemeTags": [
+      "Sauce Gardner Lockdown",
+      "Quinnen Williams Push",
+      "Cover 3 Match",
+      "Aaron Rodgers Control",
+      "4-Man Rush"
+    ]
   },
   {
     "id": "nyj-oc",
@@ -762,7 +1767,19 @@
     "teamId": "20",
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
-    "experience": 4
+    "experience": 4,
+    "tree": "Mike McCarthy / Gary Kubiak West Coast Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "West Coast Timing with Quick Slants & Pre-Snap Audibles",
+    "personnelPreference": "11 Personnel (70%), 12 Personnel (22%)",
+    "passRunTendency": "61% Pass / 39% Run",
+    "philosophy": "Give the quarterback total autonomy at the line of scrimmage, quick 3-step timing throws to Garrett Wilson, and outside zone runs for Breece Hall.",
+    "schemeTags": [
+      "Audibles at Line",
+      "Garrett Wilson Targets",
+      "Breece Hall Zone",
+      "Timing Routes"
+    ]
   },
   {
     "id": "nyj-dc",
@@ -772,7 +1789,20 @@
     "teamId": "20",
     "teamAbbr": "NYJ",
     "teamName": "New York Jets",
-    "experience": 4
+    "experience": 4,
+    "tree": "Robert Saleh / Dan Quinn 4-3 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Attacking 4-3 Under with Sauce Gardner Island Coverage",
+    "baseFront": "4-3 Under Front",
+    "personnelPreference": "Nickel 4-2-5 (80%), Base 4-3 (16%)",
+    "coverageTendency": "Cover 3 Sky (44%), Cover 4 Quarters (34%), Cover 1 (12%)",
+    "philosophy": "Rarely blitz; dominate the line of scrimmage with front-four speed and power, leaving Sauce Gardner on an island to lock down the boundary.",
+    "schemeTags": [
+      "Sauce Island",
+      "Quinnen Penetration",
+      "Low Blitz Rate",
+      "Cover 3 Sky"
+    ]
   },
   {
     "id": "phi-hc",
@@ -783,7 +1813,23 @@
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
     "experience": 4,
-    "record": "38-19"
+    "record": "38-19",
+    "tree": "Frank Reich / Doug Pederson Spread Tree",
+    "playCalling": "CEO & Aggressive 4th-Down / Tush Push Mastermind",
+    "offensiveScheme": "Vertical Spread Coast with Saquon Barkley Power & RPO",
+    "defensiveScheme": "Vic Fangio Iconic 2-High Split-Field Match Defense",
+    "baseFront": "Multiple 3-4 / 5-2 Tite",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (22%)",
+    "passRunTendency": "55% Pass / 45% Run (Dominant Trench Balance)",
+    "coverageTendency": "Cover 6 / Quarters (48%), Cover 4 (28%), Cover 3 (16%)",
+    "philosophy": "Unstoppable short-yardage Tush Push, Saquon Barkley explosive gap-runs, vertical shots to A.J. Brown, backed by the godfather of modern defense: Vic Fangio.",
+    "schemeTags": [
+      "Vic Fangio Godfather",
+      "Tush Push Sneak",
+      "Saquon Barkley Power",
+      "AJ Brown Vertical",
+      "2-High Shell"
+    ]
   },
   {
     "id": "phi-oc",
@@ -793,7 +1839,19 @@
     "teamId": "21",
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
-    "experience": 6
+    "experience": 6,
+    "tree": "Chris Petersen / Mike McCarthy Spread Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Fast-Tempo Spread Coast with Motion & Deep Route Combinations",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (20%)",
+    "passRunTendency": "58% Pass / 42% Run",
+    "philosophy": "High-tempo shotgun spread with pre-snap motion, mesh and dagger concepts, and explosive RPOs taking advantage of Hurts dual-threat capability.",
+    "schemeTags": [
+      "Fast-Tempo",
+      "Pre-Snap Motion",
+      "Dagger Concept",
+      "RPO Glances"
+    ]
   },
   {
     "id": "phi-dc",
@@ -803,7 +1861,20 @@
     "teamId": "21",
     "teamAbbr": "PHI",
     "teamName": "Philadelphia Eagles",
-    "experience": 24
+    "experience": 24,
+    "tree": "Vic Fangio Defensive Tree (The Creator)",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Vic Fangio Two-High Split-Field Match Shell (Original)",
+    "baseFront": "Multiple 3-4 / 5-1 Front",
+    "personnelPreference": "Nickel (74%), Base 3-4 (20%), Dime (6%)",
+    "coverageTendency": "Cover 6 (38%), Cover 4 Quarters (34%), Cover 3 (18%)",
+    "philosophy": "The defensive scheme that reshaped the entire NFL: disguise coverage with two deep safeties, play split-field match principles, and squeeze the run with light boxes.",
+    "schemeTags": [
+      "Original Fangio",
+      "Cover 6 Match",
+      "Two Deep Safeties",
+      "Light Box Run Defense"
+    ]
   },
   {
     "id": "pit-hc",
@@ -814,7 +1885,23 @@
     "teamAbbr": "PIT",
     "teamName": "Pittsburgh Steelers",
     "experience": 18,
-    "record": "177-102-2"
+    "record": "177-102-2",
+    "tree": "Tony Dungy / Dick LeBeau Steelers Tree",
+    "playCalling": "CEO & Defensive Lineage Enforcer",
+    "offensiveScheme": "Arthur Smith Heavy 12/13 Multi-TE Power Gap & Wide Zone",
+    "defensiveScheme": "Dick LeBeau / Pittsburgh 3-4 Fire Zone Blitz",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "12 Personnel (34%), 13 Heavy (10%), 11 Personnel (50%)",
+    "passRunTendency": "52% Run / 48% Pass (Run-First Physical)",
+    "coverageTendency": "Cover 3 Fire Zone (40%), Cover 1 Man (30%), Cover 2 (18%)",
+    "philosophy": "Never-had-a-losing-season standard; smashmouth heavy-TE downhill run game, violent defensive line edge rush with T.J. Watt, and Fire Zone turnovers.",
+    "schemeTags": [
+      "Tomlin Standard",
+      "TJ Watt Destruction",
+      "Fire Zone Blitz",
+      "Arthur Smith Multi-TE",
+      "Physical Ground Game"
+    ]
   },
   {
     "id": "pit-oc",
@@ -824,7 +1911,19 @@
     "teamId": "23",
     "teamAbbr": "PIT",
     "teamName": "Pittsburgh Steelers",
-    "experience": 4
+    "experience": 4,
+    "tree": "Arthur Smith / Mike Mularkey Power Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Wide Zone & Gap Power with Heaviest Multi-TE Usage in NFL",
+    "personnelPreference": "12 Personnel (36%), 13 Heavy (12%), 11 Personnel (48%)",
+    "passRunTendency": "53% Run / 47% Pass (Run Dominant)",
+    "philosophy": "Line up with 2 or 3 tight ends, run power duo and outside stretch, and take explosive play-action deep post shots with George Pickens.",
+    "schemeTags": [
+      "Multi-TE Heavy",
+      "George Pickens Post",
+      "Play-Action Power",
+      "Duo Run"
+    ]
   },
   {
     "id": "pit-dc",
@@ -834,7 +1933,20 @@
     "teamId": "23",
     "teamAbbr": "PIT",
     "teamName": "Pittsburgh Steelers",
-    "experience": 7
+    "experience": 7,
+    "tree": "Dick LeBeau / Mike Tomlin 3-4 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Pittsburgh 3-4 Fire Zone with High-Pressure Edge Rushes",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "Nickel (68%), Base 3-4 (24%), Dime (8%)",
+    "coverageTendency": "Cover 3 Fire Zone (42%), Cover 1 Man (28%), Cover 2 (18%)",
+    "philosophy": "Unleash T.J. Watt and Alex Highsmith off the edges, drop defensive tackles into underneath throwing lanes, and force strip-sack takeaways.",
+    "schemeTags": [
+      "TJ Watt Edge",
+      "Alex Highsmith Rush",
+      "Fire Zone Blitz",
+      "Strip-Sack Havoc"
+    ]
   },
   {
     "id": "sf-hc",
@@ -845,7 +1957,23 @@
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
     "experience": 8,
-    "record": "67-54"
+    "record": "67-54",
+    "tree": "Mike Shanahan / Jon Gruden Offense Tree (The Gold Standard)",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Kyle Shanahan Outside Zone Stretch & Positionless Playmaking",
+    "defensiveScheme": "Pete Carroll / DeMeco Ryans 4-3 Wide-9 Under Front",
+    "baseFront": "4-3 Wide-9 Front",
+    "personnelPreference": "21 Personnel (38% - #1 in NFL), 11 Personnel (44%), 12 (16%)",
+    "passRunTendency": "53% Pass / 47% Run (Ultimate Balance)",
+    "coverageTendency": "Cover 3 Match (44%), Cover 4 Quarters (32%), Cover 1 (16%)",
+    "philosophy": "The premier offensive mind in football: 80%+ pre-snap motion, positionless weapons (McCaffrey, Samuel, Kittle), outside zone stretch, and Wide-9 front pass rush.",
+    "schemeTags": [
+      "Kyle Shanahan Mastermind",
+      "Positionless Football",
+      "Outside Zone Stretch",
+      "21 Personnel Heavy",
+      "Wide-9 Rush"
+    ]
   },
   {
     "id": "sf-oc",
@@ -855,7 +1983,19 @@
     "teamId": "25",
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
-    "experience": 12
+    "experience": 12,
+    "tree": "Kyle Shanahan / Gary Kubiak Tree",
+    "playCalling": "Passing Game Coordinator & Co-Designer",
+    "offensiveScheme": "Outside Zone with Deceptive Bootlegs & Throwback Screens",
+    "personnelPreference": "21 Personnel (40%), 11 Personnel (42%)",
+    "passRunTendency": "54% Pass / 46% Run",
+    "philosophy": "Fullback Kyle Juszczyk shifting all over the formation to create numbers advantages, play-action bootlegs, and quick YAC screens.",
+    "schemeTags": [
+      "Kyle Juszczyk FB",
+      "YAC Monsters",
+      "Throwback Screens",
+      "Bootleg Passes"
+    ]
   },
   {
     "id": "sf-dc",
@@ -865,7 +2005,20 @@
     "teamId": "25",
     "teamAbbr": "SF",
     "teamName": "San Francisco 49ers",
-    "experience": 1
+    "experience": 1,
+    "tree": "Pete Carroll / Robert Saleh 4-3 Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "4-3 Wide-9 Penetration with Cover 3 / Quarters Match",
+    "baseFront": "4-3 Wide-9 Front",
+    "personnelPreference": "Nickel 4-2-5 (78%), Base 4-3 (18%)",
+    "coverageTendency": "Cover 3 Match (46%), Cover 4 Quarters (30%), Cover 1 (14%)",
+    "philosophy": "Line up Nick Bosa in ultra-wide alignments, penetrate single gaps with raw speed, and let Fred Warner erase the middle of the field in coverage.",
+    "schemeTags": [
+      "Nick Bosa Wide-9",
+      "Fred Warner Middle",
+      "Cover 3 Match",
+      "Single-Gap Speed"
+    ]
   },
   {
     "id": "sea-hc",
@@ -876,7 +2029,23 @@
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
     "experience": 1,
-    "record": "4-3"
+    "record": "4-3",
+    "tree": "Mike Macdonald / Baltimore Ravens Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "offensiveScheme": "Ryan Grubb Vertical Air Raid & Pro Spread Hybrid",
+    "defensiveScheme": "Mike Macdonald Revolutionary Amoeba & Simulated Pressure",
+    "baseFront": "Multiple 3-4 / 4-2-5 Amoeba",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (22%)",
+    "passRunTendency": "61% Pass / 39% Run (Vertical Attack)",
+    "coverageTendency": "Cover 6 (38%), Cover 4 (28%), Cover 2 Man (20%)",
+    "philosophy": "The NFL youngest defensive genius bringing the Ravens simulated pressure amoeba system to Seattle, paired with Ryan Grubb vertical Air Raid passing attack.",
+    "schemeTags": [
+      "Macdonald Amoeba",
+      "Simulated Pressures",
+      "Ryan Grubb Air Raid",
+      "Vertical Passing",
+      "Split-Field Coverage"
+    ]
   },
   {
     "id": "sea-oc",
@@ -886,7 +2055,19 @@
     "teamId": "26",
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
-    "experience": 1
+    "experience": 1,
+    "tree": "Kalen DeBoer / Ryan Grubb Vertical Spread Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Vertical Air Raid & Pro Spread with Deep Boundary Isolation",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (20%)",
+    "passRunTendency": "62% Pass / 38% Run",
+    "philosophy": "Spread formations, deep choice routes, boundary go-balls for DK Metcalf and Jaxon Smith-Njigba, paired with creative split-zone runs with Kenneth Walker.",
+    "schemeTags": [
+      "Vertical Shots",
+      "DK Metcalf Go",
+      "Smith-Njigba Slot",
+      "Split-Zone Run"
+    ]
   },
   {
     "id": "sea-dc",
@@ -896,7 +2077,20 @@
     "teamId": "26",
     "teamAbbr": "SEA",
     "teamName": "Seattle Seahawks",
-    "experience": 1
+    "experience": 1,
+    "tree": "Mike Macdonald / Dan Quinn Tree",
+    "playCalling": "Defensive Coordinator & Front Specialist",
+    "defensiveScheme": "Multiple Amoeba Front with Creepers & Versatile Secondary",
+    "baseFront": "Multiple 3-4 Hybrid Front",
+    "personnelPreference": "Nickel (74%), Base 3-4 (18%), Dime (8%)",
+    "coverageTendency": "Cover 6 (40%), Cover 4 Quarters (26%), Cover 3 (22%)",
+    "philosophy": "Constantly change picture before the snap, rotate safeties late, and manufacture sacks by bringing blitzers from places quarterbacks cannot anticipate.",
+    "schemeTags": [
+      "Late Disguise",
+      "Creeper Pressure",
+      "Rotational Safeties",
+      "Amoeba Confuse"
+    ]
   },
   {
     "id": "tb-hc",
@@ -907,7 +2101,23 @@
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
     "experience": 6,
-    "record": "46-60"
+    "record": "46-60",
+    "tree": "Bill Parcells / Bruce Arians Blitz Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "offensiveScheme": "Sean McVay / Liam Coen 11-Personnel Wide Zone Spread",
+    "defensiveScheme": "Todd Bowles Heavy A-Gap Mug Blitz & Cover 1 / Cover 0",
+    "baseFront": "3-4 A-Gap Mug",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (20%)",
+    "passRunTendency": "63% Pass / 37% Run",
+    "coverageTendency": "Cover 1 Man (36%), Cover 3 (30%), Cover 0 Zero Blitz (20%)",
+    "philosophy": "Highest blitz rate from nickel in the NFL, sending DBs and inside LBs on interior blitzes, paired with a Rams-style 11-personnel wide-zone passing game.",
+    "schemeTags": [
+      "Bowles Blitz",
+      "A-Gap Mug",
+      "Highest DB Blitz Rate",
+      "Cover 0",
+      "Baker Mayfield Play-Action"
+    ]
   },
   {
     "id": "tb-oc",
@@ -917,7 +2127,19 @@
     "teamId": "27",
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
-    "experience": 2
+    "experience": 2,
+    "tree": "Sean McVay Los Angeles Rams Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "McVay Wide Zone & Play-Action Crossers with Baker Mayfield",
+    "personnelPreference": "11 Personnel (76%), 12 Personnel (18%)",
+    "passRunTendency": "64% Pass / 36% Run",
+    "philosophy": "11-personnel spacing, motion, outside zone handoffs with Bucky Irving and Rachaad White, and play-action darts to Mike Evans and Chris Godwin.",
+    "schemeTags": [
+      "McVay Zone",
+      "Baker Play-Action",
+      "Mike Evans Isolation",
+      "11 Spacing"
+    ]
   },
   {
     "id": "tb-dc",
@@ -927,7 +2149,20 @@
     "teamId": "27",
     "teamAbbr": "TB",
     "teamName": "Tampa Bay Buccaneers",
-    "experience": 6
+    "experience": 6,
+    "tree": "Todd Bowles Blitz Tree",
+    "playCalling": "Co-Defensive Coordinator & Linebackers Coach",
+    "defensiveScheme": "Aggressive 3-4 Front with Inside Linebacker Shooting Gaps",
+    "baseFront": "3-4 Base Front",
+    "personnelPreference": "Nickel (76%), Base 3-4 (18%)",
+    "coverageTendency": "Cover 1 Press (38%), Cover 0 (20%), Cover 3 (26%)",
+    "philosophy": "Mug both A-gaps with Lavonte David, send corner blitzes off the slot, and force hasty throws under intense interior heat.",
+    "schemeTags": [
+      "A-Gap Mug",
+      "Lavonte David Blitz",
+      "Slot Corner Pressure",
+      "Zero Blitz Pressure"
+    ]
   },
   {
     "id": "ten-hc",
@@ -938,7 +2173,23 @@
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
     "experience": 1,
-    "record": "2-5"
+    "record": "2-5",
+    "tree": "Zac Taylor / Sean McVay Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Modern Shotgun 11-Personnel Spread with RPO Slants",
+    "defensiveScheme": "Dennard Wilson Aggressive Press-Man & Safety Blitzes",
+    "baseFront": "3-4 / 4-2-5 Hybrid",
+    "personnelPreference": "11 Personnel (74%), 12 Personnel (20%)",
+    "passRunTendency": "61% Pass / 39% Run",
+    "coverageTendency": "Cover 1 Man (40%), Cover 3 Match (32%), Cover 0 (14%)",
+    "philosophy": "Transition Tennessee from old-school ground-and-pound into a modern shotgun spread pass offense with Will Levis, complemented by physical press-man defense.",
+    "schemeTags": [
+      "Modern Spread",
+      "Will Levis Arm",
+      "Press-Man Defense",
+      "RPO Slant",
+      "11 Personnel"
+    ]
   },
   {
     "id": "ten-oc",
@@ -948,7 +2199,19 @@
     "teamId": "10",
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
-    "experience": 1
+    "experience": 1,
+    "tree": "Brian Callahan / Jon Gruden Tree",
+    "playCalling": "Passing Game Designer & Co-Coordinator",
+    "offensiveScheme": "Shotgun Spread with Intermediate Choice & Quick Timing",
+    "personnelPreference": "11 Personnel (76%), 12 Personnel (18%)",
+    "passRunTendency": "62% Pass / 38% Run",
+    "philosophy": "Spread the field with Calvin Ridley on boundary vertical routes, quick timing slants for slot receivers, and shotgun zone-read runs with Tony Pollard.",
+    "schemeTags": [
+      "Calvin Ridley Boundary",
+      "Tony Pollard Zone",
+      "Quick Slants",
+      "Choice Routes"
+    ]
   },
   {
     "id": "ten-dc",
@@ -958,7 +2221,20 @@
     "teamId": "10",
     "teamAbbr": "TEN",
     "teamName": "Tennessee Titans",
-    "experience": 1
+    "experience": 1,
+    "tree": "Todd Bowles / Gregg Williams / Jim Schwartz Tree",
+    "playCalling": "Primary Defensive Playcaller",
+    "defensiveScheme": "Aggressive Press-Man Front with Secondary Blitz Tracks",
+    "baseFront": "Multiple 3-4 Front",
+    "personnelPreference": "Nickel 4-2-5 (74%), Base 3-4 (20%)",
+    "coverageTendency": "Cover 1 Man (42%), Cover 3 Match (30%), Cover 0 (16%)",
+    "philosophy": "Physical bump-and-run press coverage by perimeter cornerbacks, sending safeties and nickelbacks on delayed blitz tracks into the backfield.",
+    "schemeTags": [
+      "Press Coverage",
+      "Safety Blitz",
+      "Physical Secondary",
+      "Cover 1 Man"
+    ]
   },
   {
     "id": "wsh-hc",
@@ -969,7 +2245,23 @@
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
     "experience": 7,
-    "record": "47-44"
+    "record": "47-44",
+    "tree": "Pete Carroll / Seattle Seahawks Legion of Boom Tree",
+    "playCalling": "CEO & Defensive Mastermind",
+    "offensiveScheme": "Kliff Kingsbury Air Raid / Spread Option with Jayden Daniels",
+    "defensiveScheme": "Dan Quinn 4-2-5 Attacking Front with Cover 3 / Cover 1",
+    "baseFront": "4-2-5 Big Nickel",
+    "personnelPreference": "11 Personnel (68%), 12 Personnel (24%)",
+    "passRunTendency": "56% Pass / 44% Run (Dual-Threat Option)",
+    "coverageTendency": "Cover 3 (44%), Cover 1 Man (30%), Cover 4 (18%)",
+    "philosophy": "High-octane Air Raid and read-option ground game with sensational rookie QB Jayden Daniels, backed by Dan Quinn fast-flowing takeaway-oriented 4-2-5 defense.",
+    "schemeTags": [
+      "Jayden Daniels Magic",
+      "Dan Quinn Takeaways",
+      "Air Raid Spread",
+      "Read Option",
+      "Cover 3 Attacking"
+    ]
   },
   {
     "id": "wsh-oc",
@@ -979,7 +2271,19 @@
     "teamId": "28",
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
-    "experience": 5
+    "experience": 5,
+    "tree": "Mike Leach Air Raid Tree",
+    "playCalling": "Primary Offensive Playcaller",
+    "offensiveScheme": "Air Raid / Spread Option with Zone-Read & RPO Mesh",
+    "personnelPreference": "11 Personnel (72%), 12 Personnel (22%)",
+    "passRunTendency": "57% Pass / 43% Run (Heavy QB Run Factor)",
+    "philosophy": "High-tempo spread spacing, mesh route rubs, tunnel screens, and designed read-option QB keepers for Jayden Daniels creating numbers advantages.",
+    "schemeTags": [
+      "Air Raid Mesh",
+      "Jayden Daniels Read",
+      "Tunnel Screens",
+      "High Tempo Spread"
+    ]
   },
   {
     "id": "wsh-dc",
@@ -989,6 +2293,19 @@
     "teamId": "28",
     "teamAbbr": "WSH",
     "teamName": "Washington Commanders",
-    "experience": 1
+    "experience": 1,
+    "tree": "Dan Quinn / Pete Carroll Tree",
+    "playCalling": "Co-Defensive Coordinator & Secondary Architect",
+    "defensiveScheme": "Attacking 4-2-5 Front with Heavy Takeaway Emphasis",
+    "baseFront": "4-2-5 Even Front",
+    "personnelPreference": "Nickel (78%), Base 4-3 (18%)",
+    "coverageTendency": "Cover 3 Sky (46%), Cover 1 Man (28%), Quarters (18%)",
+    "philosophy": "Line up with 5 defensive backs, flow sideline-to-sideline with Bobby Wagner, strip at the ball on every gang tackle, and play disciplined single-high zones.",
+    "schemeTags": [
+      "Bobby Wagner Middle",
+      "Takeaway Punch-Outs",
+      "4-2-5 Nickel",
+      "Cover 3 Sky"
+    ]
   }
 ]

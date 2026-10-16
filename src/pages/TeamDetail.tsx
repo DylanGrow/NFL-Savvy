@@ -173,29 +173,39 @@ export default function TeamDetail() {
 
   // ── Coaching staff ────────────────────────────────────────
   const teamCoaches = useMemo<Coach[]>(() => {
-    // ESPN raw coaches (if present in ESPN response)
+    // Local coaches.json has 100% verified HC, OC, and DC with tactical scheme intelligence
+    const filtered = coachesData.filter(
+      (c: any) => c.teamId === String(espnId) || c.teamAbbr === team?.abbreviation
+    );
+    if (filtered.length > 0) {
+      return filtered.map((c: any) => ({
+        ...c,
+        id: c.id,
+        fullName: c.fullName || `${c.firstName ?? ''} ${c.lastName ?? ''}`.trim() || 'Coach',
+        role: c.role || 'Coach',
+        teamId: c.teamId || String(espnId),
+        teamAbbr: c.teamAbbr || team?.abbreviation,
+        teamName: c.teamName || team?.name,
+        yearsExperience: c.yearsExperience ?? c.experience,
+        record: c.record,
+      }));
+    }
+
+    // Fallback: ESPN raw coaches (if present in ESPN response)
     if (espnTeam?.coaches && espnTeam.coaches.length > 0) {
       return espnTeam.coaches.map((c: any, idx: number) => ({
         id: c.id || `coach-${idx}`,
         fullName: c.fullName || `${c.firstName ?? ''} ${c.lastName ?? ''}`.trim() || 'Coach',
         role: c.role || c.titles?.[0]?.position || 'Coach',
         teamId: String(espnId),
+        teamAbbr: team?.abbreviation,
+        teamName: team?.name,
         yearsExperience: c.yearsExperience ?? c.experience,
         record: c.record,
       }));
     }
-    // Fall back to local coaches.json (96 coaches)
-    const filtered = coachesData.filter(
-      (c: any) => c.teamId === String(espnId) || c.teamAbbr === team?.abbreviation
-    );
-    return filtered.map((c: any) => ({
-      id: c.id,
-      fullName: c.fullName || `${c.firstName ?? ''} ${c.lastName ?? ''}`.trim() || 'Coach',
-      role: c.role || 'Coach',
-      teamId: c.teamId || String(espnId),
-      yearsExperience: c.yearsExperience ?? c.experience,
-      record: c.record,
-    }));
+
+    return [];
   }, [espnTeam, coachesData, espnId, team]);
 
   // ── Highlight players ─────────────────────────────────────

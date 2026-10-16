@@ -58,9 +58,21 @@ export interface Coach {
   name?: string;
   role: string;
   teamId?: string;
+  teamAbbr?: string;
+  teamName?: string;
   record?: string;
   experience?: number;
   yearsExperience?: number;
+  tree?: string;
+  playCalling?: string;
+  offensiveScheme?: string;
+  defensiveScheme?: string;
+  baseFront?: string;
+  personnelPreference?: string;
+  passRunTendency?: string;
+  coverageTendency?: string;
+  philosophy?: string;
+  schemeTags?: string[];
 }
 
 export interface Salary {

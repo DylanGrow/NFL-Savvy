@@ -89,15 +89,30 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       }
     });
 
-    // 3. Coaches
+    // 3. Coaches & Schemes
     coaches.forEach(c => {
       const fullName = `${c.firstName} ${c.lastName}`;
-      if (fullName.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || (c.teamName && c.teamName.toLowerCase().includes(q)) || (c.teamAbbr && c.teamAbbr.toLowerCase() === q)) {
+      const offScheme = c.offensiveScheme || '';
+      const defScheme = c.defensiveScheme || '';
+      const tree = c.tree || '';
+      const tags = (c.schemeTags || []).join(' ');
+
+      if (
+        fullName.toLowerCase().includes(q) ||
+        c.role.toLowerCase().includes(q) ||
+        (c.teamName && c.teamName.toLowerCase().includes(q)) ||
+        (c.teamAbbr && c.teamAbbr.toLowerCase() === q) ||
+        offScheme.toLowerCase().includes(q) ||
+        defScheme.toLowerCase().includes(q) ||
+        tree.toLowerCase().includes(q) ||
+        tags.toLowerCase().includes(q)
+      ) {
+        const schemeDesc = offScheme ? `🏈 ${offScheme.split('&')[0].trim()}` : defScheme ? `🛡️ ${defScheme.split('&')[0].trim()}` : '';
         matched.push({
           type: 'coach',
           id: c.id,
-          name: fullName,
-          subtitle: `${c.role} • ${c.teamName || c.teamAbbr || 'NFL'}`,
+          name: `${fullName} (${c.teamAbbr || 'NFL'})`,
+          subtitle: `${c.role} • ${schemeDesc || c.tree || c.teamName}`,
           url: `/coaches`
         });
       }
